@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Nome do Manual</title>
+
+    <!--
+        TEMPLATE PADRÃO — MEUSCORREIOS
+
+        Para novos manuais:
+        1. Mantenha a estrutura da navbar, sidebar, columns e main.
+        2. Substitua apenas textos, links/IDs e conteúdo das seções.
+        3. Não adicione CSS sobrescrevendo navbar, cores, sidebar ou largura principal.
+        4. Use sempre section-anchor nas seções que recebem links.
+        5. Use tabelas com: table is-fullwidth is-bordered is-size-7.
+    -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+    <link rel="stylesheet" href="assets/css/manual-padrao.css" />
+</head>
+
+<body>
+
+    <!-- NAVBAR FIXA -->
+    <nav class="navbar is-white is-fixed-top manual-navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <span class="navbar-item has-text-weight-semibold is-size-6">
+                📘 Nome do Manual
+            </span>
+        </div>
+
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#sobre">Sobre</a>
+                <a class="navbar-item is-size-7" href="#configuracao">Configuração</a>
+                <a class="navbar-item is-size-7" href="#configuracao">ConfiguraçãoMC</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="manual-page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns manual-layout">
+
+                    <!-- SIDEBAR STICKY -->
+                    <div class="column is-narrow is-hidden-mobile manual-sidebar-column">
+                        <aside class="menu manual-sidebar">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#sobre">Sobre este guia</a></li>
+                                <li>
+                                    <a href="#configuracao">Configuração</a>
+                                    <ul>
+                                        <li><a href="#passo-1">1. Primeiro passo</a></li>
+                                        <li><a href="#passo-2">2. Segundo passo</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#configuracao2">ConfiguraçãoMC</a>
+                                    <ul>
+                                        <li><a href="#pre-1">1. Primeiro passo</a></li>
+                                        <li><a href="#pre-2">2. Segundo passo</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <!-- CONTEÚDO -->
+                    <main class="column manual-content-column">
+
+                        <!-- SOBRE -->
+                        <div id="sobre" class="section-anchor mb-5">
+                            <h1 class="title is-4">Nome do Manual - Guia IA</h1>
+
+                            <p class="block is-size-7">
+                                Escreva aqui o objetivo do manual e uma descrição curta sobre o que será explicado.
+                            </p>
+
+                            <div class="notification is-light manual-highlight is-size-7">
+                                Use este bloco para explicar uma informação importante logo no início do manual.
+                            </div>
+                        </div>
+
+                        <hr />
+                        <hr />
+
+                        <!-- CONFIGURAÇÃO -->
+                        <div id="configuracao" class="section-anchor mb-5">
+                            <h2 class="title is-5">Configuração</h2>
+
+                            <p class="is-size-7 block">
+                                Explique aqui o contexto da configuração que será realizada.
+                            </p>
+
+                            <!-- PASSO 1 -->
+                            <div id="passo-1" class="section-anchor mb-5">
+                                <h3 class="title is-6">1. Primeiro passo</h3>
+
+                                <p class="is-size-7 block">
+                                    Primeira parte de como gerar os dados necessários dentro da plataforma do cliente
+                                </p>
+
+                                <!-- Exemplo de imagem/GIF:
+                                <img class="manual-image" src="../assets/img/exemplo.gif" alt="Descrição da imagem">
+                                -->
+                            </div>
+
+                            <!-- PASSO 2 -->
+                            <div id="passo-2" class="section-anchor mb-5">
+                                <h3 class="title is-6">2. Segundo passo</h3>
+
+                                <p class="is-size-7 block">
+                                    Segunda parte de como gerar os dados necessários dentro da plataforma do cliente
+                                </p>
+
+                                <article class="message is-info is-size-7">
+                                    <div class="message-body">
+                                        Use mensagens informativas para dicas importantes.
+                                    </div>
+                                </article>
+                                
+                                <!-- Exemplo de imagem/GIF:
+                                <img class="manual-image" src="../assets/img/exemplo.gif" alt="Descrição da imagem">
+                                -->
+                            </div>
+                        </div>
+                        <!-- CONFIGURAÇÃO MC-->
+                        <div id="configuracao2" class="section-anchor mb-5">
+                            <h2 class="title is-5">ConfiguraçãoMC</h2>
+
+                            <p class="is-size-7 block">
+                                Explique aqui o contexto da configuração no MeusCorreios que será realizada.
+                            </p>
+
+                            <!-- PASSO 1 -->
+                            <div id="passo-1" class="section-anchor mb-5">
+                                <h3 class="title is-6">1. Primeiro passo</h3>
+
+                                <p class="is-size-7 block">
+                                    Sempre vai ser acessar o menu Configurações - Integrações
+                                </p>
+
+                                <!-- Exemplo de imagem/GIF:
+                                <img class="manual-image" src="../assets/img/exemplo.gif" alt="Descrição da imagem">
+                                -->
+                            </div>
+
+                            <!-- PASSO 2 -->
+                            <div id="passo-2" class="section-anchor mb-5">
+                                <h3 class="title is-6">2. Segundo passo</h3>
+
+                                <p class="is-size-7 block">
+                                    Sempre vai ser o processo de preencher os dados da plataforma do cliente
+                                </p>
+
+                                <article class="message is-info is-size-7">
+                                    <div class="message-body">
+                                        Use mensagens informativas para dicas importantes como exemplo de status e configurações.
+                                    </div>
+                                </article>
+                                
+                                <!-- Exemplo de imagem/GIF:
+                                <img class="manual-image" src="../assets/img/exemplo.gif" alt="Descrição da imagem">
+                                -->
+                            </div>
+                        </div>
+
+                        <hr />
+                        <hr />
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer manual-footer">
+        <div class="content has-text-centered is-size-7 has-text-grey">
+            Nome do Manual - Guia IA
+        </div>
+    </footer>
+
+</body>
+
+</html>

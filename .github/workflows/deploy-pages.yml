@@ -45,7 +45,7 @@ jobs:
           repo = Path(".")
           site = Path("_site")
 
-          base_url = "https://meuscorreios-doc.github.io/manuais.github.io/"
+          base_url = "https://meuscorreios-doc.github.io/manuais/"
 
           ignorar = {
               ".git",

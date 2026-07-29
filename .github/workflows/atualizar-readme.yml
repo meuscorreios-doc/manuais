@@ -33,7 +33,7 @@ jobs:
           repo = Path(".")
           readme = repo / "README.md"
 
-          base_url = "https://meuscorreios-doc.github.io/manuais.github.io/"
+          base_url = "https://meuscorreios-doc.github.io/manuais/"
 
           inicio = "<!-- MANUAIS:INICIO -->"
           fim = "<!-- MANUAIS:FIM -->"

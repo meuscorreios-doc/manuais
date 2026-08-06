@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -271,10 +271,10 @@ jobs:
           (site / ".nojekyll").write_text("", encoding="utf-8")
           PY
 
-      - name: Publicar na branch gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Enviar arquivos para o Pages
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          publish_branch: gh-pages
-          force_orphan: true
+          path: "_site"
+
+      - name: Publicar no GitHub Pages
+        uses: actions/deploy-pages@v4

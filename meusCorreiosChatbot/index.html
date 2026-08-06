@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeusCorreios Chatbot — Guia de Suporte</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+    <style>
+        /* Force light mode regardless of OS setting */
+        :root {
+            color-scheme: light;
+            --bulma-scheme-main: #ffffff;
+            --bulma-scheme-main-bis: #fafafa;
+            --bulma-text: #363636;
+            --bulma-text-strong: #222222;
+            --bulma-background: #f5f5f5;
+            --bulma-menu-item-color: #363636;
+            --bulma-menu-item-background-color: transparent;
+            --bulma-menu-item-hover-color: #363636;
+            --bulma-menu-item-hover-background-color: #f5f5f5;
+            --bulma-menu-item-active-color: #363636;
+            --bulma-menu-item-active-background-color: #e8e8e8;
+            --bulma-table-head-background-color: #f5f5f5;
+            --bulma-table-head-cell-color: #363636;
+            --bulma-navbar-background-color: #ffffff;
+            --bulma-navbar-item-color: #4a4a4a;
+            --bulma-border: #dbdbdb;
+        }
+
+        body {
+            background: #fafafa;
+            padding-bottom: 4rem;
+            color: #363636;
+            font-size: 16px;
+        }
+
+        /* Bump Bulma's size scale up one notch */
+        .is-size-7 {
+            font-size: 0.875rem !important;
+        }
+
+        .is-size-6 {
+            font-size: 1rem !important;
+        }
+
+        aside.menu {
+            font-size: 0.875rem;
+        }
+
+        .chat-bubble {
+            background: #dbeafe;
+            border: 1px solid #bdd4f3;
+            border-radius: 0 10px 10px 10px;
+            padding: 0.6rem 0.85rem;
+            display: inline-block;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre-line;
+            max-width: 340px;
+        }
+
+        .chat-bubble.is-user {
+            background: #e9fbe6;
+            border-color: #c3e6c0;
+            border-radius: 10px 0 10px 10px;
+        }
+
+        .chat-label {
+            font-size: 0.7rem;
+            color: #999;
+            margin-bottom: 0.15rem;
+        }
+
+        .chat-label.right {
+            text-align: right;
+        }
+
+        .chat-row {
+            margin-bottom: 0.6rem;
+        }
+
+        .chat-row.right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chat-box {
+            background: #ece5dd;
+            border-radius: 8px;
+            padding: 1rem;
+            max-width: 400px;
+        }
+
+        .section {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 4rem;
+        }
+
+        nav.navbar {
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .tag.is-mono {
+            font-family: monospace;
+        }
+
+        .table td,
+        .table th {
+            vertical-align: middle;
+        }
+
+        .content ul li,
+        .content ol li {
+            margin-bottom: 0.3rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar is-white is-fixed-top" role="navigation">
+        <div class="navbar-brand">
+            <span class="navbar-item has-text-weight-semibold is-size-6">
+                🤖 MeusCorreios Chatbot — Guia de Suporte
+            </span>
+        </div>
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#sobre">Sobre</a>
+                <a class="navbar-item is-size-7" href="#funcionalidades">Funcionalidades</a>
+                <a class="navbar-item is-size-7" href="#como-funciona">Como funciona</a>
+                <a class="navbar-item is-size-7" href="#dispositivos">Dispositivos</a>
+                <a class="navbar-item is-size-7" href="#erros">Erros</a>
+                <a class="navbar-item is-size-7" href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <div style="padding-top: 3.5rem;">
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+
+                    <!-- SIDEBAR -->
+                    <div class="column is-narrow is-hidden-mobile" style="min-width:190px;">
+                        <aside class="menu" style="position:sticky; top:4.5rem; font-size:0.82rem;">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#sobre">Sobre este guia</a></li>
+                                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                                <li><a href="#requisitos">Pré-requisitos</a></li>
+                                <li><a href="#como-funciona">Como funciona</a>
+                                    <ul>
+                                        <li><a href="#iniciar">Iniciar</a></li>
+                                        <li><a href="#rastrear">Rastrear objetos</a></li>
+                                        <li><a href="#coleta">Solicitar coleta</a></li>
+                                        <li><a href="#cotacao">Fazer cotação</a></li>
+                                        <li><a href="#reiniciar">Reiniciar / Encerrar</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#dispositivos">Compatibilidade</a></li>
+                                <li><a href="#erros">Referência de erros</a></li>
+                                <li><a href="#limitacoes">Limitações</a></li>
+                                <li><a href="#faq">FAQ de suporte</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <!-- CONTENT -->
+                    <div class="column">
+
+                        <!-- SOBRE -->
+                        <div id="sobre" class="section-anchor mb-5">
+                            <h1 class="title is-4">MeusCorreios Chatbot — Guia de Suporte</h1>
+                            <p class="block">
+                                Este guia visa cobrir as principais funcionalidades e dúvidas acerta do uso do bot do
+                                MeusCorreios.
+                            </p>
+                            <div class="notification is-light" style="border-left: 4px solid #3273dc;">
+                                O bot é um atendimento automatizado via WhatsApp. Não há atendente humano.
+                                Ele responde a mensagens de texto e botões interativos, sem AI — apenas menus e fluxos
+                                definidos.
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <!-- FUNCIONALIDADES -->
+                        <div id="funcionalidades" class="section-anchor mb-5">
+                            <h2 class="title is-5">Funcionalidades</h2>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th>Função</th>
+                                        <th>O que faz</th>
+                                        <th>Limitações principais</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>📦 Rastrear Objetos</strong></td>
+                                        <td>Busca encomendas por rastreamento, data, nome do destinatário ou CEP. Exibe
+                                            situação, previsão e comprovante eletrônico (quando disponível).</td>
+                                        <td>Busca apenas objetos <strong>enviados pelo próprio cliente</strong> via MeusCorreios — objetos que o cliente está aguardando receber não aparecem. Máximo de 10 resultados por busca. Comprovante eletrônico depende da região.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>🚚 Solicitar Coleta</strong></td>
+                                        <td>Agenda coleta domiciliar. Cliente informa horário e tipo de veículo (moto ou
+                                            carro).</td>
+                                        <td>Somente para o <strong>dia corrente</strong> — não é possível agendar para amanhã ou datas futuras. Requer permissão de coleta habilitada no cadastro. Janelas de horário definidas pela agência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>💰 Fazer Cotação</strong></td>
+                                        <td>Calcula frete com opções de serviço, prazo e preço. Aceita valor declarado e
+                                            adicionais (AR, MP, AP).</td>
+                                        <td>Preços baseados no <strong>contrato do cliente com os Correios</strong>. Peso máximo 30 kg. Requer CEP de destino, dimensões e peso.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr />
+
+                        <!-- REQUISITOS -->
+                        <div id="requisitos" class="section-anchor mb-5">
+                            <h2 class="title is-5">Pré-requisitos do cliente</h2>
+                            <ul class="content is-size-7">
+                                <li>Número de WhatsApp ativo.</li>
+                                <li>Esse número deve estar <strong>cadastrado pela agência via MeusCorreios</strong>.
+                                </li>
+                                <li>Para solicitar coleta: <strong>permissão de coleta</strong> habilitada no cadastro.
+                                    Se não aparecer o botão, habilitar na agência.</li>
+                            </ul>
+                        </div>
+
+                        <hr />
+
+                        <!-- COMO FUNCIONA -->
+                        <div id="como-funciona" class="section-anchor mb-5">
+                            <h2 class="title is-5">Como o bot funciona</h2>
+
+                            <!-- INICIAR -->
+                            <div id="iniciar" class="section-anchor mb-5">
+                                <h3 class="title is-6">Iniciar o atendimento</h3>
+                                <p class="is-size-7 block">O cliente envia qualquer mensagem (ex.: "oi"). O bot responde
+                                    com uma saudação e o menu de opções.</p>
+                                <div class="chat-box mb-3">
+                                    <div class="chat-row">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">Olá Maria!
+
+                                            🤖 Sou o bot do MeusCorreios da Agência Centro SP.
+
+                                            ⏳ As conversas são automaticamente encerradas após 15 minutos de silêncio.
+
+                                            Para voltar ao menu a qualquer momento, digite "reiniciar".</div>
+                                    </div>
+                                    <div class="chat-row mt-2">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">Escolha uma das opções abaixo para continuar:
+
+                                            [ 📦 Rastrear Objetos ]
+                                            [ 💰 Fazer Cotação ]
+                                            [ 🚚 Solicitar Coleta ]</div>
+                                    </div>
+                                </div>
+                                <article class="message is-info is-size-7 mt-3">
+                                    <div class="message-body">📅 Se o cliente já tiver uma coleta agendada para hoje, o
+                                        bot exibe o endereço e horário antes do menu.</div>
+                                </article>
+                                <article class="message is-warning is-size-7">
+                                    <div class="message-body">⚠️ Se o botão <strong>Solicitar Coleta</strong> não
+                                        aparecer, a permissão de coleta não está habilitada para esse cadastro.
+                                        Habilitar na agência.</div>
+                                </article>
+                            </div>
+
+                            <!-- RASTREAR -->
+                            <div id="rastrear" class="section-anchor mb-5">
+                                <h3 class="title is-6">📦 Rastrear Objetos</h3>
+                                <p class="is-size-7 block">O cliente envia os filtros numa única mensagem, separados por espaço.</p>
+                                <article class="message is-warning is-size-7">
+                                    <div class="message-body">⚠️ O bot busca apenas objetos <strong>enviados pelo
+                                            próprio cliente</strong> via MeusCorreios. Objetos que o cliente está
+                                        aguardando receber ou objetos enviados de outras maneiras <strong>não
+                                            aparecem</strong> nos resultados.</div>
+                                </article>
+
+                                <table class="table is-fullwidth is-bordered is-size-7 mb-3">
+                                    <thead>
+                                        <tr><th>Filtro</th><th>Obrigatório</th><th>Formato</th><th>Exemplo</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Número de rastreamento</td>
+                                            <td>⚠️ Um dos dois*</td>
+                                            <td>Código alfanumérico</td>
+                                            <td><code>AB123456789BR</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Data ou período</td>
+                                            <td>⚠️ Um dos dois*</td>
+                                            <td>DD/MM/AA ou DD/MM/AAAA; duas datas para período</td>
+                                            <td><code>03/12/2025</code> ou <code>01/12/2025 31/12/2025</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nome do destinatário</td>
+                                            <td>—</td>
+                                            <td>Nome completo ou parte do nome</td>
+                                            <td><code>João Silva</code> ou só <code>João</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CEP de destino</td>
+                                            <td>—</td>
+                                            <td>8 dígitos, com ou sem traço</td>
+                                            <td><code>01001-000</code> ou <code>01001000</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nota fiscal</td>
+                                            <td>—</td>
+                                            <td>Prefixo <code>NF:</code> seguido do número</td>
+                                            <td><code>NF:00023</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="is-size-7 has-text-grey mb-3">* A busca precisa ter pelo menos o número de rastreamento <strong>ou</strong> uma data/período. Os outros filtros são opcionais e podem ser combinados livremente.</p>
+
+                                <p class="is-size-7 has-text-grey mb-1">Exemplos válidos:</p>
+                                <div class="chat-box mb-3 is-size-7">
+                                    <div class="chat-row right">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">AB123456789BR</div>
+                                    </div>
+                                    <div class="chat-row right mt-2">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">01/12/2025 31/12/2025 Carlos 01001000</div>
+                                    </div>
+                                    <div class="chat-row right mt-2">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">03/12/2025 Fulano de Tal NF:00023</div>
+                                    </div>
+                                </div>
+
+                                <p class="is-size-7 has-text-weight-semibold mb-1 mt-4">Confirmação antes dos resultados:</p>
+                                <p class="is-size-7 block">Antes de exibir os objetos, o bot mostra um resumo dos filtros que usou. O cliente pode verificar se está correto antes de analisar os resultados.</p>
+                                <div class="chat-box mb-3 is-size-7">
+                                    <div class="chat-row right">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">01/12/2025 31/12/2025 Carlos 01001000</div>
+                                    </div>
+                                    <div class="chat-row mt-2">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">🎉 Encontrei 3 objetos com esses filtros:
+
+🗓️ De 01/12/2025 a 31/12/2025
+☺️ Destinatário: Carlos
+🎯 CEP: 01001-000</div>
+                                    </div>
+                                </div>
+                                <div class="chat-box mb-4 is-size-7">
+                                    <div class="chat-row right">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">AB123456789BR</div>
+                                    </div>
+                                    <div class="chat-row mt-2">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">🎉 Encontrei 1 objeto com esses filtros:
+
+📦 Rastreamento: AB123456789BR</div>
+                                    </div>
+                                </div>
+
+                                <p class="is-size-7 has-text-weight-semibold mb-1">Situações possíveis na resposta:</p>
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <tbody>
+                                        <tr>
+                                            <td>✅ Entregue</td>
+                                            <td>Entrega confirmada.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>🚚 Em trânsito / Em transferência</td>
+                                            <td>A caminho, ainda não chegou.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>⚠️ Entrega não efetuada</td>
+                                            <td>Tentativa feita, nova tentativa no próximo dia útil.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>⚠️ Tentativa sem sucesso</td>
+                                            <td>Carteiro foi lá, ninguém atendeu. Até 3 tentativas.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>📬 Aguardando retirada</td>
+                                            <td>Objeto retido na unidade. 7 dias para retirar com documento.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>↩️ Devolvido</td>
+                                            <td>Voltou para o remetente.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>🚨 Atraso</td>
+                                            <td>Previsão de entrega já passou.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h4 class="title is-6 mt-5">📄 Comprovante eletrônico de entrega</h4>
+                                <p class="is-size-7 block">A imagem do comprovante só é carregada quando a busca retorna <strong>exatamente 1 objeto</strong>. Quando há 2 ou mais resultados, a imagem não é exibida para não poluir a conversa.</p>
+
+                                <table class="table is-fullwidth is-bordered is-size-7 mb-3">
+                                    <thead><tr><th>Situação</th><th>O que o bot faz</th></tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2 ou mais resultados</td>
+                                            <td>Exibe os objetos sem imagem e envia a dica abaixo para que o cliente refaça a busca por rastreamento.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1 resultado — imagem disponível</td>
+                                            <td>Envia a imagem do comprovante automaticamente.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1 resultado — imagem não disponível</td>
+                                            <td>Envia a mensagem de ausência abaixo. Pode ser limitação da região de entrega, ou falha pontual da API.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p class="is-size-7 has-text-weight-semibold mb-1">Mensagens que o cliente vai receber:</p>
+                                <div class="chat-box mb-3 is-size-7">
+                                    <div class="chat-row">
+                                        <div class="chat-label">Bot (2+ resultados)</div>
+                                        <div class="chat-bubble">💡 Objetos ENTREGUES podem ter imagens comprovativas de entrega, dependendo da disponibilidade do serviço na região de destino.
+Faça uma pesquisa informando o número do rastreamento para tentar buscar a imagem do comprovante eletrônico de entrega.</div>
+                                    </div>
+                                </div>
+                                <div class="chat-box mb-3 is-size-7">
+                                    <div class="chat-row">
+                                        <div class="chat-label">Bot (1 resultado — sem imagem)</div>
+                                        <div class="chat-bubble">🚫 O objeto pesquisado não contém imagem do comprovante eletrônico de entrega. Isso depende da região de entrega ter disponível o equipamento necessário.</div>
+                                    </div>
+                                </div>
+
+                                <article class="message is-warning is-size-7">
+                                    <div class="message-body">⚠️ A API dos Correios às vezes não retorna a imagem mesmo quando ela existe. Se o cliente tiver certeza que o objeto foi entregue e não recebeu o comprovante, orientar a tentar novamente pesquisando só o número de rastreamento.</div>
+                                </article>
+                            </div>
+
+                            <!-- COLETA -->
+                            <div id="coleta" class="section-anchor mb-5">
+                                <h3 class="title is-6">🚚 Solicitar Coleta</h3>
+                                <p class="is-size-7 block">O bot abre um formulário interativo. O cliente preenche horário e veículo e confirma. No fallback por texto (ver <a href="#dispositivos">Compatibilidade</a>), o cliente envia tudo numa mensagem só.</p>
+
+                                <table class="table is-fullwidth is-bordered is-size-7 mb-3">
+                                    <thead>
+                                        <tr><th>Campo</th><th>Obrigatório</th><th>Formato</th><th>Exemplo</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Horário</td>
+                                            <td>✅</td>
+                                            <td>HH:MM (24 horas)</td>
+                                            <td><code>09:30</code> · <code>14:00</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Veículo</td>
+                                            <td>✅</td>
+                                            <td>Palavra em português</td>
+                                            <td><code>moto</code> ou <code>carro</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Observações</td>
+                                            <td>—</td>
+                                            <td>Texto livre, resto da mensagem</td>
+                                            <td><code>3 caixas pequenas</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p class="is-size-7 mb-1 has-text-weight-semibold">Fluxo normal (celular):</p>
+                                <ol class="content is-size-7">
+                                    <li>Bot envia botão <strong>"Informar Dados para Coleta"</strong>.</li>
+                                    <li>Cliente toca, preenche horário + veículo + observações (opcional) e confirma.
+                                    </li>
+                                    <li>Bot responde com confirmação ou erro.</li>
+                                </ol>
+
+                                <p class="is-size-7 mb-1 has-text-weight-semibold">Múltiplos endereços cadastrados:</p>
+                                <p class="is-size-7 block">Se houver mais de um endereço, o bot lista as opções
+                                    numeradas e o cliente responde com o número.</p>
+
+                                <div class="chat-box mb-3 is-size-7">
+                                    <div class="chat-row">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">Encontrei mais de um endereço cadastrado. Selecione o
+                                            ponto de coleta:
+
+                                            1. Rua das Flores, 123 — São Paulo/SP
+                                            2. Av. Brasil, 456 — São Paulo/SP</div>
+                                    </div>
+                                    <div class="chat-row right mt-2">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">1</div>
+                                    </div>
+                                    <div class="chat-row mt-2">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">✅ Coleta programada para 14:00 no endereço Rua das Flores, 123 — São Paulo/SP. Obrigado!</div>
+                                    </div>
+                                </div>
+                                <p class="is-size-7 has-text-grey mt-2">O texto exato da confirmação vem da API do MeusCorreios e inclui o endereço de coleta.</p>
+                            </div>
+
+                            <!-- COTAÇÃO -->
+                            <div id="cotacao" class="section-anchor mb-5">
+                                <h3 class="title is-6">💰 Fazer Cotação</h3>
+                                <p class="is-size-7 block">O cliente envia tudo numa mensagem só, separando por espaço.
+                                </p>
+
+                                <table class="table is-fullwidth is-bordered is-size-7 mb-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Campo</th>
+                                            <th>Obrigatório</th>
+                                            <th>Formato</th>
+                                            <th>Exemplo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>CEP de destino</td>
+                                            <td>✅</td>
+                                            <td>8 dígitos, com ou sem traço</td>
+                                            <td><code>13480-100</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dimensões (A×L×C)</td>
+                                            <td>✅</td>
+                                            <td>Números separados por <code>x</code>, em cm</td>
+                                            <td><code>10x20x30</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Peso</td>
+                                            <td>✅</td>
+                                            <td>Gramas ou quilos</td>
+                                            <td><code>1250g</code> ou <code>1,25kg</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Valor declarado</td>
+                                            <td>—</td>
+                                            <td>Reais com vírgula decimal</td>
+                                            <td><code>510,80</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Adicionais</td>
+                                            <td>—</td>
+                                            <td>AR / MP / AP separados por espaço</td>
+                                            <td><code>AR MP</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p class="is-size-7 mb-1 has-text-grey">Exemplos de mensagem completa:</p>
+                                <div class="chat-box is-size-7">
+                                    <div class="chat-row right">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">13480-100 10x20x30 1250g</div>
+                                    </div>
+                                    <div class="chat-row right mt-2">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">05140-190 25x30x100 29,15kg 23500,00 AR MP AP
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="is-size-7 has-text-weight-semibold mb-1 mt-4">Confirmação antes dos resultados:</p>
+                                <p class="is-size-7 block">Antes de mostrar as opções de serviço, o bot exibe um resumo do que entendeu — o cliente pode conferir se os dados estão certos.</p>
+                                <div class="chat-box mb-3 is-size-7">
+                                    <div class="chat-row right">
+                                        <div class="chat-label right">Cliente</div>
+                                        <div class="chat-bubble is-user">13480-100 10x20x30 1250g 510,80 AR</div>
+                                    </div>
+                                    <div class="chat-row mt-2">
+                                        <div class="chat-label">Bot</div>
+                                        <div class="chat-bubble">Serviços disponíveis para envio de objeto com essas características:
+
+📍 CEP Origem: 01001-000
+🎯 CEP Destino: 13480-100
+📦 10x20x30 cm, 1.250 g
+💰 R$ 510,80
+🏷️ Adicionais: AR</div>
+                                    </div>
+                                </div>
+
+                                <article class="message is-light is-size-7 mt-3">
+                                    <div class="message-body"><strong>Adicionais:</strong> AR = Aviso de Recebimento · MP = Mão Própria · AP = Produtos Perigosos (ANAC). Peso máximo aceito: 30 kg.</div>
+                                </article>
+                            </div>
+
+                            <!-- REINICIAR -->
+                            <div id="reiniciar" class="section-anchor mb-5">
+                                <h3 class="title is-6">Reiniciar / Encerrar</h3>
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <tbody>
+                                        <tr>
+                                            <td>Digitar <code>reiniciar</code> (qualquer hora)</td>
+                                            <td>Cancela o passo atual e volta ao menu principal.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tocar em <strong>👋 Encerrar</strong></td>
+                                            <td>Aparece ao final de cada atendimento. Encerra a sessão.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Inatividade por 15 minutos</td>
+                                            <td>Sessão encerrada automaticamente.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <!-- COMPATIBILIDADE -->
+                        <div id="dispositivos" class="section-anchor mb-5">
+                            <h2 class="title is-5">Compatibilidade de dispositivos</h2>
+
+                            <p class="is-size-7 block">A solicitação de coleta usa um <strong>formulário interativo dentro do próprio WhatsApp</strong> — o cliente toca num botão e preenche os campos sem sair da conversa. Nem todos os dispositivos e aplicativos conseguem exibir esse tipo de formulário. A tabela abaixo mostra o que funciona e o que não funciona.</p>
+
+                            <table class="table is-fullwidth is-bordered is-size-7 mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>Plataforma</th>
+                                        <th>Formulário interativo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Android (6.0+)</td>
+                                        <td>✅ Suportado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>iPhone (iOS 15.1+)</td>
+                                        <td>✅ Suportado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>WhatsApp Web (navegador)</td>
+                                        <td>✅ Suportado desde dezembro de 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>WhatsApp Desktop (Windows)</td>
+                                        <td>✅ Suportado desde dezembro de 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>WhatsApp Desktop (Mac)</td>
+                                        <td>❌ Não funciona</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Android antigo (abaixo de 6.0)</td>
+                                        <td>❌ Não suportado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>iPad (app nativo, lançado em maio de 2025)</td>
+                                        <td>⚠️ Não confirmado pela Meta</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Softwares de atendimento via WhatsApp (ex.: Digisac, ikatec, Zenvia, etc.)
+                                        </td>
+                                        <td>⚠️ Depende da integração — pode não renderizar o formulário</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <article class="message is-info is-size-7">
+                                <div class="message-body">ℹ️ WhatsApp Web e WhatsApp Desktop para Windows passaram a suportar o formulário interativo em dezembro de 2025. WhatsApp Desktop para Mac não suporta — clientes nesse ambiente devem usar o fallback por texto.</div>
+                            </article>
+
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">⚠️ <strong>Softwares de atendimento ao cliente</strong>
+                                    (Digisac, ikatec, Zenvia e similares) se integram ao WhatsApp via API, mas nem todos
+                                    suportam WhatsApp Flows. Nesses casos o formulário simplesmente não aparece. O
+                                    cliente precisa usar o fallback por texto. Não é possível saber com antecedência
+                                    quais softwares suportam — o sintoma é o botão do formulário não aparecer ou não
+                                    funcionar.</div>
+                            </article>
+
+                            <h4 class="title is-6 mt-4">Fallback por texto (Android antigo, iPad e softwares de
+                                atendimento)</h4>
+                            <p class="is-size-7 block">
+                                Quando o formulário não abre, o bot já avisa que é possível enviar os dados por texto,
+                                no formato:
+                            </p>
+                            <div class="chat-box is-size-7 mb-3" style="max-width:420px;">
+                                <div class="chat-row">
+                                    <div class="chat-label">Bot</div>
+                                    <div class="chat-bubble">Clique no botão acima para informar os dados da coleta.
+
+                                        Se não conseguir usar ou ver o botão acima, informe os dados para coleta em uma
+                                        única mensagem:
+                                        "HH:MM veículo observações (opcional)"
+                                        Exemplos:
+                                        - 09:30 moto 3 caixas pequenas
+                                        - 14:00 carro</div>
+                                </div>
+                            </div>
+                            <article class="message is-warning is-size-7 mt-3">
+                                <div class="message-body">⚠️ Após 3 tentativas inválidas, o bot encerra o atendimento. O
+                                    cliente precisa enviar "oi" para recomeçar.</div>
+                            </article>
+                        </div>
+
+                        <hr />
+
+                        <!-- ERROS -->
+                        <div id="erros" class="section-anchor mb-5">
+                            <h2 class="title is-5">Referência de erros</h2>
+                            <p class="is-size-7 mb-3">O que o bot diz, o que significa e o que orientar ao cliente.</p>
+
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th style="width:34%">Mensagem do bot</th>
+                                        <th>Causa</th>
+                                        <th>Ação de suporte</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><em>🤖 Oi! Já fomos apresentados? Acho que não te conheço ainda. Desculpa,
+                                                mas eu não posso falar com estranhos. 😎</em></td>
+                                        <td>Número não cadastrado na base MeusCorreios.</td>
+                                        <td>Cadastrar o número do cliente na agência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>😢 Ops! Desculpe, [nome]! Não consegui identificar o seu número de
+                                                telefone no meu cadastro. Por favor, entre em contato com a sua agência
+                                                de correios e depois tente novamente. Obrigado! 👋🤖</em></td>
+                                        <td>Número não encontrado após nova tentativa de login.</td>
+                                        <td>Verificar cadastro na agência e pedir nova tentativa.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>😢 Entendo que você queira agendar uma coleta. No momento você não tem
+                                                permissão para solicitar coleta pelo app. Por favor, entre em contato
+                                                com a sua agência e peça para liberarem o uso.</em></td>
+                                        <td>Permissão de coleta não habilitada no cadastro (erro 91).</td>
+                                        <td>Habilitar permissão de coleta no cadastro do cliente na agência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>Já existe uma coleta programada para hoje neste endereço. Entre em
+                                                contato com a agência para mais informações.</em></td>
+                                        <td>Coleta duplicada no mesmo dia (erro 94).</td>
+                                        <td>Informar ao cliente que já há coleta agendada hoje. Para cancelar, atender
+                                            pela agência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>⚠️ Horário fora do limite permitido. Por favor, tente novamente:</em>
+                                        </td>
+                                        <td>Horário fora da janela aceita pelo sistema (erro 95) — no celular, reabre o
+                                            formulário.</td>
+                                        <td>Orientar o cliente a tentar um horário diferente. Consultar a agência sobre
+                                            a janela disponível.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>⚠️ Horário fora do limite permitido. Envie novamente: HH:MM veículo
+                                                observações</em></td>
+                                        <td>Mesmo erro 95 pelo caminho de texto (Android antigo, iPad ou qualquer
+                                            cliente que não renderizou o formulário).</td>
+                                        <td>Orientar o cliente a reenviar a mensagem com um horário dentro da janela.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>A coleta não pode ser agendada neste momento. Verifique os horários
+                                                permitidos com a agência e tente novamente.</em></td>
+                                        <td>Dia ou horário não permitido (erro 97).</td>
+                                        <td>Consultar a agência sobre dias e horários de coleta disponíveis.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>Não consegui agendar com o endereço selecionado (ele pode ter mudado).
+                                                Vamos recomeçar: envie "oi" para tentar a coleta novamente.</em></td>
+                                        <td>Endereço selecionado obsoleto ou inválido (erro 92/93 em seleção prévia).
+                                        </td>
+                                        <td>Pedir ao cliente para enviar "oi" e tentar novamente — o bot buscará
+                                            endereços atualizados. Se persistir, verificar o cadastro na agência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>😱 Sua busca ainda está retornando mais de 10 objetos. Recomece
+                                                novamente, tente refinar ainda mais a sua busca. Se já refinou ao
+                                                máximo, acesse o www.meuscorreios.com.br…</em></td>
+                                        <td>Busca retornou mais de 10 resultados e o cliente não conseguiu refinar.</td>
+                                        <td>Pedir ao cliente para tentar novamente com uma busca nova e mais específica. <strong>A busca não é acumulativa</strong> — cada tentativa começa do zero, com todos os filtros de uma vez. Para listas grandes, indicar www.meuscorreios.com.br.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>😔 Não encontrei nenhum objeto com os filtros informados.</em></td>
+                                        <td>Nenhum resultado para os dados enviados (caminho individual).</td>
+                                        <td>Verificar com o cliente: rastreamento correto? Data correta? Nome com
+                                            acentos corretos? CEP correto? Lembrar que o bot apenas busca objetos do
+                                            próprio cliente, enviados via MeusCorreios. Objetos que o cliente está
+                                            aguardando receber não aparecem nos resultados.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>Não foi possível calcular o frete. Por favor, tente novamente mais tarde
+                                                ou entre em contato com a sua agência.</em></td>
+                                        <td>Erro temporário na API de cotação.</td>
+                                        <td>Pedir para tentar novamente em alguns minutos. Se persistir, atender pelo
+                                            canal da agência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>Não consegui entender após 3 tentativas. O atendimento será encerrado.
+                                                Quando quiser tentar novamente, envie 'oi' para recomeçar. Se precisar
+                                                de ajuda, entre em contato com sua agência dos Correios.</em></td>
+                                        <td>Cliente não conseguiu digitar o formato de coleta por texto em 3 tentativas.
+                                        </td>
+                                        <td>Orientar o cliente a enviar "oi" e reenviar no formato correto: <code>HH:MM
+                                                moto observações</code>.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr />
+
+                        <!-- LIMITAÇÕES -->
+                        <div id="limitacoes" class="section-anchor mb-5">
+                            <h2 class="title is-5">O que o bot não faz</h2>
+                            <ul class="content is-size-7">
+                                <li><strong>Não cancela coleta</strong> — cancelamento é feito pela agência.</li>
+                                <li><strong>Não altera endereço de cadastro</strong> — mudança feita na agência.</li>
+                                <li><strong>Não abre reclamações</strong> — usar o site dos Correios ou 0800.</li>
+                                <li><strong>Não atualiza endereço de entrega</strong> de objeto já postado.</li>
+                                <li><strong>Não recebe imagens ou documentos</strong> do cliente — aceita apenas texto e
+                                    toques em botões.</li>
+                                <li><strong>Não emite AR avulso</strong> — AR é um adicional contratado na cotação.</li>
+                            </ul>
+                        </div>
+
+                        <hr />
+
+                        <!-- FAQ -->
+                        <div id="faq" class="section-anchor mb-5">
+                            <h2 class="title is-5">FAQ de suporte</h2>
+                            <p class="is-size-7 has-text-grey mb-3">Dúvidas comuns recebidas pelo suporte e o que
+                                responder.</p>
+
+                            <div class="content is-size-7">
+
+                                <p><strong>O cliente diz que o bot não responde mais.</strong><br />
+                                    A sessão encerra automaticamente após 15 minutos de inatividade. Pedir ao cliente
+                                    para enviar "oi" e recomeçar.</p>
+
+                                <p><strong>O botão de coleta não aparece no menu do cliente.</strong><br />
+                                    A permissão de coleta não está habilitada. Habilitar no cadastro do cliente na
+                                    agência.</p>
+
+                                <p><strong>O formulário de coleta não abre.</strong><br />
+                                    WhatsApp Desktop para Mac não suporta o formulário. Android abaixo de 6.0, iPad e softwares de atendimento (Digisac, ikatec, Zenvia, etc.) também podem não exibir. Em todos esses casos, orientar o cliente a enviar os dados por texto: <code>HH:MM veículo observações</code>. Ver seção <a href="#dispositivos">Compatibilidade</a>.
+                                </p>
+
+                                <p><strong>O cliente não está conseguindo rastrear o objeto.</strong><br />
+                                    Verificar: (1) o número de rastreamento está correto? (2) a busca tem pelo menos um
+                                    número de rastreamento ou uma data? (3) se o filtro de nome tem acento errado? Pedir
+                                    para o cliente enviar só o número de rastreamento isolado como teste.</p>
+
+                                <p><strong>O comprovante eletrônico não apareceu.</strong><br />
+                                    A imagem só é carregada quando a busca retorna exatamente 1 objeto. Se a busca retornou 2 ou mais, orientar o cliente a pesquisar só o número de rastreamento. Se já era 1 resultado e mesmo assim não veio imagem, pode ser limitação da região de entrega ou falha pontual da API dos Correios — neste caso, vale tentar novamente.</p>
+
+                                <p><strong>O cliente diz que agendou a coleta mas ninguém foi buscar.</strong><br />
+                                    O bot confirma o agendamento no sistema. Verificar se a coleta está registrada e
+                                    acionar a operação da agência.</p>
+
+                                <p><strong>O bot respondeu com erro ao solicitar cotação.</strong><br />
+                                    Pedir para o cliente verificar o formato (CEP + dimensões + peso numa mensagem só) e
+                                    tentar novamente. Se o erro persistir, atender pela agência.</p>
+
+                            </div>
+                        </div>
+
+                    </div><!-- /column content -->
+                </div><!-- /columns -->
+            </div><!-- /container -->
+        </section>
+    </div><!-- /navbar padding -->
+
+    <footer class="footer py-4">
+        <div class="content has-text-centered is-size-7 has-text-grey">
+            MeusCorreios Chatbot — Guia de Suporte Interno
+        </div>
+    </footer>
+
+</body>
+
+</html>

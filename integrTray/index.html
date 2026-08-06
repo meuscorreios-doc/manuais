@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integração Tray x MeusCorreios — Manual de Configuração</title>
+    <style>
+/* Manual MeusCorreios — estilo Guia de Suporte */
+:root {
+    color-scheme: light;
+    --main: #ffffff;
+    --main-bis: #fafafa;
+    --text: #363636;
+    --text-strong: #222222;
+    --background: #f5f5f5;
+    --border: #dbdbdb;
+    --link: #3273dc;
+    --blue-soft: #dbeafe;
+    --blue-line: #bdd4f3;
+    --green-soft: #e9fbe6;
+    --green-line: #c3e6c0;
+    --warning-soft: #fff8dc;
+    --warning-line: #ffdd57;
+    --success-soft: #effaf3;
+    --success-line: #48c774;
+    --danger-soft: #feecf0;
+    --danger-line: #f14668;
+    --grey-soft: #f5f5f5;
+    --mono-bg: #f1f5f9;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    background: #fafafa;
+    padding-bottom: 4rem;
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.navbar {
+    min-height: 3.25rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.navbar-brand { display: flex; align-items: center; min-width: 0; }
+.navbar-item {
+    color: #4a4a4a;
+    display: flex;
+    align-items: center;
+    padding: .5rem .75rem;
+    line-height: 1.5;
+}
+.navbar-title {
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.navbar-menu { margin-left: auto; display: flex; }
+.navbar-end { display: flex; align-items: stretch; }
+.navbar-end .navbar-item.is-current { color: #3273dc; font-weight: 700; }
+.page-offset { padding-top: 3.5rem; }
+.section { padding: 2rem 1.5rem; }
+.container { width: 100%; max-width: 1180px; margin: 0 auto; }
+.columns { display: flex; align-items: flex-start; gap: 1.5rem; }
+.column { flex: 1 1 0; min-width: 0; }
+.column.is-narrow { flex: none; }
+.sidebar-column { min-width: 245px; max-width: 245px; width: 245px; flex: 0 0 245px; }
+.menu { font-size: .875rem; }
+.sidebar-fixed {
+    position: fixed;
+    top: 4.75rem;
+    width: 225px;
+    max-height: calc(100vh - 5.5rem);
+    overflow-y: auto;
+    padding-right: .35rem;
+}
+.menu-label {
+    color: #7a7a7a;
+    font-size: .75rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 0 0 .75rem;
+}
+.menu-list,
+.menu-list ul { list-style: none; margin: 0; padding: 0; }
+.menu-list a {
+    color: #363636;
+    border-radius: 4px;
+    display: block;
+    padding: .5em .75em;
+}
+.menu-list a:hover { background: #f5f5f5; text-decoration: none; }
+.menu-list ul { margin-left: .75rem; padding-left: .75rem; border-left: 1px solid #ededed; }
+.sidebar-fixed::-webkit-scrollbar { width: 6px; }
+.sidebar-fixed::-webkit-scrollbar-thumb { background: #d7dee7; border-radius: 999px; }
+.sidebar-fixed .menu-list a.is-current {
+    background: #e8f0fe;
+    color: #1d4e89;
+    font-weight: 700;
+    border-left: 4px solid #3273dc;
+    padding-left: calc(.75em - 4px);
+}
+.sidebar-fixed .menu-list a.is-parent-current { color: #1d4e89; font-weight: 600; }
+.section-anchor { scroll-margin-top: 4.2rem; }
+.block { margin-bottom: 1rem; }
+.mb-1 { margin-bottom: .25rem !important; }
+.mb-2 { margin-bottom: .5rem !important; }
+.mb-3 { margin-bottom: .75rem !important; }
+.mb-4 { margin-bottom: 1rem !important; }
+.mb-5 { margin-bottom: 1.5rem !important; }
+.mt-2 { margin-top: .5rem !important; }
+.mt-3 { margin-top: .75rem !important; }
+.mt-4 { margin-top: 1rem !important; }
+.mt-5 { margin-top: 1.5rem !important; }
+.py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+.title { color: #363636; font-weight: 700; line-height: 1.125; margin: 0 0 1rem; }
+.title.is-4 { font-size: 1.5rem; }
+.title.is-5 { font-size: 1.25rem; }
+.title.is-6 { font-size: 1rem; }
+.subtitle { color: #4a4a4a; font-size: 1rem; margin-top: -.5rem; margin-bottom: 1rem; }
+.content p { margin-top: 0; margin-bottom: .75rem; }
+.content ul,
+.content ol { margin-top: .5rem; margin-bottom: 1rem; padding-left: 1.25rem; }
+.content ul li,
+.content ol li { margin-bottom: .3rem; }
+.is-size-7 { font-size: .875rem !important; }
+.is-size-6 { font-size: 1rem !important; }
+.has-text-weight-semibold { font-weight: 600 !important; }
+.has-text-grey { color: #7a7a7a !important; }
+.has-text-centered { text-align: center !important; }
+hr { background: #ededed; border: none; display: block; height: 1px; margin: 1.5rem 0; }
+.notification,
+.message {
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+.notification {
+    background: #f5f5f5;
+    padding: 1rem 1.25rem;
+}
+.notification.is-light { background: #f5f5f5; color: #363636; }
+.notification.is-info { background: #eef6fc; border-left: 4px solid #3273dc; }
+.message { background: #f5f5f5; }
+.message-body {
+    border-left: 4px solid #dbdbdb;
+    padding: 1em 1.25em;
+}
+.message.is-info .message-body { border-left-color: #3273dc; background: #eef6fc; }
+.message.is-warning .message-body { border-left-color: #ffdd57; background: #fffbeb; }
+.message.is-success .message-body { border-left-color: #48c774; background: #effaf3; }
+.message.is-danger .message-body { border-left-color: #f14668; background: #feecf0; }
+.table {
+    background: #fff;
+    color: #363636;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.table.is-bordered td,
+.table.is-bordered th { border: 1px solid #dbdbdb; }
+.table th,
+.table td { padding: .5em .75em; vertical-align: middle; }
+.table thead th {
+    background: #f5f5f5;
+    color: #363636;
+    font-weight: 700;
+}
+.table code,
+code {
+    background: var(--mono-bg);
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    color: #111827;
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: .92em;
+    padding: .08em .35em;
+}
+.tag {
+    align-items: center;
+    border-radius: 9999px;
+    display: inline-flex;
+    font-size: .75rem;
+    height: 1.7em;
+    justify-content: center;
+    line-height: 1.5;
+    padding: .1em .65em;
+    white-space: nowrap;
+    background: #eef6fc;
+    color: #1d4e89;
+    margin: 0 .25rem .25rem 0;
+}
+.tag.is-mono { font-family: Consolas, Monaco, 'Courier New', monospace; }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.info-card {
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    background: #ffffff;
+    padding: .9rem 1rem;
+}
+.info-card .label { color: #7a7a7a; display: block; font-size: .75rem; margin-bottom: .25rem; }
+.steps { counter-reset: step; list-style: none; padding-left: 0; margin: .5rem 0 1rem; }
+.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding: .85rem 1rem .85rem 3rem;
+    margin-bottom: .65rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    background: #ffffff;
+}
+.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: .85rem;
+    top: .85rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #3273dc;
+    color: #fff;
+    font-weight: 700;
+    font-size: .8rem;
+}
+.steps li ul { margin: .45rem 0 0; padding-left: 1.1rem; }
+.screenshot {
+    margin: 1rem 0;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: .75rem;
+}
+.screenshot img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 0 auto;
+}
+.screenshot figcaption {
+    color: #7a7a7a;
+    font-size: .75rem;
+    margin-top: .5rem;
+    text-align: center;
+}
+.footer { background: #fafafa; padding: 1rem 1.5rem; }
+.checklist { list-style: none; padding-left: 0; }
+.checklist li { margin-bottom: .45rem; padding-left: 1.4rem; position: relative; }
+.checklist li::before { content: "✅"; position: absolute; left: 0; top: 0; font-size: .9em; }
+.bad-example { background:#fff5f5; border-color:#fecaca; }
+.good-example { background:#f0fff4; border-color:#bbf7d0; }
+.copy-row { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin:.5rem 0; }
+.copy-row code { font-size:.9rem; }
+.copy-btn {
+    border:1px solid #dbdbdb;
+    background:#fff;
+    color:#3273dc;
+    border-radius:4px;
+    padding:.32rem .55rem;
+    cursor:pointer;
+    font-size:.78rem;
+}
+.copy-btn:hover { background:#f5f5f5; }
+.flow {
+    display:grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap:.75rem;
+    margin: 1rem 0;
+}
+.flow-step {
+    border:1px solid #dbdbdb;
+    border-radius:8px;
+    background:#fff;
+    padding:.85rem;
+    min-height: 95px;
+    position: relative;
+}
+.flow-step strong { display:block; margin-bottom:.25rem; }
+.flow-step span { color:#7a7a7a; font-size:.78rem; }
+.flow-step::after {
+    content:"→";
+    position:absolute;
+    right:-.62rem;
+    top:50%;
+    transform:translateY(-50%);
+    color:#3273dc;
+    font-weight:700;
+    background:#fafafa;
+}
+.flow-step:last-child::after { content:""; }
+.kbd {
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    border:1px solid #cbd5e1;
+    border-bottom-width:2px;
+    background:#fff;
+    border-radius:4px;
+    padding:.06rem .35rem;
+    font-size:.82em;
+}
+@media (max-width: 900px) {
+    .navbar-menu { display: none; }
+    .columns { display: block; }
+    .is-hidden-mobile { display: none !important; }
+    .section { padding-left: 1rem; padding-right: 1rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: 1fr; }
+    .flow-step::after { display:none; }
+}
+@media print {
+    .navbar, aside.menu, .copy-btn { display: none !important; }
+    .page-offset { padding-top: 0; }
+    body { background: white; }
+    a { color: inherit; text-decoration: none; }
+    .screenshot, .info-card, .flow-step { break-inside: avoid; }
+}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar is-white is-fixed-top" role="navigation">
+        <div class="navbar-brand">
+            <span class="navbar-item navbar-title">📦 Integração Tray x MeusCorreios — Manual de Configuração</span>
+        </div>
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#sobre">Sobre</a>
+                <a class="navbar-item is-size-7" href="#dominio">Domínio</a>
+                <a class="navbar-item is-size-7" href="#code">Code</a>
+                <a class="navbar-item is-size-7" href="#meuscorreios">Configuração</a>
+                <a class="navbar-item is-size-7" href="#prepostagem">Pré-postagem</a>
+                <a class="navbar-item is-size-7" href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+
+                    <div class="column is-narrow is-hidden-mobile sidebar-column">
+                        <aside class="menu sidebar-fixed" style="font-size:0.82rem;">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#sobre">Sobre este manual</a></li>
+                                <li><a href="#requisitos">Pré-requisitos</a></li>
+                                <li><a href="#visao-geral">Fluxo da integração</a></li>
+                                <li><a href="#dominio">Encontrar o domínio da Tray</a></li>
+                                <li><a href="#code">Gerar o Code na Tray</a></li>
+                                <li><a href="#meuscorreios">Configurar no MeusCorreios</a>
+                                    <ul>
+                                        <li><a href="#campos-status">Campos e status</a></li>
+                                        <li><a href="#confirmar-integracao">Salvar configuração</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#prepostagem">Gerar pré-postagens</a>
+                                    <ul>
+                                        <li><a href="#buscar-pedidos">Buscar pedidos</a></li>
+                                        <li><a href="#opcoes-importacao">Opções de importação</a></li>
+                                        <li><a href="#marcar-pedidos">Selecionar pedidos</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#servicos">Selecionar serviços e etiquetas</a></li>
+                                <li><a href="#checklist">Checklist final</a></li>
+                                <li><a href="#faq">FAQ de suporte</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <div class="column">
+
+                        <div id="sobre" class="section-anchor mb-5">
+                            <h1 class="title is-4">Integração Tray x MeusCorreios — Manual de Configuração</h1>
+                            <p class="block is-size-7">
+                                Este manual orienta como configurar a integração da Tray no MeusCorreios, gerar o <strong>Code</strong> de autorização nos aplicativos de parceiros da Tray e importar pedidos para criação de pré-postagens.
+                            </p>
+                            <div class="notification is-info is-size-7">
+                                A integração depende de três etapas principais: localizar o domínio correto da loja Tray, autorizar o aplicativo MeusCorreios para gerar o <strong>Code</strong> e preencher os campos da integração no remetente do MeusCorreios.
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div id="requisitos" class="section-anchor mb-5">
+                            <h2 class="title is-5">Pré-requisitos</h2>
+                            <ul class="content is-size-7">
+                                <li>Acesso ao painel da loja Tray com permissão para visualizar o domínio e autorizar aplicativos.</li>
+                                <li>Acesso ao MeusCorreios com permissão para editar <strong>Configurações</strong> e <strong>Integrações</strong> do remetente.</li>
+                                <li>Remetente já cadastrado no MeusCorreios.</li>
+                                <li>Status da Tray definidos para importação, envio e entrega dos pedidos.</li>
+                                <li>Pedidos disponíveis na Tray para teste após finalizar a configuração.</li>
+                            </ul>
+                        </div>
+
+                        <hr>
+
+                        <div id="visao-geral" class="section-anchor mb-5">
+                            <h2 class="title is-5">Fluxo resumido da integração</h2>
+                            <div class="flow is-size-7">
+                                <div class="flow-step"><strong>1. Domínio</strong><span>Copiar o domínio correto da loja Tray, sem <code>https://</code> e sem caminhos.</span></div>
+                                <div class="flow-step"><strong>2. Code</strong><span>Autorizar o aplicativo MeusCorreios na Tray e copiar o Code gerado.</span></div>
+                                <div class="flow-step"><strong>3. Status</strong><span>Carregar a lista de status disponíveis e definir quando buscar, enviar e entregar.</span></div>
+                                <div class="flow-step"><strong>4. Pré-postagem</strong><span>Importar pedidos Tray e gerar etiquetas/listas no MeusCorreios.</span></div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div id="dominio" class="section-anchor mb-5">
+                            <h2 class="title is-5">1. Como encontrar e preencher o domínio da loja Tray</h2>
+                            <p class="is-size-7 block">
+                                O campo <strong>Domínio da Loja</strong> deve receber apenas o endereço principal da loja Tray. Não informe o protocolo <code>https://</code>, não inclua barras no final e não adicione caminhos como <code>/web_api</code>.
+                            </p>
+
+                            <ol class="steps is-size-7">
+                                <li>Acesse o painel administrativo da Tray.</li>
+                                <li>No menu da Tray, entre em <strong>Minha Loja</strong> e depois em <strong>Domínio da Loja</strong>.</li>
+                                <li>Se aparecer mais de um domínio, utilize o domínio que estiver com a descrição <strong>PAGO</strong>.</li>
+                                <li>Copie o domínio da loja e ajuste antes de colar no MeusCorreios.</li>
+                            </ol>
+
+                            <div class="card-grid is-size-7">
+                                <div class="info-card bad-example">
+                                    <span class="label">Não preencher assim</span>
+                                    <code>https://trayparceiros.commercesuite.com.br/web_api</code>
+                                    <p class="mb-0 mt-2">Contém protocolo e caminho, por isso não deve ser usado no campo de domínio.</p>
+                                </div>
+                                <div class="info-card good-example">
+                                    <span class="label">Preencher assim</span>
+                                    <div class="copy-row">
+                                        <code id="dominio-exemplo">trayparceiros.commercesuite.com.br</code>
+                                        <button class="copy-btn" type="button" data-copy="trayparceiros.commercesuite.com.br">Copiar exemplo</button>
+                                    </div>
+                                    <p class="mb-0 mt-2">Use somente o domínio, sem <code>https://</code>, sem barras e sem complementos.</p>
+                                </div>
+                            </div>
+
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">
+                                    ⚠️ Se o domínio for preenchido com <code>https://</code>, <code>http://</code>, <code>/web_api</code> ou barra no final, a autorização pode falhar ou a lista de status pode não carregar corretamente.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="code" class="section-anchor mb-5">
+                            <h2 class="title is-5">2. Como gerar o Code da Tray para o MeusCorreios</h2>
+                            <p class="is-size-7 block">
+                                No passo anterior você já acessou a tela da integração Tray dentro do MeusCorreios e preencheu o <strong>Domínio da Loja</strong>. Agora, o próximo passo é clicar em <strong>Autorizar MeusCorreios</strong> para abrir a autorização na Tray e gerar o <strong>Code</strong> que será colado no campo <strong>Code</strong> da integração.
+                            </p>
+
+                            <figure class="screenshot mb-4">
+                                <video controls loop muted playsinline preload="metadata" style="width:100%; border-radius:14px; display:block; background:#000;">
+                                    <source src="assets/chegando-integracao-tray.mp4" type="video/mp4">
+                                    Seu navegador não conseguiu carregar o vídeo. Abra o arquivo <strong>chegando-integracao-tray.mp4</strong> dentro da pasta <strong>assets</strong>.
+                                </video>
+                                <figcaption>Exemplo visual do caminho no MeusCorreios até a tela da integração. Use esse fluxo para chegar ao botão <strong>Autorizar MeusCorreios</strong>.</figcaption>
+                            </figure>
+
+                            <ol class="steps is-size-7">
+                                <li>No MeusCorreios, acesse o remetente que será usado e abra a tela de <strong>Integrações</strong> conforme mostrado acima.</li>
+                                <li>Na linha da integração <strong>Tray</strong>, confirme que o campo <strong>Domínio da Loja HTTPS://</strong> está preenchido somente com o domínio, por exemplo: <code>trayparceiros.commercesuite.com.br</code>.</li>
+                                <li>Clique em <strong>Autorizar MeusCorreios</strong>.</li>
+                                <li>Se a Tray solicitar login, entre com o usuário administrador da loja.</li>
+                                <li>A Tray abrirá a tela <strong>Meus aplicativos</strong>, na área de autorização do aplicativo <strong>MeusCorreios</strong>.</li>
+                                <li>Na seção <strong>Dados da autorização</strong>, confira se o aplicativo exibido é realmente o <strong>MeusCorreios</strong>.</li>
+                                <li>Copie o valor exibido no campo <strong>Code</strong>.</li>
+                                <li>Volte ao MeusCorreios e cole esse valor no campo <strong>Code</strong> da integração.</li>
+                            </ol>
+
+                            <article class="message is-link is-light is-size-7 mb-4">
+                                <div class="message-body">
+                                    <strong>Dica:</strong> Se o MeusCorreios não aparecer na tela de aplicativos, entre em contato com o suporte da Tray solicitando a liberação do MeusCorreios na sua tela de aplicativos.
+                                </div>
+                            </article>
+							<article class="message is-info is-size-7">
+                                <div class="message-body">
+                                    💡 A URL exibida na tela da Tray pode aparecer com <code>/web_api</code>. Essa URL serve apenas como referência da autorização. No MeusCorreios, o campo <strong>Domínio da Loja</strong> continua recebendo somente o domínio, sem <code>/web_api</code>.
+                                </div>
+                            </article>
+                        </div>
+                        <hr>
+
+                        <div id="meuscorreios" class="section-anchor mb-5">
+                            <h2 class="title is-5">3. Configurar a integração Tray no MeusCorreios</h2>
+                            <p class="is-size-7 block">
+                                Como o caminho até a tela da integração e a geração do <strong>Code</strong> já foram explicados no passo anterior, aqui o foco é apenas finalizar o preenchimento dos campos e salvar a integração no MeusCorreios.
+                            </p>
+
+                            <ol class="steps is-size-7">
+                                <li>Volte para a tela da integração <strong>Tray</strong> no MeusCorreios.</li>
+                                <li>Confira se o campo <strong>Domínio da Loja</strong> permanece preenchido apenas com o domínio, sem <code>https://</code>.</li>
+                                <li>Cole no campo <strong>Code</strong> o código gerado na Tray.</li>
+                                <li>Clique em <strong>Lista de Status Disponíveis</strong> para carregar os status cadastrados na loja.</li>
+                                <li>Preencha os campos de status conforme a regra da sua operação.</li>
+                                <li>Defina se o rastreamento deve ser atualizado automaticamente no pedido da Tray.</li>
+                                <li>Revise os demais campos opcionais, como a forma de trazer a referência do pedido.</li>
+                                <li>Clique em <strong>Confirmar</strong> para salvar a integração.</li>
+                            </ol>
+                        </div>
+                        <div id="campos-status" class="section-anchor mb-5">
+                            <h3 class="title is-6">Campos da tela de integração</h3>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th>Campo</th>
+                                        <th>O que informar</th>
+                                        <th>Observação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Domínio da Loja HTTPS://</strong></td>
+                                        <td>Domínio principal da loja Tray, sem protocolo.</td>
+                                        <td>Exemplo: <code>trayparceiros.commercesuite.com.br</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Code</strong></td>
+                                        <td>Código gerado após autorizar o MeusCorreios nos aplicativos de parceiros da Tray.</td>
+                                        <td>Copie o valor completo do campo <strong>Code</strong>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Buscar Pedidos com Status</strong></td>
+                                        <td>Status dos pedidos que o MeusCorreios deverá buscar na Tray.</td>
+                                        <td>Use o status equivalente a pedido liberado/aprovado para envio.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status "Enviado"</strong></td>
+                                        <td>Status que será enviado para a Tray quando a Lista de Postagem for gerada.</td>
+                                        <td>Normalmente usado para indicar que o pedido foi enviado/postado.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Atualiza Rastreamento</strong></td>
+                                        <td>Marque se o código de rastreamento deve ser atualizado no pedido da Tray.</td>
+                                        <td>O código usado é o número da etiqueta gerada na pré-postagem.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status "Entregue"</strong></td>
+                                        <td>Status que será enviado para a Tray quando o rastreamento identificar a entrega do objeto.</td>
+                                        <td>Depende do acompanhamento de rastreamento no MeusCorreios.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Trazer como NF/Pedido</strong></td>
+                                        <td>Define se a referência principal importada será tratada como Nota Fiscal ou Pedido.</td>
+                                        <td>Escolha conforme a forma como a operação identifica os pedidos.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="confirmar-integracao" class="section-anchor mb-5">
+                            <article class="message is-success is-size-7">
+                                <div class="message-body">
+                                    ✅ Depois de preencher os campos, clique em <strong>Confirmar</strong>. Em seguida, faça um teste importando poucos pedidos para validar se domínio, Code e status foram configurados corretamente.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="prepostagem" class="section-anchor mb-5">
+                            <h2 class="title is-5">4. Geração de pré-postagens de pedidos Tray</h2>
+                            <p class="is-size-7 block">
+                                Após salvar a integração, os pedidos da Tray podem ser importados para o módulo de <strong>Pré-postagem</strong> do MeusCorreios.
+                            </p>
+
+                            <div id="buscar-pedidos" class="section-anchor">
+                                <h3 class="title is-6">4.1 Acessar o lote e buscar os pedidos</h3>
+                                <ol class="steps is-size-7">
+                                    <li>Entre no módulo <strong>Pré-postagem</strong> do MeusCorreios.</li>
+                                    <li>Crie um novo lote ou abra um lote já existente.</li>
+                                    <li>Ao criar um novo lote, selecione a opção <strong>Integração Tray</strong>.</li>
+                                    <li>Se estiver usando um lote já existente, selecione a opção <strong>Integra / Tray</strong>.</li>
+                                    <li>Execute a integração para listar os pedidos disponíveis conforme o status configurado.</li>
+                                </ol>
+                            </div>
+
+                            <div id="opcoes-importacao" class="section-anchor">
+                                <h3 class="title is-6">4.2 Revisar as opções de importação</h3>
+                                <p class="is-size-7 block">Antes de gerar as pré-postagens, revise como os pedidos devem ser tratados:</p>
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <thead>
+                                        <tr>
+                                            <th>Opção</th>
+                                            <th>Quando usar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Desconsiderar pedidos já incluídos no lote</strong></td>
+                                            <td>Evita duplicidade quando um pedido já foi importado anteriormente.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Incluir AR nas postagens</strong></td>
+                                            <td>Use quando a operação exige Aviso de Recebimento.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Considerar valor do pedido como Valor Declarado</strong></td>
+                                            <td>Use quando o valor do pedido deve ser levado para a postagem como valor declarado.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Criar Declaração de Conteúdo</strong></td>
+                                            <td>Gera a declaração com base nos itens de cada pedido importado da Tray.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <article class="message is-info is-size-7">
+                                    <div class="message-body">
+                                        Essas preferências também podem ser deixadas como padrão em <strong>Configurações &gt; Importações e Integrações</strong>, conforme o comportamento desejado para as integrações.
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div id="marcar-pedidos" class="section-anchor">
+                                <h3 class="title is-6">4.3 Filtrar, selecionar e gerar as pré-postagens</h3>
+                                <ol class="steps is-size-7">
+                                    <li>Use os filtros disponíveis para localizar pedidos por <strong>Destinatário</strong>, <strong>Serviço</strong> ou <strong>Faixa de Pedido</strong>.</li>
+                                    <li>Marque os pedidos que serão postados.</li>
+                                    <li>Use o quadrinho do cabeçalho para marcar ou desmarcar todos os pedidos da página atual.</li>
+                                    <li>Se houver várias páginas, avance normalmente: os pedidos já marcados permanecem selecionados.</li>
+                                    <li>Deixe desmarcados os pedidos que não devem ser postados.</li>
+                                    <li>Clique em <strong>Gerar Pré-Postagem de Todos os Marcados</strong>.</li>
+                                </ol>
+                            </div>
+
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">
+                                    ⚠️ Se o serviço de entrega já vier definido no pedido Tray, cadastre a correspondência no <strong>Dicionário de Serviços</strong>. Assim o MeusCorreios consegue converter o serviço da loja para o código correto de postagem.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="servicos" class="section-anchor mb-5">
+                            <h2 class="title is-5">5. Selecionar serviços e definir as etiquetas</h2>
+                            <p class="is-size-7 block">
+                                Depois de gerar os destinatários no lote, defina os serviços de postagem antes de imprimir as etiquetas e listas.
+                            </p>
+                            <ol class="steps is-size-7">
+                                <li>Entre em <strong>Atribui Serviços</strong> ou <strong>Define Serviços</strong>.</li>
+                                <li>Escolha um serviço preferencial para envio dos objetos, por exemplo <strong>PAC</strong>.</li>
+                                <li>Escolha um serviço alternativo para quando o serviço preferencial não tiver abrangência, por exemplo <strong>SEDEX</strong>.</li>
+                                <li>Clique em <strong>Atribuir Serviços</strong>.</li>
+                                <li>Confira se todos os objetos ficaram com serviço definido.</li>
+                                <li>Imprima as etiquetas e as Listas de Postagem.</li>
+                                <li>Após a emissão, acompanhe a coleta/postagem conforme a rotina da agência.</li>
+                            </ol>
+                        </div>
+
+                        <hr>
+
+                        <div id="checklist" class="section-anchor mb-5">
+                            <h2 class="title is-5">Checklist final de validação</h2>
+                            <ul class="checklist is-size-7">
+                                <li>O domínio foi preenchido sem <code>https://</code>, sem <code>/web_api</code> e sem barra no final.</li>
+                                <li>O domínio usado é o domínio com descrição <strong>PAGO</strong> na Tray, quando houver mais de um.</li>
+                                <li>O aplicativo <strong>MeusCorreios</strong> foi autorizado na Tray.</li>
+                                <li>O campo <strong>Code</strong> do MeusCorreios recebeu o código gerado na tela <strong>Meus aplicativos</strong>.</li>
+                                <li>A <strong>Lista de Status Disponíveis</strong> carregou corretamente.</li>
+                                <li>Os campos de buscar pedidos, enviado e entregue foram preenchidos com status válidos da Tray.</li>
+                                <li>A opção <strong>Atualiza Rastreamento</strong> foi marcada ou desmarcada conforme a regra da operação.</li>
+                                <li>Foi realizado um teste com poucos pedidos antes de iniciar a operação em volume.</li>
+                            </ul>
+                        </div>
+
+                        <hr>
+
+                        <div id="faq" class="section-anchor mb-5">
+                            <h2 class="title is-5">FAQ de suporte</h2>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th>Dúvida / Situação</th>
+                                        <th>Como orientar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>O cliente colou o domínio com HTTPS.</strong></td>
+                                        <td>Remova <code>https://</code> ou <code>http://</code> e deixe apenas o domínio, por exemplo <code>trayparceiros.commercesuite.com.br</code>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Há mais de um domínio na Tray.</strong></td>
+                                        <td>Use o domínio que aparece com a descrição <strong>PAGO</strong> em <strong>Minha Loja &gt; Domínio da Loja</strong>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>O Code não aparece.</strong></td>
+                                        <td>Oriente o cliente a clicar novamente em <strong>Autorizar MeusCorreios</strong>, fazer login na Tray e verificar a tela <strong>Meus aplicativos</strong>. Também vale liberar pop-ups no navegador.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>A lista de status não carrega.</strong></td>
+                                        <td>Verifique se o domínio está sem protocolo/caminho, se o Code foi copiado completo e se o aplicativo foi autorizado na loja correta.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Os pedidos não aparecem na pré-postagem.</strong></td>
+                                        <td>Confira o campo <strong>Buscar Pedidos com Status</strong>. O pedido precisa estar na Tray com um dos status configurados para busca.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>O serviço não foi atribuído automaticamente.</strong></td>
+                                        <td>Cadastre a correspondência no <strong>Dicionário de Serviços</strong> ou deixe o MeusCorreios atribuir o serviço em <strong>Atribui Serviços / Define Serviços</strong>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>O rastreamento não atualizou na Tray.</strong></td>
+                                        <td>Confira se a opção <strong>Atualiza Rastreamento</strong> está marcada e se o pedido passou pela etapa de geração de etiqueta/lista conforme o fluxo operacional.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr>
+
+                        <footer class="footer py-4">
+        <div class="content has-text-centered is-size-7 has-text-grey">
+            Integração Tray x MeusCorreios — Manual de Configuração
+        </div>
+    </footer>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+(function () {
+    const links = Array.from(document.querySelectorAll('aside.menu a[href^="#"], .navbar-end a[href^="#"]'));
+    const sections = links
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+    function setCurrent() {
+        let current = sections[0];
+        const offset = 120;
+        for (const section of sections) {
+            const top = section.getBoundingClientRect().top;
+            if (top <= offset) current = section;
+        }
+        const currentId = current ? '#' + current.id : '';
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            link.classList.toggle('is-current', href === currentId);
+            link.classList.remove('is-parent-current');
+            if (href !== currentId && currentId) {
+                const child = document.querySelector(`aside.menu a[href="${currentId}"]`);
+                const parentUl = child ? child.closest('ul') : null;
+                const parentLi = parentUl ? parentUl.closest('li') : null;
+                const parentLink = parentLi ? parentLi.querySelector(':scope > a') : null;
+                if (parentLink && link === parentLink) link.classList.add('is-parent-current');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', setCurrent, { passive: true });
+    window.addEventListener('resize', setCurrent);
+    setCurrent();
+
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const text = btn.getAttribute('data-copy');
+            try {
+                await navigator.clipboard.writeText(text);
+                const old = btn.textContent;
+                btn.textContent = 'Copiado!';
+                setTimeout(() => btn.textContent = old, 1200);
+            } catch (e) {
+                alert('Copie manualmente: ' + text);
+            }
+        });
+    });
+})();
+    </script>
+</body>
+</html>

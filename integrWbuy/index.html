@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integração Wbuy x MeusCorreios — Manual de Configuração</title>
+<style>
+:root {
+    color-scheme: light;
+    --main: #ffffff;
+    --main-bis: #fafafa;
+    --text: #363636;
+    --text-strong: #222222;
+    --background: #f5f5f5;
+    --border: #dbdbdb;
+    --blue: #3273dc;
+    --blue-dark: #1d4e89;
+    --blue-light: #eef6fc;
+    --warning-bg: #fff8e1;
+    --warning-border: #f4d06f;
+    --success-bg: #effaf5;
+    --success-border: #48c78e;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    background: var(--main-bis);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    padding-bottom: 4rem;
+}
+a { color: var(--blue-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    min-height: 3.25rem;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .85rem;
+}
+.navbar-title { font-weight: 700; font-size: .95rem; color: var(--text-strong); }
+.navbar-menu { display: flex; align-items: center; gap: .1rem; }
+.navbar-item {
+    display: inline-flex;
+    align-items: center;
+    padding: .65rem .75rem;
+    color: #4a4a4a;
+    font-size: .82rem;
+}
+.navbar-item:hover { background: #f5f5f5; text-decoration: none; }
+.page-offset { padding-top: 3.5rem; }
+.section { padding: 2rem 1.5rem; }
+.container { max-width: 1180px; margin: 0 auto; }
+.columns { display: flex; align-items: flex-start; gap: 1.5rem; }
+.column-content { flex: 1; min-width: 0; }
+.sidebar-column { min-width: 220px; position: relative; }
+.sidebar-fixed {
+    position: fixed;
+    top: 4.5rem;
+    width: 220px;
+    max-height: calc(100vh - 5rem);
+    overflow: auto;
+    padding-right: .35rem;
+    font-size: .82rem;
+}
+.menu-label {
+    color: #7a7a7a;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 .5rem;
+}
+.menu-list { list-style: none; padding: 0; margin: 0; }
+.menu-list ul { list-style: none; margin: .25rem 0 .5rem .85rem; padding: 0; border-left: 1px solid #e7e7e7; }
+.menu-list li { margin: 0; }
+.menu-list a {
+    display: block;
+    padding: .45rem .65rem;
+    border-radius: 5px;
+    color: #363636;
+    line-height: 1.25;
+}
+.menu-list a:hover { background: #f0f3f7; text-decoration: none; }
+.section-anchor { scroll-margin-top: 4.2rem; }
+.title { color: var(--text-strong); line-height: 1.2; margin: 0 0 1rem; font-weight: 700; }
+.title.is-4 { font-size: 1.45rem; }
+.title.is-5 { font-size: 1.15rem; }
+.title.is-6 { font-size: 1rem; }
+.subtitle { color: #4a4a4a; font-size: 1rem; margin-top: -.5rem; margin-bottom: 1rem; }
+.block { margin: 0 0 1rem; }
+.mb-1 { margin-bottom: .25rem !important; }
+.mb-3 { margin-bottom: .75rem !important; }
+.mb-4 { margin-bottom: 1rem !important; }
+.mb-5 { margin-bottom: 1.5rem !important; }
+.mt-2 { margin-top: .5rem !important; }
+.mt-3 { margin-top: .75rem !important; }
+.mt-4 { margin-top: 1rem !important; }
+.mt-5 { margin-top: 1.5rem !important; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+.is-size-7 { font-size: .92rem; }
+.has-text-grey { color: #7a7a7a; }
+.has-text-weight-semibold { font-weight: 600; }
+.notification, .message {
+    background: #f5f5f5;
+    border-radius: 6px;
+    padding: .9rem 1rem;
+    margin: 1rem 0;
+}
+.notification.is-info, .message.is-info { background: var(--blue-light); border-left: 4px solid var(--blue); }
+.message.is-warning { background: var(--warning-bg); border-left: 4px solid var(--warning-border); }
+.message.is-success { background: var(--success-bg); border-left: 4px solid var(--success-border); }
+.message-body { margin: 0; }
+.content ul, .content ol { margin: .5rem 0 1rem; padding-left: 1.25rem; }
+.content li { margin-bottom: .35rem; }
+.steps { counter-reset: step; list-style: none; padding-left: 0; margin: .5rem 0 1rem; }
+.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding: .85rem 1rem .85rem 3rem;
+    margin-bottom: .65rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+}
+.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: .85rem;
+    top: .85rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 700;
+    font-size: .8rem;
+}
+.steps li ul { margin: .45rem 0 0; padding-left: 1.1rem; }
+.table { width: 100%; border-collapse: collapse; background: #fff; margin: .75rem 0 1rem; }
+.table th, .table td { border: 1px solid var(--border); padding: .6rem .7rem; vertical-align: top; }
+.table th { background: #f5f5f5; color: var(--text-strong); font-weight: 700; }
+.tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-size: .75rem;
+    padding: .1em .65em;
+    white-space: nowrap;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+}
+code, .codebox {
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    background: #f5f5f5;
+    color: #222;
+    border-radius: 4px;
+}
+code { padding: .12rem .32rem; }
+.codebox {
+    display: block;
+    padding: .8rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid var(--border);
+    margin: .5rem 0 1rem;
+    font-size: .82rem;
+}
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.info-card { border: 1px solid var(--border); border-radius: 6px; background: #fff; padding: .9rem 1rem; }
+.info-card .label { color: #7a7a7a; display: block; font-size: .75rem; margin-bottom: .25rem; }
+.footer { background: #fafafa; padding: 1rem 1.5rem; text-align: center; color: #7a7a7a; font-size: .82rem; }
+@media (max-width: 900px) {
+    .navbar-menu { display: none; }
+    .columns { display: block; }
+    .sidebar-column { display: none !important; }
+    .section { padding-left: 1rem; padding-right: 1rem; }
+    .card-grid { grid-template-columns: 1fr; }
+}
+@media print {
+    .navbar, .sidebar-column { display: none !important; }
+    .page-offset { padding-top: 0; }
+    body { background: #fff; }
+    a { color: inherit; text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<nav class="navbar" role="navigation">
+    <div class="navbar-title">🛒 Integração Wbuy x MeusCorreios — Manual de Configuração</div>
+    <div class="navbar-menu">
+        <a class="navbar-item" href="#sobre">Sobre</a>
+        <a class="navbar-item" href="#credenciais">Credenciais</a>
+        <a class="navbar-item" href="#meuscorreios">Configuração</a>
+        <a class="navbar-item" href="#prepostagem">Pré-postagem</a>
+        <a class="navbar-item" href="#retorno">Retorno</a>
+        <a class="navbar-item" href="#erros">Erros</a>
+    </div>
+</nav>
+
+<div class="page-offset">
+<section class="section">
+<div class="container">
+<div class="columns">
+
+<aside class="sidebar-column">
+    <nav class="menu sidebar-fixed">
+        <p class="menu-label">Navegação</p>
+        <ul class="menu-list">
+            <li><a href="#sobre">Sobre este manual</a></li>
+            <li><a href="#requisitos">Pré-requisitos</a></li>
+            <li><a href="#credenciais">Gerar credenciais na Wbuy</a></li>
+            <li><a href="#meuscorreios">Configurar no MeusCorreios</a></li>
+            <li><a href="#prepostagem">Gerar pré-postagens</a>
+                <ul>
+                    <li><a href="#lote">Criar ou usar lote</a></li>
+                    <li><a href="#opcoes-importacao">Opções de importação</a></li>
+                    <li><a href="#marcar-pedidos">Marcar pedidos</a></li>
+                </ul>
+            </li>
+            <li><a href="#status">Selecionar serviços e etiquetas</a></li>
+            <li><a href="#retorno">Retorno automático à Wbuy</a></li>
+            <li><a href="#erros">Possíveis erros e soluções</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<main class="column-content">
+    <div id="sobre" class="section-anchor mb-5">
+        <h1 class="title is-4">Integração Wbuy x MeusCorreios — Manual de Configuração</h1>
+        <p class="block is-size-7">Este manual orienta como obter o <strong>Usuário API</strong> e a <strong>Senha API</strong> no painel da Wbuy, configurar a integração no MeusCorreios, importar os pedidos para geração de pré-postagens e acompanhar o retorno automático de rastreio para a Wbuy.</p>
+        <div class="notification is-info is-size-7">
+            A integração depende de duas etapas principais: primeiro gerar as credenciais de API no painel da Wbuy, e depois informar esses dados no cadastro do remetente dentro do MeusCorreios. Uma vez configurada, a integração é bidirecional: o MeusCorreios importa os pedidos da Wbuy e, ao gerar/atualizar o rastreio, devolve automaticamente o código de rastreio e o status para a Wbuy — sem passo manual adicional.
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="requisitos" class="section-anchor mb-5">
+        <h2 class="title is-5">Pré-requisitos</h2>
+        <ul class="content is-size-7">
+            <li>Acesso administrativo ao painel da Wbuy.</li>
+            <li>Permissão para acessar <strong>Plataforma &gt; API e Webhooks</strong> na Wbuy.</li>
+            <li>Acesso ao MeusCorreios com permissão para alterar as integrações do remetente.</li>
+            <li>Remetente já cadastrado no MeusCorreios.</li>
+            <li>Conhecer os códigos de status de pedido usados na loja Wbuy (para preencher os filtros de status na integração).</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div id="credenciais" class="section-anchor mb-5">
+        <h2 class="title is-5">1. Gerar as credenciais de acesso na Wbuy</h2>
+        <p class="is-size-7 block">No painel da Wbuy, será necessário gerar um <strong>Usuário API</strong> e uma <strong>Senha API</strong> para preencher no MeusCorreios.</p>
+        <ol class="steps is-size-7">
+            <li>Acesse o painel administrativo da sua loja Wbuy.</li>
+            <li>No menu lateral, acesse <strong>Plataforma &gt; API e Webhooks</strong>.</li>
+            <li>Acesse <strong>Opções &gt; Integração REST API</strong>.</li>
+            <li>Crie uma nova chave, informando uma identificação para reconhecer depois (por exemplo, <em>MeusCorreios</em>).</li>
+            <li>Copie o <strong>usuário</strong> gerado.</li>
+            <li>Clique em <strong>Visualizar senha</strong> e copie a <strong>senha</strong> exibida.</li>
+        </ol>
+        <article class="message is-warning is-size-7">
+            <div class="message-body">⚠️ A API da Wbuy limita <strong>100 requisições a cada 60 segundos</strong> por credencial. Se a integração for usada por mais de um sistema simultaneamente com a mesma credencial, considere gerar uma chave exclusiva para o MeusCorreios.</div>
+        </article>
+        <div class="card-grid is-size-7">
+            <div class="info-card"><span class="label">Campo na Wbuy</span><strong>Usuário</strong><br>Use como <strong>Usuário API</strong> no MeusCorreios.</div>
+            <div class="info-card"><span class="label">Campo na Wbuy</span><strong>Senha</strong><br>Use como <strong>Senha API</strong> no MeusCorreios.</div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="meuscorreios" class="section-anchor mb-5">
+        <h2 class="title is-5">2. Configurar a integração no MeusCorreios</h2>
+        <ol class="steps is-size-7">
+            <li>Entre no menu <strong>Configurações</strong>.</li>
+            <li>Clique em <strong>Remetentes</strong>.</li>
+            <li>No remetente que será usado para integrar a plataforma, clique em <strong>Integrações</strong>.</li>
+            <li>Selecione a opção <strong>Integrações/Wbuy</strong>.</li>
+        </ol>
+
+        <p class="is-size-7 block">Preencha os campos com os dados obtidos na Wbuy e defina os status que a integração deve considerar:</p>
+        <table class="table is-size-7">
+            <thead><tr><th>Campo no MeusCorreios</th><th>O que preencher</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Usuário API</strong></td><td>Usuário copiado em Plataforma &gt; API e Webhooks na Wbuy.</td></tr>
+                <tr><td><strong>Senha API</strong></td><td>Senha copiada em "Visualizar senha" na mesma tela.</td></tr>
+                <tr><td><strong>Pedidos com Cód. Status</strong></td><td>Código de status da Wbuy que a integração deve buscar ao importar pedidos.</td></tr>
+                <tr><td><strong>Tag / Identificador</strong> <span class="tag">opcional</span></td><td>Filtra os pedidos por um identificador/tag específico da Wbuy, quando necessário.</td></tr>
+                <tr><td><strong>Status "Enviado"</strong></td><td>Código de status que a Wbuy deve receber quando a postagem for confirmada como enviada.</td></tr>
+                <tr><td><strong>Status "Entregue"</strong></td><td>Código de status que a Wbuy deve receber quando o objeto for confirmado como entregue.</td></tr>
+            </tbody>
+        </table>
+        <p class="is-size-7 block">Após preencher os dados, clique em <strong>Confirmar</strong>.</p>
+    </div>
+
+    <hr>
+
+    <div id="prepostagem" class="section-anchor mb-5">
+        <h2 class="title is-5">3. Geração de Pré-Postagens de Pedidos Wbuy</h2>
+        <div id="lote" class="section-anchor mt-4">
+            <h3 class="title is-6">3.1. Criar ou utilizar um lote existente</h3>
+            <ol class="steps is-size-7">
+                <li>Entre no módulo de <strong>Pré-postagem</strong> do MeusCorreios.</li>
+                <li>Crie um novo lote ou utilize um lote já existente.</li>
+                <li>Ao criar um novo lote, selecione a opção <strong>Integração Wbuy</strong>.</li>
+                <li>Ao utilizar um lote existente, selecione a opção <strong>Integra/Wbuy</strong>.</li>
+            </ol>
+            <article class="message is-info is-size-7">
+                <div class="message-body">ℹ️ A opção de integração pode ser deixada como padrão acessando <strong>Configurações &gt; Importações e Integrações</strong>.</div>
+            </article>
+        </div>
+
+        <div id="opcoes-importacao" class="section-anchor mt-5">
+            <h3 class="title is-6">3.2. Definir as opções da importação</h3>
+            <p class="is-size-7 block">Após buscar os pedidos, os dados serão exibidos na tela. Antes de gerar a pré-postagem, defina como o MeusCorreios deve tratar os pedidos importados:</p>
+            <table class="table is-size-7">
+                <thead><tr><th>Opção</th><th>Descrição</th></tr></thead>
+                <tbody>
+                    <tr><td>Pedidos já incluídos no lote</td><td>Define se pedidos já adicionados anteriormente serão desconsiderados.</td></tr>
+                    <tr><td>AR nas postagens</td><td>Define se será incluído Aviso de Recebimento nas postagens.</td></tr>
+                    <tr><td>Valor Declarado</td><td>Define se o valor do pedido será considerado como Valor Declarado.</td></tr>
+                    <tr><td>Declaração de Conteúdo</td><td>Define se as declarações serão criadas com base nos itens de cada pedido.</td></tr>
+                </tbody>
+            </table>
+            <article class="message is-info is-size-7">
+                <div class="message-body">Essas opções também podem ser configuradas como padrão em <strong>Configurações &gt; Importações e Integrações</strong>.</div>
+            </article>
+            <p class="is-size-7 block">O MeusCorreios busca o endereçamento, o frete (nome e valor) e o peso de cada produto direto no pedido da Wbuy. Se o pedido já tiver um código de rastreio atribuído na própria Wbuy, o MeusCorreios reaproveita esse código automaticamente.</p>
+        </div>
+
+        <div id="marcar-pedidos" class="section-anchor mt-5">
+            <h3 class="title is-6">3.3. Selecionar pedidos e gerar pré-postagens</h3>
+            <ol class="steps is-size-7">
+                <li>Selecione os pedidos pelo <strong>Destinatário</strong>, <strong>Serviço</strong> ou <strong>Faixa de Pedido</strong>, quando necessário.</li>
+                <li>Marque todos os pedidos que serão postados.</li>
+                <li>Use o quadrinho do cabeçalho para marcar ou desmarcar todos os pedidos da página.</li>
+                <li>Alterne entre páginas sem perder os itens já marcados.</li>
+                <li>Pedidos que não devem ser postados devem permanecer desmarcados.</li>
+                <li>Clique em <strong>Gerar Pré-Postagem de Todos os Marcados</strong>.</li>
+            </ol>
+            <article class="message is-warning is-size-7">
+                <div class="message-body">⚠️ Caso o serviço de frete já venha definido no pedido da Wbuy, cadastre os serviços no <strong>Dicionário de Serviços</strong> para que o MeusCorreios atribua o código corretamente. Se preferir, deixe o MeusCorreios definir o serviço na próxima etapa.</div>
+            </article>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="status" class="section-anchor mb-5">
+        <h2 class="title is-5">4. Selecionando Serviços e Definindo as Etiquetas</h2>
+        <p class="is-size-7 block">Depois de importar os pedidos pela integração, o MeusCorreios indica o que ainda falta por meio dos menus em vermelho na tela de Pré-Postagem ou dentro dos lotes gerados.</p>
+        <table class="table is-size-7">
+            <thead><tr><th>Status</th><th>O que significa</th><th>Ação recomendada</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Sem Serviço</strong></td><td>Pedidos foram importados, mas ainda não tiveram serviço atribuído.</td><td>Verifique o Dicionário de Serviços ou atribua o serviço manualmente.</td></tr>
+                <tr><td><strong>Sem Registro</strong></td><td>Pedidos tiveram serviço atribuído, mas ainda não tiveram etiqueta atribuída.</td><td>Verifique o estoque/range de etiquetas do serviço selecionado.</td></tr>
+                <tr><td><strong>Não Emitidos</strong></td><td>Pedidos tiveram serviços e etiquetas atribuídas, mas ainda não foram impressos.</td><td>Imprima as etiquetas.</td></tr>
+                <tr><td><strong>Sem Lista</strong></td><td>Etiquetas foram emitidas, mas a lista de postagem ainda não foi gerada.</td><td>Gere a lista de postagem e envie as caixas para a agência que atende a empresa.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div id="retorno" class="section-anchor mb-5">
+        <h2 class="title is-5">5. Retorno automático de rastreio para a Wbuy</h2>
+        <p class="is-size-7 block">Diferente de uma simples importação, a integração com a Wbuy é <strong>bidirecional</strong>: depois que uma etiqueta é atribuída e o status do objeto muda no MeusCorreios, o código de rastreio e o status configurado são enviados de volta para a Wbuy automaticamente — não é necessário nenhum passo manual para isso.</p>
+        <table class="table is-size-7">
+            <thead><tr><th>Evento no MeusCorreios</th><th>O que é enviado para a Wbuy</th></tr></thead>
+            <tbody>
+                <tr><td>Objeto passa para o status configurado em <strong>Status "Enviado"</strong></td><td>Código de rastreio, nome do serviço de frete e link de rastreamento.</td></tr>
+                <tr><td>Objeto passa para o status configurado em <strong>Status "Entregue"</strong></td><td>Confirmação de entrega no status configurado.</td></tr>
+            </tbody>
+        </table>
+        <article class="message is-info is-size-7">
+            <div class="message-body">ℹ️ Se o retorno para a Wbuy falhar (por exemplo, usuário/senha inválidos ou pedido não encontrado), o erro fica registrado no <strong>Log Pós Integração</strong> do pedido, sem impedir a postagem em si.</div>
+        </article>
+    </div>
+
+    <hr>
+
+    <div id="erros" class="section-anchor mb-5">
+        <h2 class="title is-5">6. Possíveis Erros e Soluções</h2>
+        <table class="table is-size-7">
+            <thead><tr><th>Erro ou situação</th><th>Possível causa</th><th>Como resolver</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>A Integração retornou um Erro e não pode ser concluída!</strong></td>
+                    <td>O MeusCorreios tentou acessar a API da Wbuy e não conseguiu.</td>
+                    <td>Verifique o Usuário API e a Senha API cadastrados. Também é possível gerar o log clicando em <strong>Log Pós Integração</strong>.</td>
+                </tr>
+                <tr>
+                    <td><strong>Erro 429 / limite de requisições</strong></td>
+                    <td>A credencial excedeu o limite de 100 requisições a cada 60 segundos na Wbuy.</td>
+                    <td>Aguarde alguns instantes e tente novamente. Se o volume de pedidos for muito alto, gere uma credencial exclusiva para o MeusCorreios.</td>
+                </tr>
+                <tr>
+                    <td><strong>Serviço não atribui ao clicar em Atribui Serviços</strong></td>
+                    <td>O serviço selecionado pode não ter abrangência para o CEP de destino.</td>
+                    <td>Verifique se o serviço possui abrangência para o CEP de destino. Exemplo: PAC local.</td>
+                </tr>
+                <tr>
+                    <td><strong>Atribui Serviço, mas não atribui Etiqueta</strong></td>
+                    <td>Pode não haver estoque/range de etiquetas disponível para o serviço selecionado.</td>
+                    <td>Verifique seu estoque de etiquetas ou entre em contato com a AGF que atende sua empresa e solicite um novo range de etiquetas.</td>
+                </tr>
+                <tr>
+                    <td><strong>Retorno de rastreio para a Wbuy não aparece no pedido</strong></td>
+                    <td>O pedido pode ter sido excluído/alterado na Wbuy após a importação, ou a credencial perdeu acesso.</td>
+                    <td>Confira o Log Pós Integração do pedido e revalide o Usuário API / Senha API cadastrados no remetente.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+</div>
+</div>
+</section>
+</div>
+<footer class="footer">Integração Wbuy x MeusCorreios — Manual de Configuração</footer>
+</body>
+</html>

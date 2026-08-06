@@ -10,5 +10,6 @@ Repositório dedicado aos manuais das integrações do **MeusCorreios**.
 - [Integração Tray x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrTray/index.html)
 - [Integração Wbuy x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrWbuy/index.html)
 - [MeusCorreios Chatbot](https://meuscorreios-doc.github.io/manuais/meusCorreiosChatbot/index.html)
+- [Pré-Postagem Manual no MeusCorreios](https://meuscorreios-doc.github.io/manuais/PreManualMC/index.html)
 <!-- MANUAIS:FIM -->
 

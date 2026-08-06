@@ -1,0 +1,248 @@
+name: Atualizar README com manuais
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar-readme:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Atualizar lista de manuais no README
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from html import unescape
+          from urllib.parse import quote
+          import re
+
+          repo = Path(".")
+          readme = repo / "README.md"
+
+          base_url = "https://meuscorreios-doc.github.io/manuais/"
+
+          inicio = "<!-- MANUAIS:INICIO -->"
+          fim = "<!-- MANUAIS:FIM -->"
+
+          # Pastas que não devem virar link no README
+          pastas_ignoradas = {
+              ".git",
+              ".github",
+              "templates",
+          }
+
+          # Arquivos específicos que também devem ser ignorados
+          arquivos_ignorados = {
+              "templates/manual-padrao.html",
+          }
+
+          class TitleParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.dentro_title = False
+                  self.partes = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "title":
+                      self.dentro_title = True
+
+              def handle_endtag(self, tag):
+                  if tag.lower() == "title":
+                      self.dentro_title = False
+
+              def handle_data(self, data):
+                  if self.dentro_title:
+                      self.partes.append(data)
+
+              def titulo(self):
+                  texto = " ".join(self.partes)
+                  texto = unescape(texto)
+                  texto = re.sub(r"\s+", " ", texto).strip()
+                  return texto if texto else None
+
+          def ler_arquivo_texto(caminho):
+              dados = caminho.read_bytes()
+
+              for encoding in ["utf-8-sig", "utf-8", "cp1252", "latin-1"]:
+                  try:
+                      return dados.decode(encoding)
+                  except UnicodeDecodeError:
+                      pass
+
+              return dados.decode("utf-8", errors="ignore")
+
+          def extrair_title(caminho):
+              conteudo = ler_arquivo_texto(caminho)
+              parser = TitleParser()
+              parser.feed(conteudo)
+              return parser.titulo()
+
+          def limpar_titulo(titulo):
+              titulo = re.sub(r"\s+", " ", titulo).strip()
+
+              # Remove tudo que vier depois de separadores como:
+              # " — ", " – ", " - ", "—" ou "–"
+              titulo = re.split(
+                  r"\s+[—–-]\s+|\s*[—–]\s*",
+                  titulo,
+                  maxsplit=1
+              )[0].strip()
+
+              return titulo
+
+          def nome_fallback(nome_pasta):
+              return nome_pasta.replace("-", " ").replace("_", " ").title()
+
+          def caminho_relativo_normalizado(caminho):
+              return caminho.relative_to(repo).as_posix().lower()
+
+          def arquivo_esta_ignorado(caminho):
+              caminho_relativo = caminho_relativo_normalizado(caminho)
+
+              if caminho_relativo in arquivos_ignorados:
+                  return True
+
+              partes = caminho_relativo.split("/")
+
+              for pasta in pastas_ignoradas:
+                  if pasta.lower() in partes:
+                      return True
+
+              return False
+
+          def montar_link(arquivo_manual):
+              caminho_relativo = arquivo_manual.relative_to(repo)
+              caminho_url = quote(caminho_relativo.as_posix(), safe="/")
+              return f"{base_url}{caminho_url}"
+
+          def encontrar_arquivo_manual(pasta):
+              # Primeiro procura index.html ou index.htm
+              for nome_arquivo in ["index.html", "index.htm"]:
+                  caminho = pasta / nome_arquivo
+
+                  if not caminho.exists() or not caminho.is_file():
+                      continue
+
+                  if arquivo_esta_ignorado(caminho):
+                      continue
+
+                  return caminho
+
+              # Se não encontrar index, procura qualquer .html ou .htm dentro da pasta
+              arquivos_html = sorted(
+                  [
+                      arquivo
+                      for arquivo in pasta.iterdir()
+                      if arquivo.is_file()
+                      and arquivo.suffix.lower() in [".html", ".htm"]
+                      and not arquivo_esta_ignorado(arquivo)
+                  ],
+                  key=lambda arquivo: arquivo.name.lower()
+              )
+
+              if not arquivos_html:
+                  return None
+
+              return arquivos_html[0]
+
+          manuais = []
+
+          for pasta in sorted(repo.iterdir(), key=lambda item: item.name.lower()):
+              if not pasta.is_dir():
+                  continue
+
+              if pasta.name.lower() in pastas_ignoradas:
+                  continue
+
+              if pasta.name.startswith("."):
+                  continue
+
+              arquivo_manual = encontrar_arquivo_manual(pasta)
+
+              if arquivo_manual is None:
+                  continue
+
+              titulo = extrair_title(arquivo_manual)
+
+              if not titulo:
+                  titulo = nome_fallback(pasta.name)
+                  print(
+                      f"::warning file={arquivo_manual.as_posix()}::"
+                      f"Arquivo sem tag <title>. Usando o nome da pasta no README: {titulo}"
+                  )
+              else:
+                  titulo_original = titulo
+                  titulo = limpar_titulo(titulo)
+
+                  if titulo != titulo_original:
+                      print(
+                          f"::notice file={arquivo_manual.as_posix()}::"
+                          f"Título ajustado de '{titulo_original}' para '{titulo}'"
+                      )
+
+              link = montar_link(arquivo_manual)
+
+              manuais.append({
+                  "titulo": titulo,
+                  "link": link,
+              })
+
+          manuais = sorted(manuais, key=lambda item: item["titulo"].casefold())
+
+          if manuais:
+              nova_lista = "\n".join(
+                  f"- [{manual['titulo']}]({manual['link']})"
+                  for manual in manuais
+              )
+          else:
+              nova_lista = "_Nenhum manual encontrado._"
+
+          conteudo = readme.read_text(encoding="utf-8")
+
+          if inicio not in conteudo or fim not in conteudo:
+              raise SystemExit(
+                  "Marcadores MANUAIS:INICIO e MANUAIS:FIM não encontrados no README.md"
+              )
+
+          novo_conteudo = re.sub(
+              rf"{re.escape(inicio)}.*?{re.escape(fim)}",
+              f"{inicio}\n{nova_lista}\n{fim}",
+              conteudo,
+              flags=re.S
+          )
+
+          readme.write_text(novo_conteudo, encoding="utf-8")
+          PY
+
+      - name: Mostrar alteração no Pull Request
+        if: github.event_name == 'pull_request'
+        run: |
+          git diff README.md || true
+
+      - name: Salvar alteração no README
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet README.md; then
+            echo "Nenhuma alteração no README."
+          else
+            git add README.md
+            git commit -m "Atualiza lista de manuais no README [skip ci]"
+            git push
+          fi

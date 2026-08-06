@@ -1,0 +1,286 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - ".github/workflows/atualizar-readme.yml"
+      - ".github/templates/manual-padrao.html"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Gerar site com index.html
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from html import unescape, escape
+          import shutil
+          import re
+
+          repo = Path(".")
+          site = Path("_site")
+
+          base_url = "https://meuscorreios-doc.github.io/manuais/"
+
+          ignorar = {
+              ".git",
+              ".github",
+              "_site",
+              "templates",
+          }
+
+          class TitleParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.dentro_title = False
+                  self.partes = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "title":
+                      self.dentro_title = True
+
+              def handle_endtag(self, tag):
+                  if tag.lower() == "title":
+                      self.dentro_title = False
+
+              def handle_data(self, data):
+                  if self.dentro_title:
+                      self.partes.append(data)
+
+              def titulo(self):
+                  texto = " ".join(self.partes)
+                  texto = unescape(texto)
+                  texto = re.sub(r"\s+", " ", texto).strip()
+                  return texto if texto else None
+
+          def ler_arquivo_texto(caminho):
+              dados = caminho.read_bytes()
+
+              for encoding in ["utf-8-sig", "utf-8", "cp1252", "latin-1"]:
+                  try:
+                      return dados.decode(encoding)
+                  except UnicodeDecodeError:
+                      pass
+
+              return dados.decode("utf-8", errors="ignore")
+
+          def extrair_title(caminho):
+              conteudo = ler_arquivo_texto(caminho)
+              parser = TitleParser()
+              parser.feed(conteudo)
+              return parser.titulo()
+
+          def limpar_titulo(titulo):
+              titulo = re.sub(r"\s+", " ", titulo).strip()
+              titulo = re.split(r"\s+[—–-]\s+", titulo, maxsplit=1)[0].strip()
+              return titulo
+
+          def nome_fallback(nome_pasta):
+              return nome_pasta.replace("-", " ").replace("_", " ").title()
+
+          def encontrar_manual(pasta):
+              for nome_arquivo in ["index.html", "index.htm"]:
+                  caminho = pasta / nome_arquivo
+                  if caminho.exists() and caminho.is_file():
+                      return caminho
+
+              arquivos_html = sorted(
+                  [
+                      arquivo
+                      for arquivo in pasta.iterdir()
+                      if arquivo.is_file() and arquivo.suffix.lower() in [".html", ".htm"]
+                  ],
+                  key=lambda arquivo: arquivo.name.lower()
+              )
+
+              return arquivos_html[0] if arquivos_html else None
+
+          def montar_link(pasta, arquivo_manual):
+              if arquivo_manual.name.lower() in ["index.html", "index.htm"]:
+                  return f"{base_url}{pasta.name}/"
+
+              return f"{base_url}{pasta.name}/{arquivo_manual.name}"
+
+          manuais = []
+
+          for pasta in sorted(repo.iterdir()):
+              if not pasta.is_dir():
+                  continue
+
+              if pasta.name in ignorar:
+                  continue
+
+              if pasta.name.startswith("."):
+                  continue
+
+              arquivo_manual = encontrar_manual(pasta)
+
+              if arquivo_manual is None:
+                  continue
+
+              titulo = extrair_title(arquivo_manual)
+
+              if titulo:
+                  titulo = limpar_titulo(titulo)
+              else:
+                  titulo = nome_fallback(pasta.name)
+                  print(
+                      f"::warning file={arquivo_manual.as_posix()}::"
+                      f"Arquivo sem tag <title>. Usando o nome da pasta: {titulo}"
+                  )
+
+              manuais.append({
+                  "titulo": titulo,
+                  "link": montar_link(pasta, arquivo_manual),
+              })
+
+          manuais = sorted(manuais, key=lambda item: item["titulo"].casefold())
+
+          if site.exists():
+              shutil.rmtree(site)
+
+          site.mkdir()
+
+          for item in repo.iterdir():
+              if item.name in ignorar:
+                  continue
+
+              if item.name.startswith("."):
+                  continue
+
+              destino = site / item.name
+
+              if item.is_dir():
+                  shutil.copytree(item, destino)
+              elif item.is_file() and item.name not in ["README.md"]:
+                  shutil.copy2(item, destino)
+
+          linhas_manuais = "\n".join(
+              f'<li><a href="{escape(manual["link"])}">{escape(manual["titulo"])}</a></li>'
+              for manual in manuais
+          )
+
+          if not linhas_manuais:
+              linhas_manuais = "<li>Nenhum manual encontrado.</li>"
+
+          html = f"""<!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Manuais MeusCorreios</title>
+            <style>
+              body {{
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background: #f5f7fb;
+                color: #1f2937;
+              }}
+
+              .container {{
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 48px 24px;
+              }}
+
+              .card {{
+                background: #ffffff;
+                border-radius: 16px;
+                padding: 32px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+              }}
+
+              h1 {{
+                margin-top: 0;
+                color: #0f172a;
+              }}
+
+              p {{
+                font-size: 16px;
+                line-height: 1.6;
+              }}
+
+              ul {{
+                list-style: none;
+                padding: 0;
+                margin: 24px 0 0;
+              }}
+
+              li {{
+                margin-bottom: 12px;
+              }}
+
+              a {{
+                display: block;
+                padding: 14px 16px;
+                border-radius: 10px;
+                background: #eef2ff;
+                color: #1d4ed8;
+                text-decoration: none;
+                font-weight: 600;
+              }}
+
+              a:hover {{
+                background: #dbeafe;
+              }}
+
+              .footer {{
+                margin-top: 24px;
+                font-size: 13px;
+                color: #64748b;
+              }}
+            </style>
+          </head>
+          <body>
+            <main class="container">
+              <section class="card">
+                <h1>📘 Manuais MeusCorreios</h1>
+                <p>Selecione abaixo o manual que deseja acessar.</p>
+
+                <ul>
+                  {linhas_manuais}
+                </ul>
+
+                <p class="footer">Página gerada automaticamente pelo GitHub Actions.</p>
+              </section>
+            </main>
+          </body>
+          </html>
+          """
+
+          (site / "index.html").write_text(html, encoding="utf-8")
+          (site / ".nojekyll").write_text("", encoding="utf-8")
+          PY
+
+      - name: Enviar arquivos para o Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+      - name: Publicar no GitHub Pages
+        uses: actions/deploy-pages@v4

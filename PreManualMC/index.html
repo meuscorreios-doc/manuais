@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Guia para criar uma pré-postagem manual no MeusCorreios, cadastrar objetos, selecionar serviços, imprimir etiquetas e emitir a lista de postagem." />
+    <title>Pré-Postagem Manual no MeusCorreios</title>
+    <link rel="stylesheet" href="assets/css/bulma.min.css" />
+    <link rel="stylesheet" href="assets/css/manual-padrao.css" />
+</head>
+<body>
+    <nav class="navbar is-white is-fixed-top manual-navbar" role="navigation" aria-label="Navegação principal">
+        <div class="navbar-brand">
+            <span class="navbar-item has-text-weight-semibold is-size-6">📘 Pré-Postagem Manual</span>
+        </div>
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#visao-geral">Visão geral</a>
+                <a class="navbar-item is-size-7" href="#criar-lote">Criar lote</a>
+                <a class="navbar-item is-size-7" href="#preencher-objeto">Preencher objeto</a>
+                <a class="navbar-item is-size-7" href="#imprimir-etiquetas">Etiquetas</a>
+                <a class="navbar-item is-size-7" href="#emitir-lista">Lista</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="manual-page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns manual-layout">
+                    <div class="column is-narrow is-hidden-mobile manual-sidebar-column">
+                        <aside class="menu manual-sidebar">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#visao-geral">Visão geral</a></li>
+                                <li><a href="#acessar-pre-postagem">1. Acessar a Pré-Postagem</a></li>
+                                <li><a href="#criar-lote">2. Criar um lote manual</a></li>
+                                <li>
+                                    <a href="#preencher-objeto">3. Preencher os objetos</a>
+                                    <ul>
+                                        <li><a href="#destinatario-endereco">Destinatário e endereço</a></li>
+                                        <li><a href="#servico-adicionais">Serviço e adicionais</a></li>
+                                        <li><a href="#declaracao-conteudo">Declaração de Conteúdo</a></li>
+                                        <li><a href="#salvar-continuar">Salvar e continuar</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#acompanhar-pendencias">4. Acompanhar pendências</a></li>
+                                <li>
+                                    <a href="#imprimir-etiquetas">5. Imprimir etiquetas</a>
+                                    <ul>
+                                        <li><a href="#modelo-etiqueta">Modelo da etiqueta</a></li>
+                                        <li><a href="#logo-etiqueta">Logotipo na etiqueta</a></li>
+                                        <li><a href="#emitir-ar">Emitir AR</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#emitir-lista">6. Emitir a lista de postagem</a></li>
+                                <li><a href="#configuracoes">7. Configurações</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <main class="column manual-content-column">
+                        <section id="visao-geral" class="section-anchor mb-5">
+                            <h1 class="title is-4">Pré-Postagem Manual no MeusCorreios</h1>
+                            <p class="block is-size-7">
+                                Este guia apresenta o processo de criação manual de uma pré-postagem no MeusCorreios, desde a abertura do lote e o cadastro dos objetos até a impressão das etiquetas e a emissão da lista de postagem.
+                            </p>
+
+                            <div class="notification is-light manual-highlight is-size-7">
+                                <strong>Fluxo resumido:</strong> acessar a Pré-Postagem → criar um lote em Digitação → preencher destinatário e objeto → selecionar serviço e adicionais → salvar → resolver as pendências indicadas em vermelho → imprimir etiquetas → gerar a lista de postagem.
+                            </div>
+
+                            <article class="message is-info is-size-7">
+                                <div class="message-body">
+                                    O MeusCorreios mostra em vermelho cada etapa ainda pendente. Ao concluir uma etapa, o processo avança para a próxima até chegar à emissão da lista de postagem.
+                                </div>
+                            </article>
+                        </section>
+
+                        <hr />
+
+                        <section id="acessar-pre-postagem" class="section-anchor mb-5">
+                            <h2 class="title is-5">1. Acessar a Pré-Postagem</h2>
+                            <p class="block is-size-7">Na barra lateral do MeusCorreios, clique em <strong>Pré-Postagem</strong>.</p>
+                            <figure>
+                                <img class="manual-image" src="assets/img/01-menu-pre-postagem.png" alt="Tela inicial do MeusCorreios com o menu Pré-Postagem destacado na barra lateral" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Acesso ao módulo de Pré-Postagem pela barra lateral.</figcaption>
+                            </figure>
+                        </section>
+
+                        <hr />
+
+                        <section id="criar-lote" class="section-anchor mb-5">
+                            <h2 class="title is-5">2. Criar um lote manual</h2>
+                            <ol class="is-size-7">
+                                <li>Na tela de Pré-Postagem, clique em <strong>Novo</strong>.</li>
+                                <li>Selecione o <strong>Cartão de Postagem</strong>.</li>
+                                <li>Escolha a forma de postagem <strong>Digitação</strong>.</li>
+                                <li>O lote e a descrição podem ser preenchidos manualmente ou deixados para criação automática pelo sistema.</li>
+                                <li>Use a opção exibida na tela para criar o lote e começar a postar.</li>
+                            </ol>
+
+                            <figure class="mt-4 mb-5">
+                                <img class="manual-image" src="assets/img/02-novo-lote.png" alt="Tela de lotes da Pré-Postagem com o cartão Novo destacado" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Clique em Novo para iniciar um lote.</figcaption>
+                            </figure>
+
+                            <div class="columns is-centered">
+                                <div class="column is-8">
+                                    <figure>
+                                        <img class="manual-image" src="assets/img/03-cartao-digitacao.png" alt="Janela de criação do lote com os campos Cartão de Postagem e Digitação" loading="lazy" />
+                                        <figcaption class="has-text-grey is-size-7 mt-2">Seleção do cartão e da forma de postagem Digitação.</figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr />
+
+                        <section id="preencher-objeto" class="section-anchor mb-5">
+                            <h2 class="title is-5">3. Preencher os dados do objeto</h2>
+                            <p class="block is-size-7">Cadastre as informações do destinatário, do endereço e do objeto. Repita o procedimento para cada destinatário do lote.</p>
+
+                            <section id="destinatario-endereco" class="section-anchor mb-5">
+                                <h3 class="title is-6">3.1. Destinatário e endereço</h3>
+                                <ul class="is-size-7">
+                                    <li>Preencha os dados do destinatário e mantenha o número do imóvel com um valor numérico válido, sem sinais ou pontuação.</li>
+                                    <li>Use o botão indicado ao lado da letra <strong>Q</strong> para avançar de um campo para outro, somente depois de concluir o preenchimento.</li>
+                                    <li>Ao informar um destinatário utilizado anteriormente, selecione o nome sugerido e clique em <strong>F7 Traz Histórico</strong>. O sistema preencherá os dados da última postagem realizada para esse destinatário.</li>
+                                </ul>
+
+                                <figure class="mt-4 mb-5">
+                                    <img class="manual-image" src="assets/img/04-historico-destinatario.png" alt="Campo Destinatário com uma sugestão de nome e o botão F7 Traz Histórico" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Seleção de um destinatário já utilizado e recuperação do histórico.</figcaption>
+                                </figure>
+
+                                <figure>
+                                    <img class="manual-image" src="assets/img/05-dados-endereco.png" alt="Campos de endereço do destinatário preenchidos após a consulta do CEP" loading="lazy" />
+                                </figure>
+                            </section>
+
+                            <section id="servico-adicionais" class="section-anchor mb-5">
+                                <h3 class="title is-6">3.2. Serviço e adicionais</h3>
+                                <ol class="is-size-7">
+                                    <li>Informe o <strong>CEP</strong>, a <strong>CAIXA</strong> e o <strong>PESO</strong> do objeto.</li>
+                                    <li>Abra a área <strong>Serviços</strong>, disponível acima do campo Destinatário.</li>
+                                    <li>Clique em <strong>Selecione o Serviço</strong> para consultar os serviços disponíveis e seus valores.</li>
+                                    <li>Quando necessário, marque os serviços adicionais: <strong>AR</strong>, <strong>Mão Própria</strong>, <strong>Valor Declarado (VD - Seguro)</strong> ou <strong>Declarar Conteúdo</strong>.</li>
+                                </ol>
+
+                                <figure class="mt-4">
+                                    <img class="manual-image" src="assets/img/06-servico-adicionais.png" alt="Área Objeto com os campos de peso, adicionais e seleção de serviço" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Seleção do serviço e dos adicionais do objeto.</figcaption>
+                                </figure>
+                            </section>
+
+                            <section id="declaracao-conteudo" class="section-anchor mb-5">
+                                <h3 class="title is-6">3.3. Preencher a Declaração de Conteúdo</h3>
+                                <p class="block is-size-7">Para preencher e imprimir a Declaração de Conteúdo, marque a opção <strong>Declarar Conteúdo</strong>, no canto inferior direito da área do objeto, e informe os itens enviados.</p>
+
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/07-declarar-conteudo.png" alt="Tela de digitação com a opção Declarar Conteúdo marcada" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Ativação da Declaração de Conteúdo durante a digitação.</figcaption>
+                                </figure>
+
+                                <div class="columns is-variable is-5">
+                                    <div class="column is-6">
+                                        <figure>
+                                            <img class="manual-image" src="assets/img/08-formulario-declaracao.png" alt="Formulário da Declaração de Conteúdo com campos de item, quantidade, peso, descrição e valor" loading="lazy" />
+                                            <figcaption class="has-text-grey is-size-7 mt-2">Preenchimento dos itens da declaração.</figcaption>
+                                        </figure>
+                                    </div>
+                                    <div class="column is-6">
+                                        <figure>
+                                            <img class="manual-image" src="assets/img/09-declaracao-conteudo-impressa.png" alt="Modelo impresso da Declaração de Conteúdo" loading="lazy" />
+                                            <figcaption class="has-text-grey is-size-7 mt-2">Modelo de Declaração de Conteúdo gerado pelo sistema.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="salvar-continuar" class="section-anchor mb-5">
+                                <h3 class="title is-6">3.4. Salvar e continuar</h3>
+                                <ol class="is-size-7">
+                                    <li>Clique em <strong>Salvar</strong> para finalizar o objeto atual.</li>
+                                    <li>Inclua os demais destinatários do lote, repetindo o preenchimento.</li>
+                                    <li>Ao terminar, clique em <strong>F12 Voltar</strong> para retornar ao lote de objetos.</li>
+                                </ol>
+                            </section>
+                        </section>
+
+                        <hr />
+
+                        <section id="acompanhar-pendencias" class="section-anchor mb-5">
+                            <h2 class="title is-5">4. Acompanhar as etapas pendentes</h2>
+                            <p class="block is-size-7">Depois da digitação, o MeusCorreios identifica o que ainda falta por meio dos cartões vermelhos exibidos na tela de Pré-Postagem e dentro do lote.</p>
+
+                            <figure class="mb-5">
+                                <img class="manual-image" src="assets/img/10-status-pendentes.png" alt="Cartões vermelhos Sem Serviço, Sem Registro, Não Emitidos e Sem Lista" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Indicadores das quatro etapas que podem permanecer pendentes.</figcaption>
+                            </figure>
+
+                            <div class="table-container mb-5">
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>O que significa</th>
+                                            <th>Ação indicada</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Sem Serviço</strong></td>
+                                            <td>Pedidos importados ou digitados sem serviço atribuído. Verifique também o dicionário de serviços.</td>
+                                            <td>Definir Serviços</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sem Registro</strong></td>
+                                            <td>O serviço foi atribuído, mas a etiqueta ainda não foi vinculada. Pode haver falta de estoque; consulte o Range de Etiquetas.</td>
+                                            <td>Atribuir Registros</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Não Emitidos</strong></td>
+                                            <td>O pedido já possui serviço e etiqueta, mas a impressão ainda não foi realizada.</td>
+                                            <td>Imprimir Etiquetas</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sem Lista</strong></td>
+                                            <td>As etiquetas foram emitidas, mas a lista de postagem ainda não foi gerada.</td>
+                                            <td>Gerar Listas</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <figure>
+                                <img class="manual-image" src="assets/img/11-fluxo-pendencias.png" alt="Linha do lote mostrando a sequência de processos pendentes até a lista de postagem" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">A tela mantém em vermelho o processo que ainda precisa ser concluído.</figcaption>
+                            </figure>
+                        </section>
+
+                        <hr />
+
+                        <section id="imprimir-etiquetas" class="section-anchor mb-5">
+                            <h2 class="title is-5">5. Imprimir as etiquetas</h2>
+                            <ol class="is-size-7">
+                                <li>Clique no cartão vermelho <strong>Não Emitidos</strong>.</li>
+                                <li>Na tela de impressão, clique em <strong>Imprime Tudo</strong>.</li>
+                            </ol>
+
+                            <figure class="mt-4 mb-5">
+                                <img class="manual-image" src="assets/img/12-imprime-tudo.png" alt="Tela de impressão de etiquetas com o botão Imprime Tudo destacado" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Impressão de todas as etiquetas ainda não emitidas.</figcaption>
+                            </figure>
+
+                            <section id="modelo-etiqueta" class="section-anchor mb-5">
+                                <h3 class="title is-6">5.1. Selecionar o modelo da etiqueta</h3>
+                                <p class="block is-size-7">Selecione o modelo de etiqueta desejado na janela de impressão e confirme.</p>
+                                <div class="columns is-centered">
+                                    <div class="column is-8">
+                                        <figure>
+                                            <img class="manual-image" src="assets/img/13-modelo-etiqueta.png" alt="Janela Imprimir Registrados com o campo Tipo de Etiqueta destacado" loading="lazy" />
+                                        </figure>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="logo-etiqueta" class="section-anchor mb-5">
+                                <h3 class="title is-6">5.2. Cadastrar o logotipo da etiqueta</h3>
+                                <p class="block is-size-7">O logotipo exibido na etiqueta pode ser cadastrado em <strong>Configurações → Remetentes</strong>.</p>
+                                <div class="columns is-centered">
+                                    <div class="column is-6">
+                                        <figure>
+                                            <img class="manual-image" src="assets/img/14-etiqueta-com-logo.png" alt="Exemplo de etiqueta de postagem com a área reservada para o logotipo do remetente" loading="lazy" />
+                                            <figcaption class="has-text-grey is-size-7 mt-2">Exemplo de etiqueta com logotipo cadastrado.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="emitir-ar" class="section-anchor mb-5">
+                                <h3 class="title is-6">5.3. Emitir o Aviso de Recebimento (AR)</h3>
+                                <p class="block is-size-7">Quando o AR tiver sido selecionado durante a digitação, acesse <strong>Imprime → ARs, VPs e DDs</strong> para emitir o formulário.</p>
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/15-menu-imprimir-ar.png" alt="Menu Imprime do MeusCorreios com a opção ARs, VPs e DDs destacada" loading="lazy" />
+                                </figure>
+                                <div class="columns is-centered">
+                                    <div class="column is-8">
+                                        <figure>
+                                            <img class="manual-image" src="assets/img/16-aviso-recebimento.png" alt="Modelo impresso de Aviso de Recebimento dos Correios" loading="lazy" />
+                                            <figcaption class="has-text-grey is-size-7 mt-2">Modelo de AR gerado pelo sistema.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </section>
+                        </section>
+
+                        <hr />
+
+                        <section id="emitir-lista" class="section-anchor mb-5">
+                            <h2 class="title is-5">6. Emitir a lista de postagem</h2>
+                            <ol class="is-size-7">
+                                <li>Clique no cartão vermelho <strong>Sem Lista</strong>.</li>
+                                <li>Selecione os objetos que farão parte da lista ou clique em <strong>Imprimir todos e Voltar</strong>.</li>
+                                <li>Confira a lista impressa antes de encaminhar as caixas para a agência que atende a empresa.</li>
+                            </ol>
+
+                            <figure class="mt-4 mb-5">
+                                <img class="manual-image" src="assets/img/17-menu-sem-lista.png" alt="Tela do lote com o cartão Sem Lista destacado" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Acesso à geração da lista pelo indicador Sem Lista.</figcaption>
+                            </figure>
+
+                            <figure class="mb-5">
+                                <img class="manual-image" src="assets/img/18-selecionar-objetos-lista.png" alt="Tela para selecionar os objetos da lista de postagem ou imprimir todos e voltar" loading="lazy" />
+                            </figure>
+
+                            <article class="message is-info is-size-7">
+                                <div class="message-body">
+                                    A geração da lista é a última etapa do processo. Depois disso, os volumes podem ser encaminhados para a agência responsável pelo atendimento da empresa.
+                                </div>
+                            </article>
+
+                            <div class="columns is-centered mt-5">
+                                <div class="column is-9">
+                                    <figure>
+                                        <img class="manual-image" src="assets/img/19-lista-postagem-impressa.png" alt="Modelo de lista de postagem impressa" loading="lazy" />
+                                        <figcaption class="has-text-grey is-size-7 mt-2">Exemplo de lista de postagem concluída.</figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr />
+
+                        <section id="configuracoes" class="section-anchor mb-5">
+                            <h2 class="title is-5">7. Configurações da Pré-Postagem</h2>
+                            <p class="block is-size-7">Em <strong>Configurações</strong>, várias opções da Pré-Postagem podem ser definidas antecipadamente.</p>
+                            <p class="block is-size-7">Entre as opções exibidas estão o tipo de postagem, a criação automática de lotes, embalagem preferida, definição e preferência de serviço, comportamento do AR, peso e dimensões, observações, nota fiscal, valor declarado e regras de impressão.</p>
+                            <figure>
+                                <img class="manual-image" src="assets/img/20-configuracoes-pre-postagem.png" alt="Tela de Configurações da Pré-Postagem com opções gerais de digitação e impressão" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Preferências que podem ser pré-definidas para agilizar a digitação.</figcaption>
+                            </figure>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer manual-footer">
+        <div class="content has-text-centered is-size-7 has-text-grey">Pré-Postagem Manual — MeusCorreios</div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const links = [...document.querySelectorAll(".manual-sidebar .menu-list a[href^='#']")];
+            const sections = links.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+            const setActive = (id) => links.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`));
+            const observer = new IntersectionObserver((entries) => {
+                const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+                if (visible.length) setActive(visible[0].target.id);
+            }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+            sections.forEach((section) => observer.observe(section));
+        });
+    </script>
+</body>
+</html>

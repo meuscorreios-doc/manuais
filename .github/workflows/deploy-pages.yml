@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -22,16 +22,10 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-
+    
     steps:
       - name: Baixar repositório
         uses: actions/checkout@v4
-
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
 
       - name: Gerar site com index.html
         run: |
@@ -277,10 +271,10 @@ jobs:
           (site / ".nojekyll").write_text("", encoding="utf-8")
           PY
 
-      - name: Enviar arquivos para o Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: Publicar na branch gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: "_site"
-
-      - name: Publicar no GitHub Pages
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          force_orphan: true

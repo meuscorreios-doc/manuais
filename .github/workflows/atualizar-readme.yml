@@ -46,8 +46,6 @@ jobs:
               ".git",
               ".github",
               "templates",
-              "ExpSECT",
-              "ImpBDF",
           }
 
           # Arquivos específicos que também devem ser ignorados

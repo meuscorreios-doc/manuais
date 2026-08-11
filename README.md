@@ -6,6 +6,8 @@ Repositório dedicado aos manuais das integrações do **MeusCorreios**.
 
 <!-- MANUAIS:INICIO -->
 - [Checklist Venda Balança Cubadora SECT](https://meuscorreios-doc.github.io/manuais/CheckSECT/Checklist_Venda_Balanca_Cubadora_SECT.html)
+- [Configurar Expedição no SECT](https://meuscorreios-doc.github.io/manuais/ExpSect/index.html)
+- [Importação BDF/BAU](https://meuscorreios-doc.github.io/manuais/ImpBDF/index.html)
 - [Integração JetCommerce x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrJetcom/index.html)
 - [Integração Shopify x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrShopifyG/index.html)
 - [Integração Tray x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrTray/index.html)

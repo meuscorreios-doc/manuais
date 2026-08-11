@@ -47,11 +47,17 @@ jobs:
 
           base_url = "https://meuscorreios-doc.github.io/manuais/"
 
-          ignorar = {
+          nao_publicar = {
               ".git",
               ".github",
               "_site",
               "templates",
+          }
+
+          ocultar_da_lista = {
+              "ExpSECT",
+              "ImpBDF",
+              "CheckSECT",
           }
 
           class TitleParser(HTMLParser):
@@ -132,7 +138,10 @@ jobs:
               if not pasta.is_dir():
                   continue
 
-              if pasta.name in ignorar:
+              if pasta.name in nao_publicar:
+                  continue
+
+              if pasta.name in ocultar_da_lista:
                   continue
 
               if pasta.name.startswith("."):
@@ -167,7 +176,7 @@ jobs:
           site.mkdir()
 
           for item in repo.iterdir():
-              if item.name in ignorar:
+              if item.name in nao_publicar:
                   continue
 
               if item.name.startswith("."):

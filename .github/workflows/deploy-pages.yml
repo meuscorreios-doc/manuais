@@ -52,8 +52,6 @@ jobs:
               ".github",
               "_site",
               "templates",
-              "ExpSECT",
-              "ImpBDF",
           }
 
           class TitleParser(HTMLParser):

@@ -55,7 +55,7 @@ jobs:
           }
 
           ocultar_da_lista = {
-              "ExpSECT",
+              "ExpSect",
               "ImpBDF",
               "CheckSECT",
           }

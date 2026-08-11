@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checklist Venda Balança Cubadora SECT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+    <link rel="stylesheet" href="assets/css/manual-padrao.css" />
+</head>
+<body>
+    <nav class="navbar is-white is-fixed-top manual-navbar" role="navigation" aria-label="Navegação principal">
+        <div class="navbar-brand">
+            <span class="navbar-item has-text-weight-semibold is-size-6">📘 Checklist Venda Balança Cubadora SECT</span>
+        </div>
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#sobre">Sobre</a>
+                <a class="navbar-item is-size-7" href="#checklist">Checklist</a>
+                <a class="navbar-item is-size-7" href="#pesagem">Pesagem</a>
+                <a class="navbar-item is-size-7" href="#venda">Venda</a>
+                <a class="navbar-item is-size-7" href="#sigepweb">SIGEPweb</a>
+                <a class="navbar-item is-size-7" href="#conferencia-sro">Conferência SRO</a>
+                <a class="navbar-item is-size-7" href="#expedicao">Expedição</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="manual-page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns manual-layout">
+                    <div class="column is-narrow is-hidden-mobile manual-sidebar-column">
+                        <aside class="menu manual-sidebar">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#sobre">Sobre este checklist</a></li>
+                                <li><a href="#checklist">Checklist operacional</a></li>
+                                <li>
+                                    <a href="#procedimento">Procedimento detalhado</a>
+                                    <ul>
+                                        <li><a href="#pesagem">1. Pesagem dos objetos</a></li>
+                                        <li><a href="#venda">2. Venda no CTRL+S</a></li>
+                                        <li><a href="#sigepweb">3. Monitor SIGEPweb</a></li>
+                                        <li><a href="#conferencia-sro">4. SECT x Postados SRO</a></li>
+                                        <li><a href="#expedicao">5. Expedição no SROweb</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#conclusao">Conclusão da conferência</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <main class="column manual-content-column">
+                        <div id="sobre" class="section-anchor mb-5">
+                            <h1 class="title is-4">Checklist Venda Balança Cubadora SECT</h1>
+                            <p class="block is-size-7">
+                                Este passo a passo é voltado para a <strong>segurança da postagem</strong>. O processo é mais lento porque inclui as telas de conferência disponíveis em cada etapa da venda, permitindo identificar pendências antes de concluir a expedição.
+                            </p>
+                            <div class="notification is-light manual-highlight is-size-7">
+                                <strong>Objetivo:</strong> garantir que os objetos pesados na balança sejam vendidos no SECT, atualizados no Correios Atende, conferidos no SRO e expedidos sem pendências.
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div id="checklist" class="section-anchor mb-5">
+                            <h2 class="title is-5">Checklist operacional</h2>
+                            <p class="is-size-7 block">Marque cada item conforme concluir a etapa.</p>
+                            <div class="box is-size-7">
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Pesagem concluída e objetos com erro de pré-postagem tratados.</label>
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Venda realizada no <strong>CTRL+S</strong> e tela <strong>Situação da Balança</strong> conferida.</label>
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Objetos sem PLP tratados pela opção <strong>Buscar SVP/PPN</strong>, quando necessário.</label>
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Monitor <strong>SIGEPweb</strong> atualizado e pendências verificadas.</label>
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Tela <strong>SECT x Postados SRO</strong> conferida durante e após a venda.</label>
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Objetos em <strong>Pesados s/ Venda</strong>, <strong>Não Finalizadas</strong> e <strong>API SARA</strong> verificados.</label>
+                                <label class="checkbox is-block mb-3"><input type="checkbox" /> Retorno <strong>POSTADO</strong> confirmado antes de gerar o arquivo de expedição.</label>
+                                <label class="checkbox is-block"><input type="checkbox" /> Arquivo SRO gerado e processo iniciado no robô de expedição com o SROweb preparado.</label>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div id="procedimento" class="section-anchor mb-5">
+                            <h2 class="title is-5">Procedimento detalhado</h2>
+
+                            <div id="pesagem" class="section-anchor mb-6">
+                                <h3 class="title is-6">1. Pesagem dos objetos</h3>
+                                <div class="content is-size-7">
+                                    <ol>
+                                        <li>Realize normalmente a pesagem dos objetos na balança.</li>
+                                        <li>Se o WS informar <strong>“Não Localizado”</strong>, significa que não foi encontrada uma pré-postagem com os dados informados.</li>
+                                        <li>Nesse caso, puxe o arquivo do <strong>MeusCorreios</strong>. Se o objeto for de terceiros, solicite ao cliente o ajuste da pré-postagem.</li>
+                                    </ol>
+                                </div>
+                                <figure class="mb-4">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/01-erro-nao-localizado.jpeg" alt="Tela da balança mostrando erro Não Localizado para uma pré-postagem" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Exemplo de objeto sem pré-postagem localizada.</figcaption>
+                                </figure>
+
+                                <article class="message is-info is-size-7">
+                                    <div class="message-body">
+                                        Em versões do WS posteriores a <strong>11/08/2026</strong>, o sistema também avisa quando o cartão está suspenso, inativo ou cancelado. Entre em contato com o cliente para informar o problema no contrato. Após o ajuste, utilize <strong>Situação dos Objetos</strong> para puxar a PPN e prosseguir com a venda.
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div id="venda" class="section-anchor mb-6">
+                                <h3 class="title is-6">2. Venda no CTRL+S do SECT</h3>
+                                <div class="content is-size-7">
+                                    <ol>
+                                        <li>Faça a venda no <strong>CTRL+S</strong>.</li>
+                                        <li>Acesse a tela <strong>Situação da Balança</strong> e confira se ficaram objetos pendentes para venda.</li>
+                                    </ol>
+                                </div>
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/02-situacao-balanca.png" alt="Tela do SECT com acesso à Situação da Balança destacado" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Utilize a tela Situação da Balança para identificar pendências.</figcaption>
+                                </figure>
+
+                                <p class="is-size-7 block">
+                                    Se algum objeto aparecer nessa tela com o campo <strong>PLP</strong> vazio, a PPN do arquivo não foi importada. Clique em <strong>Buscar SVP/PPN</strong> para criar o arquivo necessário à venda. É nessa etapa que podem ser recuperadas as PPNs de objetos que apresentaram erro durante a pesagem, como cartão suspenso.
+                                </p>
+                                <figure>
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/03-buscar-svp-ppn.png" alt="Tela Consultar Pesos e Dimensões com o botão Buscar SVP/PPN destacado" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Botão Buscar SVP/PPN para recuperar a pré-postagem.</figcaption>
+                                </figure>
+                            </div>
+
+                            <div id="sigepweb" class="section-anchor mb-6">
+                                <h3 class="title is-6">3. Conferência no Monitor SIGEPweb</h3>
+                                <p class="is-size-7 block">
+                                    Após a venda no CTRL+S, o SECT envia os dados ao Monitor SIGEPweb, responsável pela atualização da venda no Correios Atende.
+                                </p>
+                                <div class="content is-size-7">
+                                    <ol>
+                                        <li>O monitor atualiza automaticamente a cada <strong>5 minutos</strong>. Para forçar uma atualização, pressione <strong>F5</strong> ou clique no ícone de atualizar.</li>
+                                        <li>O comportamento normal é os objetos desaparecerem do monitor conforme passam a constar como postados no SRO.</li>
+                                        <li>Se um objeto não desaparecer, pode ser que o Correios Atende ainda não tenha atualizado a informação.</li>
+                                        <li>Se o CA estiver com problema, utilize a <strong>API SARA</strong> dentro de <strong>SECT x Postados SRO</strong> para confirmar se existe realmente algum objeto sem postagem.</li>
+                                        <li>Para reprocessar um objeto que ainda não consta como postado no CA, informe a letra <strong>V</strong>. O monitor enviará novamente os dados daquela postagem.</li>
+                                    </ol>
+                                </div>
+                                <figure>
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/04-monitor-sigepweb.png" alt="Monitor SIGEPweb com o botão de atualização destacado" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Monitor SIGEPweb: atualização automática ou manual pelo F5/ícone de atualizar.</figcaption>
+                                </figure>
+                            </div>
+
+                            <div id="conferencia-sro" class="section-anchor mb-6">
+                                <h3 class="title is-6">4. Conferência no SECT x Postados SRO</h3>
+                                <article class="message is-warning is-size-7">
+                                    <div class="message-body">
+                                        <strong>Esta é a tela mais importante do processo.</strong> Ela mostra objetos postados no SECT que ainda não constam como postados no SRO. Consulte esta tela <strong>durante e depois</strong> do processo de venda.
+                                    </div>
+                                </article>
+
+                                <p class="is-size-7 block">Acesse <strong>Expedição → SECT x Postados SRO</strong>.</p>
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/05-menu-sect-postados-sro.png" alt="Menu Expedição do SECT com a opção SECT x Postados SRO destacada" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Caminho para abrir a tela SECT x Postados SRO.</figcaption>
+                                </figure>
+
+                                <h4 class="title is-6">Mapa da tela SECT x Postados SRO</h4>
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/06-mapa-sect-postados-sro.png" alt="Mapa numerado da tela SECT x Postados SRO" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Os números da imagem correspondem à tabela abaixo.</figcaption>
+                                </figure>
+
+                                <div class="table-container">
+                                    <table class="table is-fullwidth is-bordered is-size-7">
+                                        <thead><tr><th>Nº</th><th>Função</th><th>Como usar na conferência</th></tr></thead>
+                                        <tbody>
+                                            <tr><td><strong>1</strong></td><td>Período de busca</td><td>Define o período da consulta e permite filtrar também pelo horário ao longo do dia.</td></tr>
+                                            <tr><td><strong>2</strong></td><td>Filtros da consulta</td><td>Permite filtrar Carta Registrada, buscar evento de postagem, mostrar apenas pendentes ou todos, buscar quantidade de status no SRO e incluir ou não Mini Envios.</td></tr>
+                                            <tr><td><strong>3</strong></td><td>Cliente / Posição SRO / Arquivo SRO</td><td>Filtra por cliente e posição no SRO. O botão <strong>Arquivo SRO</strong> gera o arquivo utilizado pelo robô de expedição quando <strong>Busca Quantidade de Status</strong> está ativo.</td></tr>
+                                            <tr><td><strong>4</strong></td><td>Busca de situação específica</td><td>Permite consultar uma situação específica no SRO, por exemplo objetos encaminhados que ainda não aparecem como postados. A opção <strong>Atualiza Monitor SIGEPweb</strong> envia ao monitor as informações atualizadas obtidas no cruzamento SECT x SRO.</td></tr>
+                                            <tr><td><strong>5</strong></td><td>Pesados s/ Venda</td><td>Mostra objetos que passaram pela balança, mas não tiveram o arquivo criado para venda no CTRL+S. Trate-os pela tela <strong>Situação dos Objetos</strong>.</td></tr>
+                                            <tr><td><strong>6</strong></td><td>Não Finalizadas</td><td>Mostra objetos cujo arquivo foi criado para o CTRL+S, mas que ainda não foram vendidos. Acesse o CTRL+S e finalize a venda.</td></tr>
+                                            <tr><td><strong>7</strong></td><td>API SARA</td><td>Útil quando o CA aceita as postagens, mas o SRO ainda não foi atualizado. Permite identificar quais objetos realmente continuam sem postagem, desconsiderando os que apenas aguardam a atualização do SRO.</td></tr>
+                                            <tr><td><strong>8</strong></td><td>Total SECT / Total Postagem SRO</td><td><strong>Total SECT</strong> mostra quantos objetos foram vendidos; <strong>Total Postagem SRO</strong> mostra quantos já possuem o evento de postagem no SRO.</td></tr>
+                                            <tr><td><strong>9</strong></td><td>&gt;1 SRO / Faltam</td><td>Mostra quantos objetos possuem mais de um status no SRO e quantos ainda precisam receber mais de um status. Pode ser usado para verificar objetos que ainda não foram expedidos.</td></tr>
+                                            <tr><td><strong>10</strong></td><td>Contagem de DH</td><td>Exibe a contagem relacionada ao horário de DH. O horário pode ser configurado em <strong>Cadastro AGF → Franquia e Parâmetros</strong>.</td></tr>
+                                            <tr><td><strong>11</strong></td><td>Exportação para Excel</td><td>Gera uma planilha com os objetos exibidos na tela.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div id="expedicao" class="section-anchor mb-6">
+                                <h3 class="title is-6">5. Gerar o arquivo e realizar a expedição no SROweb</h3>
+
+                                <article class="message is-info is-size-7">
+                                    <div class="message-body">
+                                        A configuração da expedição no SECT está detalhada no manual <a href="https://meuscorreios-doc.github.io/manuais/ExpSect/" target="_blank" rel="noopener noreferrer"><strong>Expedição no SECT</strong></a>.
+                                    </div>
+                                </article>
+
+                                <div class="content is-size-7">
+                                    <ol>
+                                        <li>Após a postagem no Correios Atende, aguarde o retorno da informação <strong>POSTADO</strong>. O arquivo de expedição somente é gerado depois desse retorno.</li>
+                                        <li>Antes de gerar o arquivo, deixe os <strong>rótulos abertos no SROweb</strong>.</li>
+                                        <li>Acesse <strong>Expedição → SECT x Expedidos SRO</strong> ou utilize <strong>ALT+X</strong>.</li>
+                                    </ol>
+                                </div>
+
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/07-menu-sect-expedidos-sro.png" alt="Menu Expedição com a opção SECT x Expedidos SRO destacada" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Acesso à tela SECT x Expedidos SRO pelo menu ou ALT+X.</figcaption>
+                                </figure>
+
+                                <div class="content is-size-7">
+                                    <ol start="4">
+                                        <li>Confirme se todos os objetos possuem numeração preenchida na coluna <strong>Pos</strong>.</li>
+                                        <li>Clique em <strong>Arquivo SRO</strong>.</li>
+                                    </ol>
+                                </div>
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/08-gerar-arquivo-sro.png" alt="Tela do SECT com a coluna Pos e o botão Arquivo SRO destacados" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Antes de gerar o arquivo, confira a coluna Pos.</figcaption>
+                                </figure>
+
+                                <div class="content is-size-7">
+                                    <ol start="6">
+                                        <li>Com o robô de expedição instalado e configurado, abra o programa e clique em <strong>Iniciar Processo</strong>.</li>
+                                        <li>O robô direcionará o processo para o SROweb e iniciará a leitura dos objetos.</li>
+                                    </ol>
+                                </div>
+                                <figure class="mb-4">
+                                    <img class="manual-image" src="assets/img/checklist-venda-balanca-sect/09-robo-expedicao.png" alt="Robô de expedição com o botão Iniciar Processo destacado" />
+                                    <figcaption class="is-size-7 has-text-grey mt-2">Robô de expedição: clique em Iniciar Processo para começar a leitura.</figcaption>
+                                </figure>
+
+                                <article class="message is-warning is-size-7">
+                                    <div class="message-body">
+                                        <strong>Atenção:</strong> só existirá arquivo para envio se houver retorno da informação <strong>POSTADO</strong>.
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div id="conclusao" class="section-anchor mb-5">
+                            <h2 class="title is-5">Conclusão da conferência</h2>
+                            <p class="is-size-7 block">
+                                Antes de encerrar o procedimento, confirme que não existem pendências de venda na balança, que as postagens foram atualizadas no Correios Atende/SRO e que o arquivo de expedição foi processado pelo robô.
+                            </p>
+                            <div class="notification is-light manual-highlight is-size-7">
+                                Se houver diferença entre o SECT e o SRO, utilize primeiro as ferramentas de conferência da tela <strong>SECT x Postados SRO</strong> — especialmente <strong>Pesados s/ Venda</strong>, <strong>Não Finalizadas</strong> e <strong>API SARA</strong> — antes de considerar o processo concluído.
+                            </div>
+                        </div>
+
+                        <hr />
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer manual-footer">
+        <div class="content has-text-centered is-size-7 has-text-grey">Checklist Venda Balança Cubadora SECT</div>
+    </footer>
+
+    <script>
+        (() => {
+            const links = Array.from(document.querySelectorAll('.manual-sidebar a[href^="#"]'));
+            const sections = links
+                .map(link => document.querySelector(link.getAttribute('href')))
+                .filter(Boolean);
+
+            if (!('IntersectionObserver' in window) || !sections.length) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                const visible = entries
+                    .filter(entry => entry.isIntersecting)
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+                if (!visible.length) return;
+
+                const id = '#' + visible[0].target.id;
+                links.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === id));
+            }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+            sections.forEach(section => observer.observe(section));
+        })();
+    </script>
+</body>
+</html>

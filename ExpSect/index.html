@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Guia de configuração e geração da expedição no SECT com base nas direções do SROweb, incluindo faixas de CEP, peso e medidas, arquivo SRO e RobôWeb." />
+    <title>Expedição</title>
+    <link rel="stylesheet" href="assets/css/bulma.min.css" />
+    <link rel="stylesheet" href="assets/css/manual-padrao.css" />
+</head>
+<body>
+    <nav class="navbar is-white is-fixed-top manual-navbar" role="navigation" aria-label="Navegação principal">
+        <div class="navbar-brand">
+            <span class="navbar-item has-text-weight-semibold is-size-6">📘 Expedição</span>
+        </div>
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#visao-geral">Visão geral</a>
+                <a class="navbar-item is-size-7" href="#consultar-sroweb">SROweb</a>
+                <a class="navbar-item is-size-7" href="#cadastrar-sect">Cadastro SECT</a>
+                <a class="navbar-item is-size-7" href="#gerar-arquivo">Arquivo SRO</a>
+                <a class="navbar-item is-size-7" href="#roboweb">RobôWeb</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="manual-page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns manual-layout">
+                    <div class="column is-narrow is-hidden-mobile manual-sidebar-column">
+                        <aside class="menu manual-sidebar">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#visao-geral">Visão geral</a></li>
+                                <li>
+                                    <a href="#consultar-sroweb">1. Consultar o SROweb</a>
+                                    <ul>
+                                        <li><a href="#abrir-rotulos">Lista de Registro e Rótulos</a></li>
+                                        <li><a href="#identificar-direcao">Identificar os dados da direção</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#cadastrar-sect">2. Cadastrar no SECT</a>
+                                    <ul>
+                                        <li><a href="#dados-direcao">Dados da direção</a></li>
+                                        <li><a href="#faixas-cep">Faixas de CEP</a></li>
+                                        <li><a href="#peso-medidas">Peso e medidas</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#proximas-direcoes">3. Cadastrar as próximas direções</a></li>
+                                <li><a href="#gerar-arquivo">4. Gerar o arquivo de expedição</a></li>
+                                <li><a href="#roboweb">5. Processar no RobôWeb</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <main class="column manual-content-column">
+                        <section id="visao-geral" class="section-anchor mb-5">
+                            <h1 class="title is-4">Expedição</h1>
+                            <p class="block is-size-7">
+                                Este guia apresenta o cadastro das direções de expedição no SECT com base nas informações exibidas no SROweb e o processo de geração do arquivo para envio.
+                            </p>
+
+                            <div class="notification is-light manual-highlight is-size-7">
+                                <strong>Fluxo resumido:</strong> consultar as direções no SROweb → reproduzir o cadastro no SECT → informar faixas de CEP e, quando necessário, peso e medidas → cadastrar as demais direções → aguardar o retorno <strong>POSTADO</strong> → gerar o Arquivo SRO → iniciar o processamento no RobôWeb.
+                            </div>
+
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">
+                                    <strong>Importante:</strong> o cadastro deve seguir as informações da própria agência/DR. A direção utilizada na geração do arquivo deve corresponder ao que aparece no SROweb para cada destino.
+                                </div>
+                            </article>
+                        </section>
+
+                        <hr />
+
+                        <section id="consultar-sroweb" class="section-anchor mb-5">
+                            <h2 class="title is-5">1. Consultar as direções no SROweb</h2>
+                            <p class="block is-size-7">
+                                Antes de cadastrar as direções no SECT, consulte no SROweb os dados utilizados na expedição. O arquivo é gerado de acordo com a <strong>direção</strong> informada para cada destino.
+                            </p>
+
+                            <section id="abrir-rotulos" class="section-anchor mb-5">
+                                <h3 class="title is-6">1.1. Abrir Lista de Registro e Rótulos</h3>
+                                <ol class="is-size-7">
+                                    <li>No SROweb, acesse <strong>Lista de Registro</strong>.</li>
+                                    <li>Em seguida, abra a opção <strong>Rótulos</strong>.</li>
+                                    <li>Mantenha essa tela disponível para consultar os detalhes de cada direção da expedição.</li>
+                                </ol>
+
+                                <figure class="mt-4 mb-5">
+                                    <img class="manual-image" src="assets/img/01-sroweb-lista-registro.png" alt="Tela inicial do SROweb com a opção Lista de Registro destacada" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Acesso à Lista de Registro no SROweb.</figcaption>
+                                </figure>
+
+                                <figure>
+                                    <img class="manual-image" src="assets/img/02-sroweb-rotulos.png" alt="Tela de Lista de Registro do SROweb com a opção Rótulos destacada" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Abra Rótulos para consultar as informações da expedição.</figcaption>
+                                </figure>
+                            </section>
+
+                            <section id="identificar-direcao" class="section-anchor mb-5">
+                                <h3 class="title is-6">1.2. Identificar os dados da direção</h3>
+                                <p class="block is-size-7">
+                                    Na listagem de Rótulos, localize o destino que será cadastrado e confira os dados exibidos, como <strong>Direção</strong>, <strong>Categoria</strong>, <strong>Formato</strong>, <strong>Faixas</strong> e <strong>Posição</strong>. Essas informações serão reproduzidas no SECT.
+                                </p>
+
+                                <figure>
+                                    <img class="manual-image" src="assets/img/03-sroweb-detalhes-expedicao.png" alt="Tabela de Rótulos do SROweb mostrando direção, categoria, formato, faixas e posição" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Use os dados apresentados no SROweb como referência para o cadastro no SECT.</figcaption>
+                                </figure>
+                            </section>
+                        </section>
+
+                        <hr />
+
+                        <section id="cadastrar-sect" class="section-anchor mb-5">
+                            <h2 class="title is-5">2. Cadastrar as direções no SECT</h2>
+                            <p class="block is-size-7">
+                                Com a tela do SROweb aberta, realize no SECT o cadastro da direção seguindo as mesmas informações apresentadas para o destino.
+                            </p>
+
+                            <section id="dados-direcao" class="section-anchor mb-5">
+                                <h3 class="title is-6">2.1. Criar a direção e o destino</h3>
+                                <ol class="is-size-7">
+                                    <li>No SECT, acesse o cadastro de <strong>Direções de Triagem</strong>.</li>
+                                    <li>Selecione o destino correspondente ou clique em <strong>Novo</strong> quando precisar criar um destino.</li>
+                                    <li>Cadastre a direção conforme os dados do SROweb.</li>
+                                </ol>
+
+                                <figure class="mt-4 mb-5">
+                                    <img class="manual-image" src="assets/img/04-sect-criar-direcao.png" alt="SECT com o cadastro de Direções de Triagem e janela para cadastrar um destino" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Abertura do cadastro de Direções de Triagem no SECT.</figcaption>
+                                </figure>
+
+                                <figure class="mb-5">
+                                    <img class="manual-image" src="assets/img/05-sect-cadastrar-destino.png" alt="Comparação entre um destino do SROweb e o cadastro correspondente no SECT" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">O destino cadastrado no SECT deve acompanhar o que consta no SROweb.</figcaption>
+                                </figure>
+
+                                <p class="block is-size-7">
+                                    Preencha também <strong>Categoria</strong>, <strong>Formato</strong> e <strong>Posição</strong> conforme a listagem do SROweb. O exemplo do manual mostra categorias como SEDEX e PAC e formatos como envelope, pacote ou misto.
+                                </p>
+
+                                <figure>
+                                    <img class="manual-image" src="assets/img/06-sect-parametros-direcao.png" alt="Comparação entre os campos de direção, categoria, formato e posição no SROweb e no SECT" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Exemplo de correspondência entre os campos do SROweb e do SECT.</figcaption>
+                                </figure>
+                            </section>
+
+                            <section id="faixas-cep" class="section-anchor mb-5">
+                                <h3 class="title is-6">2.2. Cadastrar as faixas de CEP</h3>
+                                <p class="block is-size-7">
+                                    Depois de cadastrar a direção, informe no SECT os CEPs que fazem parte dela. Utilize as faixas apresentadas no SROweb como referência para preencher <strong>CEP Inicial</strong> e <strong>CEP Final</strong>.
+                                </p>
+
+                                <figure>
+                                    <img class="manual-image" src="assets/img/07-sect-faixas-cep.png" alt="SROweb mostrando faixas de CEP e SECT com os campos CEP Inicial e CEP Final preenchidos" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Cadastro das faixas de CEP da direção.</figcaption>
+                                </figure>
+                            </section>
+
+                            <section id="peso-medidas" class="section-anchor mb-5">
+                                <h3 class="title is-6">2.3. Configurar peso e medidas, quando aplicável</h3>
+                                <p class="block is-size-7">
+                                    Caso a agência utilize expedição por <strong>peso e medidas</strong>, preencha os parâmetros dos serviços conforme o cadastro utilizado pela própria agência/DR.
+                                </p>
+
+                                <div class="notification is-light manual-highlight is-size-7">
+                                    O manual reforça que cada agência/DR pode possuir um tipo de cadastro diferente. Portanto, reproduza no SECT os limites e regras correspondentes à sua operação.
+                                </div>
+
+                                <figure>
+                                    <img class="manual-image" src="assets/img/08-sect-peso-medidas.png" alt="Tela do SECT com configuração de serviços e limites de peso, altura, largura e comprimento" loading="lazy" />
+                                    <figcaption class="has-text-grey is-size-7 mt-2">Exemplo de configuração de peso e medidas por serviço.</figcaption>
+                                </figure>
+                            </section>
+                        </section>
+
+                        <hr />
+
+                        <section id="proximas-direcoes" class="section-anchor mb-5">
+                            <h2 class="title is-5">3. Cadastrar as próximas direções</h2>
+                            <p class="block is-size-7">
+                                Depois de confirmar uma direção, o SECT abre o cadastro para a próxima. Continue seguindo a <strong>numeração/posição</strong> apresentada no SROweb.
+                            </p>
+                            <ol class="is-size-7">
+                                <li>Clique no campo de destino e selecione o cadastro desejado.</li>
+                                <li>Confira a direção e a posição correspondente.</li>
+                                <li>Repita o mesmo processo para os demais destinos.</li>
+                                <li>Para um destino ainda não cadastrado, clique em <strong>Novo</strong> e faça o cadastro como nas etapas anteriores.</li>
+                            </ol>
+
+                            <figure class="mt-4">
+                                <img class="manual-image" src="assets/img/09-sect-proxima-direcao.png" alt="Janela Criar Direções de Triagem com seleção do próximo destino e posição" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Exemplo de seleção do próximo destino e continuidade da numeração.</figcaption>
+                            </figure>
+                        </section>
+
+                        <hr />
+
+                        <section id="gerar-arquivo" class="section-anchor mb-5">
+                            <h2 class="title is-5">4. Gerar o arquivo de expedição</h2>
+
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">
+                                    <strong>Pré-requisito:</strong> após a postagem no Correios Atende, é necessário receber a informação <strong>POSTADO</strong>. O arquivo de expedição somente é gerado quando esse retorno existir.
+                                </div>
+                            </article>
+
+                            <ol class="is-size-7">
+                                <li>No SECT, acesse <strong>Expedição → SECT x Expedidos SRO</strong> ou utilize <strong>ALT+X</strong>.</li>
+                                <li>Na tela aberta, verifique se todos os objetos possuem numeração preenchida na coluna <strong>Pos</strong>.</li>
+                                <li>Clique em <strong>Arquivo SRO</strong> para gerar o arquivo.</li>
+                            </ol>
+
+                            <div class="columns is-variable is-5 mt-4 mb-5">
+                                <div class="column is-5">
+                                    <figure>
+                                        <img class="manual-image" src="assets/img/10-menu-expedicao-altx.png" alt="Menu Expedição do SECT com a opção SECT x Expedidos SRO e atalho ALT+X" loading="lazy" />
+                                        <figcaption class="has-text-grey is-size-7 mt-2">Acesso pelo menu Expedição ou pelo atalho ALT+X.</figcaption>
+                                    </figure>
+                                </div>
+                                <div class="column is-7">
+                                    <figure>
+                                        <img class="manual-image" src="assets/img/11-sect-arquivo-sro.png" alt="Tela SECT x Postados SRO com a coluna Pos e o botão Arquivo SRO destacados" loading="lazy" />
+                                        <figcaption class="has-text-grey is-size-7 mt-2">Confira a coluna Pos antes de gerar o Arquivo SRO.</figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr />
+
+                        <section id="roboweb" class="section-anchor mb-5">
+                            <h2 class="title is-5">5. Processar a expedição no RobôWeb</h2>
+                            <p class="block is-size-7">
+                                Com o robô de expedição instalado e configurado, abra o programa e clique em <strong>Iniciar Processo</strong>. O sistema será direcionado automaticamente ao SROweb e iniciará a leitura dos objetos.
+                            </p>
+
+                            <article class="message is-info is-size-7">
+                                <div class="message-body">
+                                    Antes de gerar/processar o arquivo, deixe os <strong>Rótulos abertos no SROweb</strong>.
+                                </div>
+                            </article>
+
+                            <figure class="mb-5">
+                                <img class="manual-image" src="assets/img/12-roboweb-iniciar.png" alt="Tela do RobôWeb com o botão Iniciar Processo e contadores de objetos" loading="lazy" />
+                                <figcaption class="has-text-grey is-size-7 mt-2">Início do processamento pelo RobôWeb.</figcaption>
+                            </figure>
+
+                            <div class="notification is-light manual-highlight is-size-7">
+                                <strong>Reforço:</strong> se o Correios Atende ainda não tiver retornado a informação <strong>POSTADO</strong>, não haverá arquivo disponível para envio.
+                            </div>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer manual-footer">
+        <div class="content has-text-centered is-size-7 has-text-grey">Expedição — MeusCorreios / SECT</div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const links = [...document.querySelectorAll(".manual-sidebar .menu-list a[href^='#']")];
+            const sections = links.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+            const setActive = (id) => links.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`));
+            const observer = new IntersectionObserver((entries) => {
+                const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+                if (visible.length) setActive(visible[0].target.id);
+            }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+            sections.forEach((section) => observer.observe(section));
+        });
+    </script>
+</body>
+</html>

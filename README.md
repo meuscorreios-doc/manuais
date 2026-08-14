@@ -13,6 +13,5 @@ Repositório dedicado aos manuais das integrações do **MeusCorreios**.
 - [Integração Wbuy x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrWbuy/index.html)
 - [MeusCorreios Chatbot](https://meuscorreios-doc.github.io/manuais/meusCorreiosChatbot/index.html)
 - [Pré-Postagem Manual no MeusCorreios](https://meuscorreios-doc.github.io/manuais/PreManualMC/index.html)
-- [Venda Balança Cubadora SECT](https://meuscorreios-doc.github.io/manuais/CheckSECT/index.html)
 <!-- MANUAIS:FIM -->
 

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Impressão do Dia (APIMCImpDia) — Manual de Integração</title>
+    <style>
+/* Manual MeusCorreios — estilo Guia de Suporte */
+:root {
+    color-scheme: light;
+    --main: #ffffff;
+    --main-bis: #fafafa;
+    --text: #363636;
+    --text-strong: #222222;
+    --background: #f5f5f5;
+    --border: #dbdbdb;
+    --link: #3273dc;
+    --blue-soft: #dbeafe;
+    --blue-line: #bdd4f3;
+    --green-soft: #e9fbe6;
+    --green-line: #c3e6c0;
+    --warning-soft: #fff3cd;
+    --warning-line: #ffdd57;
+    --success-soft: #effaf3;
+    --success-line: #48c774;
+    --danger-soft: #feecf0;
+    --danger-line: #f14668;
+    --grey-soft: #f5f5f5;
+    --mono-bg: #f1f5f9;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    background: #fafafa;
+    padding-bottom: 4rem;
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.navbar {
+    min-height: 3.25rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: stretch;
+}
+.navbar-brand { display: flex; align-items: center; min-width: 0; }
+.navbar-item {
+    color: #4a4a4a;
+    display: flex;
+    align-items: center;
+    padding: .5rem .75rem;
+    line-height: 1.5;
+}
+.navbar-title {
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.navbar-menu { margin-left: auto; display: flex; }
+.navbar-end { display: flex; align-items: stretch; }
+.page-offset { padding-top: 3.5rem; }
+.section { padding: 2rem 1.5rem; }
+.container { width: 100%; max-width: 1180px; margin: 0 auto; }
+.columns { display: flex; align-items: flex-start; gap: 1.5rem; }
+.column { flex: 1 1 0; min-width: 0; }
+.column.is-narrow { flex: none; }
+.menu { font-size: .875rem; }
+.menu-label {
+    color: #7a7a7a;
+    font-size: .75rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 0 0 .75rem;
+}
+.menu-list,
+.menu-list ul { list-style: none; margin: 0; padding: 0; }
+.menu-list a {
+    color: #363636;
+    border-radius: 4px;
+    display: block;
+    padding: .5em .75em;
+}
+.menu-list a:hover { background: #f5f5f5; text-decoration: none; }
+.menu-list ul { margin-left: .75rem; padding-left: .75rem; border-left: 1px solid #ededed; }
+.section-anchor { scroll-margin-top: 4.2rem; }
+.block { margin-bottom: 1rem; }
+.mb-1 { margin-bottom: .25rem !important; }
+.mb-2 { margin-bottom: .5rem !important; }
+.mb-3 { margin-bottom: .75rem !important; }
+.mb-4 { margin-bottom: 1rem !important; }
+.mb-5 { margin-bottom: 1.5rem !important; }
+.mt-2 { margin-top: .5rem !important; }
+.mt-3 { margin-top: .75rem !important; }
+.mt-4 { margin-top: 1rem !important; }
+.mt-5 { margin-top: 1.5rem !important; }
+.py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+.title { color: #363636; font-weight: 700; line-height: 1.125; margin: 0 0 1rem; }
+.title.is-4 { font-size: 1.5rem; }
+.title.is-5 { font-size: 1.25rem; }
+.title.is-6 { font-size: 1rem; }
+.subtitle { color: #4a4a4a; font-size: 1rem; margin-top: -.5rem; margin-bottom: 1rem; }
+.content p { margin-top: 0; margin-bottom: .75rem; }
+.content ul,
+.content ol { margin-top: .5rem; margin-bottom: 1rem; padding-left: 1.25rem; }
+.content ul li,
+.content ol li { margin-bottom: .3rem; }
+.is-size-7 { font-size: .875rem !important; }
+.is-size-6 { font-size: 1rem !important; }
+.has-text-weight-semibold { font-weight: 600 !important; }
+.has-text-grey { color: #7a7a7a !important; }
+.has-text-centered { text-align: center !important; }
+hr { background: #ededed; border: none; display: block; height: 1px; margin: 1.5rem 0; }
+.notification,
+.message {
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+.notification {
+    background: #f5f5f5;
+    padding: 1rem 1.25rem;
+}
+.notification.is-light { background: #f5f5f5; color: #363636; }
+.notification.is-info { background: #eef6fc; border-left: 4px solid #3273dc; }
+.message { background: #f5f5f5; }
+.message-body {
+    border-left: 4px solid #dbdbdb;
+    padding: 1em 1.25em;
+}
+.message.is-info .message-body { border-left-color: #3273dc; background: #eef6fc; }
+.message.is-warning .message-body { border-left-color: #ffdd57; background: #fffbeb; }
+.message.is-success .message-body { border-left-color: #48c774; background: #effaf3; }
+.message.is-danger .message-body { border-left-color: #f14668; background: #feecf0; }
+.table {
+    background: #fff;
+    color: #363636;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.table.is-bordered td,
+.table.is-bordered th { border: 1px solid #dbdbdb; }
+.table th,
+.table td { padding: .5em .75em; vertical-align: middle; }
+.table thead th {
+    background: #f5f5f5;
+    color: #363636;
+    font-weight: 700;
+}
+.table code,
+code {
+    background: var(--mono-bg);
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    color: #111827;
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: .92em;
+    padding: .08em .35em;
+}
+pre.codeblock {
+    background: var(--mono-bg);
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #111827;
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: .8rem;
+    line-height: 1.45;
+    margin: .5rem 0 1rem;
+    overflow-x: auto;
+    padding: .85rem 1rem;
+    white-space: pre;
+}
+pre.codeblock code { background: none; border: none; padding: 0; font-size: inherit; }
+.codelabel { color: #7a7a7a; display: block; font-size: .75rem; margin-top: .75rem; }
+.tag {
+    align-items: center;
+    border-radius: 9999px;
+    display: inline-flex;
+    font-size: .75rem;
+    height: 1.7em;
+    justify-content: center;
+    line-height: 1.5;
+    padding: .1em .65em;
+    white-space: nowrap;
+    background: #eef6fc;
+    color: #1d4e89;
+}
+.tag.is-mono { font-family: Consolas, Monaco, 'Courier New', monospace; }
+.tag.is-post { background: #e9fbe6; color: #1f6b2a; font-weight: 700; }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.info-card {
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    background: #ffffff;
+    padding: .9rem 1rem;
+}
+.info-card .label { color: #7a7a7a; display: block; font-size: .75rem; margin-bottom: .25rem; }
+.info-card code { word-break: break-all; }
+.steps { counter-reset: step; list-style: none; padding-left: 0; margin: .5rem 0 1rem; }
+.steps.start-3 { counter-reset: step 2; }
+.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding: .85rem 1rem .85rem 3rem;
+    margin-bottom: .65rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    background: #ffffff;
+}
+.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: .85rem;
+    top: .85rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #3273dc;
+    color: #fff;
+    font-weight: 700;
+    font-size: .8rem;
+}
+.steps li ul { margin: .45rem 0 0; padding-left: 1.1rem; }
+.footer { background: #fafafa; padding: 1rem 1.5rem; }
+.checklist { list-style: none; padding-left: 0; }
+.checklist li { margin-bottom: .45rem; padding-left: 1.4rem; position: relative; }
+.checklist li::before { content: "✅"; position: absolute; left: 0; top: 0; font-size: .9em; }
+
+.sidebar-column {
+    min-width: 220px;
+    position: relative;
+}
+.sidebar-fixed {
+    position: fixed;
+    top: 4.5rem;
+    width: 220px;
+    max-height: calc(100vh - 5rem);
+    overflow: auto;
+    padding-right: .35rem;
+}
+.sidebar-fixed.is-bottom {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+}
+
+@media (max-width: 900px) {
+
+    .sidebar-column {
+        min-width: auto;
+    }
+    .sidebar-fixed {
+        position: static !important;
+        width: auto !important;
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+    }
+
+    .navbar-menu { display: none; }
+    .columns { display: block; }
+    .is-hidden-mobile { display: none !important; }
+    .section { padding-left: 1rem; padding-right: 1rem; }
+    .card-grid { grid-template-columns: 1fr; }
+}
+@media print {
+    .navbar, aside.menu { display: none !important; }
+    .page-offset { padding-top: 0; }
+    body { background: white; }
+    a { color: inherit; text-decoration: none; }
+    pre.codeblock { white-space: pre-wrap; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+    <nav class="navbar is-white is-fixed-top" role="navigation">
+        <div class="navbar-brand">
+            <span class="navbar-item navbar-title">🖨️ API Impressão do Dia (APIMCImpDia) — Manual de Integração</span>
+        </div>
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#sobre">Sobre</a>
+                <a class="navbar-item is-size-7" href="#endpoint">Endpoint</a>
+                <a class="navbar-item is-size-7" href="#requisicao">Requisição</a>
+                <a class="navbar-item is-size-7" href="#resposta">Resposta</a>
+                <a class="navbar-item is-size-7" href="#erros">Erros</a>
+                <a class="navbar-item is-size-7" href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+
+                    <div class="column is-narrow is-hidden-mobile sidebar-column">
+                        <aside class="menu sidebar-fixed" style="font-size:0.82rem;">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#sobre">Sobre esta API</a></li>
+                                <li><a href="#requisitos">Pré-requisitos</a></li>
+                                <li><a href="#regras">Quais pré-postagens são devolvidas</a></li>
+                                <li><a href="#endpoint">Endpoint e autenticação</a></li>
+                                <li><a href="#requisicao">Requisição</a>
+                                    <ul>
+                                        <li><a href="#campos-entrada">Campos de entrada</a></li>
+                                        <li><a href="#exemplo-entrada">Exemplos</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#resposta">Resposta</a>
+                                    <ul>
+                                        <li><a href="#campos-saida">Campos de retorno</a></li>
+                                        <li><a href="#exemplo-saida">Exemplo</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#arquivo">Conteúdo do arquivo</a></li>
+                                <li><a href="#fluxo">Fluxo recomendado</a></li>
+                                <li><a href="#erros">Mensagens de erro</a></li>
+                                <li><a href="#outras">ZPL nas APIs de pré-postagem</a></li>
+                                <li><a href="#faq">FAQ de suporte</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <div class="column">
+
+                        <div id="sobre" class="section-anchor mb-5">
+                            <h1 class="title is-4">API Impressão do Dia (APIMCImpDia) — Manual de Integração</h1>
+                            <p class="block is-size-7">
+                                Esta API permite que o cliente, usando o seu <strong>Token</strong> do MeusCorreios, busque de uma só vez todas as pré-postagens de um dia que <strong>já têm etiqueta e serviço definidos</strong> e <strong>ainda não foram impressas</strong>. Para cada objeto, a API devolve um arquivo pronto para impressão com a <strong>etiqueta de postagem + DANFE / DACE</strong>, em <strong>PDF</strong> ou em <strong>ZPL</strong> (impressoras térmicas Zebra).
+                            </p>
+                            <div class="notification is-info is-size-7" style="border-left: 4px solid #3273dc;">
+                                Cada objeto devolvido é marcado como <strong>impresso</strong> no MeusCorreios. Assim, a próxima chamada do mesmo dia traz apenas as pré-postagens que ficaram prontas depois da chamada anterior.
+                            </div>
+                            <div class="card-grid is-size-7">
+                                <div class="info-card"><span class="label">Tipo</span>REST · JSON · <span class="tag is-post">POST</span></div>
+                                <div class="info-card"><span class="label">Autenticação</span>Token do cliente no corpo da requisição</div>
+                                <div class="info-card"><span class="label">Formatos de arquivo</span><code>PDF</code> (base64) ou <code>ZPL</code> (texto)</div>
+                                <div class="info-card"><span class="label">Escopo de cada chamada</span>Um dia por vez (data do lote)</div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div id="requisitos" class="section-anchor mb-5">
+                            <h2 class="title is-5">Pré-requisitos</h2>
+                            <ul class="content is-size-7">
+                                <li><strong>Token de API</strong> válido do MeusCorreios — o mesmo usado nas demais APIs (criação de pré-postagem, logística reversa etc.).</li>
+                                <li>Pré-postagens já criadas no MeusCorreios, com <strong>serviço</strong> e <strong>etiqueta</strong> atribuídos.</li>
+                                <li>Para receber o DANFE junto da etiqueta: chave da nota fiscal (ou da DC-e) informada na pré-postagem e o XML autorizado (com protocolo) disponível no MeusCorreios.</li>
+                                <li>Comunicação por <strong>HTTPS</strong>.</li>
+                            </ul>
+                        </div>
+
+                        <hr>
+
+                        <div id="regras" class="section-anchor mb-5">
+                            <h2 class="title is-5">1. Quais pré-postagens são devolvidas</h2>
+                            <p class="is-size-7 block">
+                                Uma pré-postagem entra no retorno quando atende <strong>todas</strong> as condições abaixo:
+                            </p>
+                            <ul class="checklist is-size-7">
+                                <li>Pertence ao cliente dono do <strong>Token</strong> informado.</li>
+                                <li>Está em um lote cuja <strong>data</strong> é a data informada na chamada (se não informar, vale a data de hoje).</li>
+                                <li>Já possui <strong>etiqueta</strong> (código de rastreio).</li>
+                                <li>Já possui <strong>serviço</strong> definido.</li>
+                                <li>Ainda <strong>não foi impressa</strong>.</li>
+                            </ul>
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">
+                                    ⚠️ Ao gerar o arquivo, o objeto é marcado como <strong>impresso</strong> e recebe a <strong>data de postagem</strong> do dia, exatamente como acontece na impressão de etiquetas pelo MeusCorreios. Guarde o arquivo recebido: uma nova chamada <strong>não devolve</strong> o mesmo objeto outra vez.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="endpoint" class="section-anchor mb-5">
+                            <h2 class="title is-5">2. Endpoint e autenticação</h2>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:28%"><strong>URL</strong></td>
+                                        <td><code>https://meuscorreios.app/apimcimpdia.svc/rest/</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Método</strong></td>
+                                        <td><span class="tag is-post">POST</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cabeçalho</strong></td>
+                                        <td><code>Content-Type: application/json</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Autenticação</strong></td>
+                                        <td>Campo <code>token</code> dentro do corpo da requisição.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Protocolo</strong></td>
+                                        <td>Somente <strong>HTTPS</strong>.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <article class="message is-info is-size-7">
+                                <div class="message-body">
+                                    ℹ️ O corpo da requisição vai sempre <strong>dentro</strong> do objeto <code>parmIn</code>, e a resposta vem dentro de <code>parmOut</code> — mesmo padrão das demais APIs REST do MeusCorreios.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="requisicao" class="section-anchor mb-5">
+                            <h2 class="title is-5">3. Requisição</h2>
+
+                            <div id="campos-entrada" class="section-anchor">
+                                <h3 class="title is-6">Campos de entrada (<code>parmIn</code>)</h3>
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <thead>
+                                        <tr>
+                                            <th>Campo</th>
+                                            <th>Tipo</th>
+                                            <th>Obrigatório</th>
+                                            <th>Descrição</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>token</code></td>
+                                            <td>texto (até 256)</td>
+                                            <td>Sim</td>
+                                            <td>Token de API do cliente no MeusCorreios.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>data</code></td>
+                                            <td>data <code>AAAA-MM-DD</code></td>
+                                            <td>Não</td>
+                                            <td>Data dos lotes a imprimir. Um dia por chamada. Se vier vazia, vale a <strong>data de hoje</strong>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>formato</code></td>
+                                            <td>texto</td>
+                                            <td>Não</td>
+                                            <td><code>PDF</code> ou <code>ZPL</code>. Se vier vazio, vale <code>PDF</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>impLogo</code></td>
+                                            <td>texto (<code>S</code>/<code>N</code>)</td>
+                                            <td>Não</td>
+                                            <td><code>S</code> imprime a logomarca do remetente na etiqueta em PDF (quando cadastrada). Não se aplica ao ZPL.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="exemplo-entrada" class="section-anchor">
+                                <h3 class="title is-6 mt-4">Exemplos</h3>
+                                <span class="codelabel">Corpo da requisição — PDF</span>
+<pre class="codeblock"><code>{
+  "parmIn": {
+    "token": "SEU_TOKEN_AQUI",
+    "data": "2026-10-06",
+    "formato": "PDF",
+    "impLogo": "N"
+  }
+}</code></pre>
+                                <span class="codelabel">Corpo da requisição — ZPL</span>
+<pre class="codeblock"><code>{
+  "parmIn": {
+    "token": "SEU_TOKEN_AQUI",
+    "data": "2026-10-06",
+    "formato": "ZPL"
+  }
+}</code></pre>
+                                <span class="codelabel">Chamada com curl</span>
+<pre class="codeblock"><code>curl -X POST "https://meuscorreios.app/apimcimpdia.svc/rest/" \
+     -H "Content-Type: application/json" \
+     --data-binary @requisicao.json</code></pre>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div id="resposta" class="section-anchor mb-5">
+                            <h2 class="title is-5">4. Resposta</h2>
+
+                            <div id="campos-saida" class="section-anchor">
+                                <h3 class="title is-6">Campos de retorno (<code>parmOut</code>)</h3>
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <thead>
+                                        <tr>
+                                            <th>Campo</th>
+                                            <th>Descrição</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>erro</code></td>
+                                            <td>Vazio quando a chamada foi aceita. Preenchido com o motivo quando a chamada foi recusada (ver <a href="#erros">Mensagens de erro</a>).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>data</code></td>
+                                            <td>Data considerada na busca (a informada ou a data de hoje).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>formato</code></td>
+                                            <td>Formato usado nos arquivos: <code>PDF</code> ou <code>ZPL</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>quantidade</code></td>
+                                            <td>Quantidade de objetos devolvidos em <code>objetos</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>objetos</code></td>
+                                            <td>Lista com <strong>um item por objeto</strong> (detalhes abaixo). Quando não há nada a imprimir, o campo <strong>não vem</strong> na resposta e <code>quantidade</code> é <code>0</code>.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h3 class="title is-6 mt-4">Cada item de <code>objetos</code></h3>
+                                <table class="table is-fullwidth is-bordered is-size-7">
+                                    <thead>
+                                        <tr>
+                                            <th>Campo</th>
+                                            <th>Descrição</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>dstxlot</code></td>
+                                            <td>Lote da pré-postagem no MeusCorreios.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>dstxseq</code></td>
+                                            <td>Sequência da pré-postagem dentro do lote.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>dstxetq</code></td>
+                                            <td>Código da etiqueta (rastreio).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>codectcod</code></td>
+                                            <td>Código do serviço de postagem.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>dstxnfi</code></td>
+                                            <td>Número da nota fiscal / pedido informado na pré-postagem.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>dstnom</code></td>
+                                            <td>Nome do destinatário.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>etqSRO</code></td>
+                                            <td>Link de rastreamento do objeto.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>arquivo</code></td>
+                                            <td><strong>PDF:</strong> conteúdo do PDF em <strong>base64</strong>.<br><strong>ZPL:</strong> comandos ZPL em <strong>texto</strong>, prontos para enviar à impressora.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>erroItem</code></td>
+                                            <td>Vazio quando o arquivo foi gerado. Preenchido quando não foi possível gerar o arquivo daquele objeto.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="exemplo-saida" class="section-anchor">
+                                <h3 class="title is-6 mt-4">Exemplo</h3>
+                                <span class="codelabel">Resposta com dois objetos (conteúdo de <code>arquivo</code> abreviado)</span>
+<pre class="codeblock"><code>{
+  "parmOut": {
+    "erro": "",
+    "data": "2026-10-06",
+    "formato": "PDF",
+    "quantidade": 2,
+    "objetos": [
+      {
+        "dstxlot": "06/10/26A",
+        "dstxseq": 1,
+        "dstxetq": "AD123456789BR",
+        "codectcod": "03220",
+        "dstxnfi": "001/0012345",
+        "dstnom": "NOME DO DESTINATARIO",
+        "etqSRO": "https://...",
+        "arquivo": "JVBERi0xLjQKJcfsj6IKNSAwIG9i...",
+        "erroItem": ""
+      },
+      {
+        "dstxlot": "06/10/26A",
+        "dstxseq": 2,
+        "dstxetq": "AP123456780BR",
+        "codectcod": "03298",
+        "dstxnfi": "001/0012346",
+        "dstnom": "OUTRO DESTINATARIO",
+        "etqSRO": "https://...",
+        "arquivo": "JVBERi0xLjQKJcfsj6IKNSAwIG9i...",
+        "erroItem": ""
+      }
+    ]
+  }
+}</code></pre>
+                                <span class="codelabel">Resposta sem pendências no dia</span>
+<pre class="codeblock"><code>{
+  "parmOut": {
+    "erro": "",
+    "data": "2026-10-06",
+    "formato": "PDF",
+    "quantidade": 0
+  }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div id="arquivo" class="section-anchor mb-5">
+                            <h2 class="title is-5">5. Conteúdo do arquivo</h2>
+                            <p class="is-size-7 block">
+                                Cada item traz <strong>um arquivo por objeto</strong>, já com os documentos que acompanham a etiqueta:
+                            </p>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th>Situação da pré-postagem</th>
+                                        <th>Conteúdo do arquivo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Com chave de NF-e / DC-e</td>
+                                        <td>Etiqueta de postagem + <strong>DANFE simplificado / DACE</strong> na página (ou etiqueta) seguinte.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sem nota, com declaração de conteúdo cadastrada</td>
+                                        <td>Etiqueta de postagem + <strong>declaração de conteúdo</strong>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sem nota e sem declaração</td>
+                                        <td>Somente a etiqueta de postagem.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="card-grid is-size-7">
+                                <div class="info-card">
+                                    <span class="label">PDF</span>
+                                    Decodifique o campo <code>arquivo</code> de base64 e grave como <code>.pdf</code>. Uma página por documento (etiqueta, DANFE…).
+                                </div>
+                                <div class="info-card">
+                                    <span class="label">ZPL</span>
+                                    Envie o texto do campo <code>arquivo</code> direto para a impressora Zebra. Cada documento é um bloco <code>^XA … ^XZ</code>, codificação UTF-8 (<code>^CI28</code>), etiqueta 10 × 15 cm a 203 dpi.
+                                </div>
+                            </div>
+
+                            <article class="message is-info is-size-7">
+                                <div class="message-body">
+                                    ℹ️ Se o XML da nota guardado no MeusCorreios não tiver o protocolo de autorização (<code>&lt;infProt&gt;</code>), a página do DANFE sai com o aviso <em>"Não há dados disponíveis para Emissão do DANFE/DACE"</em>. Nesse caso, reenvie a pré-postagem com o XML autorizado da nota.
+                                </div>
+                            </article>
+
+                            <span class="codelabel">Exemplo: gravar os PDFs recebidos (PowerShell)</span>
+<pre class="codeblock"><code>$r = Get-Content .\resposta.json -Raw | ConvertFrom-Json
+foreach ($o in $r.parmOut.objetos) {
+    [IO.File]::WriteAllBytes("$($o.dstxetq).pdf", [Convert]::FromBase64String($o.arquivo))
+}</code></pre>
+                        </div>
+
+                        <hr>
+
+                        <div id="fluxo" class="section-anchor mb-5">
+                            <h2 class="title is-5">6. Fluxo recomendado</h2>
+                            <ol class="steps is-size-7">
+                                <li>Crie as pré-postagens no MeusCorreios (pela tela, por integração ou pelas APIs de pré-postagem).</li>
+                                <li>Quando for imprimir, chame a <strong>APIMCImpDia</strong> com o Token, a data do dia e o formato desejado.</li>
+                                <li>Para cada item de <code>objetos</code>:
+                                    <ul>
+                                        <li>se <code>erroItem</code> estiver vazio, grave ou envie o <code>arquivo</code> para impressão;</li>
+                                        <li>se <code>erroItem</code> estiver preenchido, registre o objeto para conferência.</li>
+                                    </ul>
+                                </li>
+                                <li>Repita a chamada quantas vezes quiser ao longo do dia: cada chamada traz apenas o que ficou pronto desde a anterior.</li>
+                            </ol>
+                            <article class="message is-success is-size-7">
+                                <div class="message-body">
+                                    ✅ Como os objetos devolvidos são marcados como impressos, não há risco de imprimir duas vezes a mesma etiqueta por chamadas repetidas.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="erros" class="section-anchor mb-5">
+                            <h2 class="title is-5">7. Mensagens de erro</h2>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th>Onde aparece</th>
+                                        <th>Mensagem</th>
+                                        <th>O que fazer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>erro</code></td>
+                                        <td><code>Token Invalido</code></td>
+                                        <td>Confira o Token (sem espaços antes ou depois) e a validade dele.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>erro</code></td>
+                                        <td><code>Acesso Restrito [motivo]</code></td>
+                                        <td>O acesso do cliente está bloqueado. Entre em contato com o suporte do MeusCorreios.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>erro</code></td>
+                                        <td><code>Formato invalido: use PDF ou ZPL</code></td>
+                                        <td>Informe <code>PDF</code>, <code>ZPL</code> ou deixe o campo <code>formato</code> vazio.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>erroItem</code></td>
+                                        <td><code>Nao foi possivel gerar o arquivo da etiqueta</code></td>
+                                        <td>O objeto não foi marcado como impresso e volta na próxima chamada. Se persistir, acione o suporte informando lote e sequência.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <article class="message is-warning is-size-7">
+                                <div class="message-body">
+                                    ⚠️ Quando o campo <code>erro</code> vem preenchido, nenhuma pré-postagem é processada nem marcada como impressa.
+                                </div>
+                            </article>
+                        </div>
+
+                        <hr>
+
+                        <div id="outras" class="section-anchor mb-5">
+                            <h2 class="title is-5">8. ZPL também nas APIs de criação de pré-postagem</h2>
+                            <p class="is-size-7 block">
+                                As APIs <code>APIMCCriPrePos</code> e <code>APIMCCriPreDANFE</code>, que criam a pré-postagem e já devolvem a etiqueta, passaram a aceitar ZPL no campo <code>impetq</code>, sem nenhuma mudança para quem já usa PDF:
+                            </p>
+                            <table class="table is-fullwidth is-bordered is-size-7">
+                                <thead>
+                                    <tr>
+                                        <th><code>impetq</code></th>
+                                        <th>Retorno</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>PDF</code>, <code>PDFDCE</code>, <code>PDFNFE</code></td>
+                                        <td>Como antes: PDF em base64 no campo <code>etqPDF</code>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>ZPL</code>, <code>ZPLDCE</code>, <code>ZPLNFE</code></td>
+                                        <td>Etiqueta + DANFE/DACE (ou declaração de conteúdo) em ZPL, em texto, no novo campo <code>etqZPL</code>.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr>
+
+                        <div id="faq" class="section-anchor mb-5">
+                            <h2 class="title is-5">FAQ de suporte</h2>
+                            <div class="content is-size-7">
+                                <p><strong>Chamei a API e não veio nenhum objeto.</strong><br>
+                                    Confira se a <code>data</code> é a dos lotes onde estão as pré-postagens e se elas já têm serviço e etiqueta atribuídos. Pré-postagens já impressas (pela tela ou por uma chamada anterior) não voltam.</p>
+
+                                <p><strong>Perdi o arquivo de uma etiqueta já devolvida. Como reimprimir?</strong><br>
+                                    A APIMCImpDia devolve cada objeto uma única vez. Reimprima pela tela de Pré-Postagem do MeusCorreios ou acione o suporte informando lote e sequência.</p>
+
+                                <p><strong>Posso buscar vários dias numa chamada só?</strong><br>
+                                    Não. Cada chamada considera um único dia. Para dias diferentes, faça uma chamada por data.</p>
+
+                                <p><strong>O DANFE saiu com "Não há dados disponíveis para Emissão do DANFE/DACE".</strong><br>
+                                    O XML da nota guardado no MeusCorreios não tem o protocolo de autorização. Reenvie a pré-postagem com o XML autorizado da nota.</p>
+
+                                <p><strong>A etiqueta ZPL saiu cortada ou deslocada.</strong><br>
+                                    O ZPL é gerado para etiqueta 10 × 15 cm em 203 dpi e não define o tamanho da mídia. Configure a impressora para esse tamanho de etiqueta.</p>
+
+                                <p><strong>O campo <code>objetos</code> não veio na resposta.</strong><br>
+                                    Isso significa que não há nada a imprimir no dia (<code>quantidade</code> = <code>0</code>). Trate a ausência do campo como lista vazia.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer py-4">
+        <div class="content has-text-centered is-size-7 has-text-grey">
+            API Impressão do Dia (APIMCImpDia) — Manual de Integração
+        </div>
+    </footer>
+
+<script>
+(function () {
+    function setupFixedSidebar() {
+        var column = document.querySelector('.sidebar-column');
+        var sidebar = document.querySelector('.sidebar-fixed');
+        if (!column || !sidebar) return;
+
+        function updateSidebar() {
+            if (window.innerWidth < 1024) {
+                sidebar.classList.remove('is-bottom');
+                sidebar.style.left = '';
+                sidebar.style.width = '';
+                return;
+            }
+
+            var rect = column.getBoundingClientRect();
+            var topOffset = 72; // ~4.5rem
+            var pageBottom = document.querySelector('footer.footer')?.getBoundingClientRect().top + window.scrollY || document.body.scrollHeight;
+            var sidebarHeight = sidebar.offsetHeight;
+            var maxScrollY = pageBottom - sidebarHeight - 24;
+            var currentScrollY = window.scrollY + topOffset;
+
+            sidebar.style.left = rect.left + 'px';
+            sidebar.style.width = rect.width + 'px';
+
+            if (currentScrollY >= maxScrollY) {
+                sidebar.classList.add('is-bottom');
+                sidebar.style.left = '0px';
+                sidebar.style.width = '100%';
+            } else {
+                sidebar.classList.remove('is-bottom');
+            }
+        }
+
+        updateSidebar();
+        window.addEventListener('scroll', updateSidebar, { passive: true });
+        window.addEventListener('resize', updateSidebar);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupFixedSidebar);
+    } else {
+        setupFixedSidebar();
+    }
+})();
+</script>
+
+</body>
+</html>

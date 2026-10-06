@@ -5,6 +5,7 @@ Repositório dedicado aos manuais das integrações do **MeusCorreios**.
 ## 📘 Manuais disponíveis
 
 <!-- MANUAIS:INICIO -->
+- [API Impressão do Dia (APIMCImpDia)](https://meuscorreios-doc.github.io/manuais/APIMCImpDia/index.html)
 - [Configurar Expedição no SECT](https://meuscorreios-doc.github.io/manuais/ExpSect/index.html)
 - [Importação BDF/BAU](https://meuscorreios-doc.github.io/manuais/ImpBDF/index.html)
 - [Integração JetCommerce x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrJetcom/index.html)

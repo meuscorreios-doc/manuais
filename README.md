@@ -12,6 +12,7 @@ Repositório dedicado aos manuais das integrações do **MeusCorreios**.
 - [Integração Shopify x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrShopifyG/index.html)
 - [Integração Tray x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrTray/index.html)
 - [Integração Wbuy x MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrWbuy/index.html)
+- [Integração Yampi com MeusCorreios](https://meuscorreios-doc.github.io/manuais/integrYampi/index.html)
 - [MeusCorreios Chatbot](https://meuscorreios-doc.github.io/manuais/meusCorreiosChatbot/index.html)
 - [Pré-Postagem Manual no MeusCorreios](https://meuscorreios-doc.github.io/manuais/PreManualMC/index.html)
 - [Venda Balança Cubadora SECT](https://meuscorreios-doc.github.io/manuais/CheckSECT/index.html)

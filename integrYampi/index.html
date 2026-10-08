@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Integração Yampi com MeusCorreios</title>
+
+    <!--
+        TEMPLATE PADRÃO — MEUSCORREIOS
+
+        Para novos manuais:
+        1. Mantenha a estrutura da navbar, sidebar, columns e main.
+        2. Substitua apenas textos, links/IDs e conteúdo das seções.
+        3. Não adicione CSS sobrescrevendo navbar, cores, sidebar ou largura principal.
+        4. Use sempre section-anchor nas seções que recebem links.
+        5. Use tabelas com: table is-fullwidth is-bordered is-size-7.
+    -->
+
+    <link rel="stylesheet" href="assets/css/bulma.min.css">
+    <link rel="stylesheet" href="assets/css/manual-padrao.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR FIXA -->
+    <nav class="navbar is-white is-fixed-top manual-navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <span class="navbar-item has-text-weight-semibold is-size-6">📘 Integração Yampi</span>
+        </div>
+
+        <div class="navbar-menu is-active">
+            <div class="navbar-end is-hidden-mobile">
+                <a class="navbar-item is-size-7" href="#sobre">Sobre</a>
+                <a class="navbar-item is-size-7" href="#configuracao">Configuração na Yampi</a>
+                <a class="navbar-item is-size-7" href="#configuracao2">MeusCorreios e Pré-Postagem</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="manual-page-offset">
+        <section class="section">
+            <div class="container">
+                <div class="columns manual-layout">
+
+                    <!-- SIDEBAR STICKY -->
+                    <div class="column is-narrow is-hidden-mobile manual-sidebar-column">
+                        <aside class="menu manual-sidebar">
+                            <p class="menu-label">Navegação</p>
+                            <ul class="menu-list">
+                                <li><a href="#sobre">Sobre este guia</a></li>
+                                <li>
+                                    <a href="#configuracao">Configuração na Yampi</a>
+                                    <ul>
+                                        <li><a href="#passo-1">1. Credenciais de API</a></li>
+                                        <li><a href="#passo-2">2. Conferir os pedidos</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#configuracao2">MeusCorreios e Pré-Postagem</a>
+                                    <ul>
+                                        <li><a href="#pre-1">1. Configurar integração</a></li>
+                                        <li><a href="#pre-2">2. Gerar pré-postagem</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+
+                    <!-- CONTEÚDO -->
+                    <main class="column manual-content-column">
+
+                        <!-- SOBRE -->
+                        <div id="sobre" class="section-anchor mb-5">
+<h1 class="title is-4">Integração Yampi com MeusCorreios</h1>
+<p class="is-size-7 block">Aprenda a obter as credenciais da sua loja Yampi, configurar a integração no remetente do MeusCorreios e importar os pedidos para gerar pré-postagens, etiquetas e lista de postagem.</p>
+<div class="notification is-light manual-highlight is-size-7">O processo começa na Yampi, com as credenciais da loja, e continua no MeusCorreios, com a seleção dos pedidos e a preparação da postagem.</div>
+<h2 class="title is-6">Antes de começar</h2>
+<div class="content is-size-7"><ul>
+<li>Acesso ao painel da loja Yampi e às suas credenciais de API.</li>
+<li>Acesso ao módulo de Configurações e à Pré-Postagem do MeusCorreios.</li>
+<li>Remetente cadastrado com a integração Yampi disponível.</li>
+<li>Pedidos com dados do destinatário e endereço de entrega preenchidos.</li>
+<li>Serviços e faixa de etiquetas disponíveis para concluir a postagem.</li>
+</ul></div>
+</div>
+
+                        <hr>
+                        <hr>
+
+                        <!-- CONFIGURAÇÃO -->
+                        <div id="configuracao" class="section-anchor mb-5">
+                            <h2 class="title is-5">Configuração na Yampi</h2>
+
+                            <p class="is-size-7 block">Obtenha as credenciais da loja que terá os pedidos importados e confira quais pedidos estão liberados para expedição.</p>
+
+                            <!-- PASSO 1 -->
+                            <div id="passo-1" class="section-anchor mb-5">
+<h3 class="title is-6">1. Obter as credenciais de API</h3>
+<div class="content is-size-7"><ol>
+<li>Acesse o <a href="https://app.yampi.com.br/" target="_blank" rel="noopener noreferrer">painel da Yampi</a> e entre na loja que será integrada.</li>
+<li>No canto superior direito, clique no ícone da loja ou do perfil.</li>
+<li>Abra <strong>Credenciais de API</strong>.</li>
+<li>Copie os valores de <strong>Alias</strong>, <strong>Token</strong> e <strong>Chave secreta</strong> para preencher a configuração no MeusCorreios.</li>
+</ol></div>
+<figure class="mb-4"><a href="assets/img/yampi-menu-api.png" target="_blank" rel="noopener noreferrer"><img class="manual-image" src="assets/img/yampi-menu-api.png" alt="Painel da Yampi com o menu do perfil aberto e a opção Credenciais de API destacada" loading="lazy"></a><figcaption class="is-size-7 has-text-grey mt-2">No menu do perfil, selecione Credenciais de API. Exemplo público publicado pela Albato, com dados identificáveis ocultados; a aparência da interface pode variar. <a href="https://albato.com/en/wiki/articles/yampi-automate-your-online-store" target="_blank" rel="noopener noreferrer">Fonte da imagem</a></figcaption></figure><figure class="mb-4"><a href="assets/img/yampi-credenciais.png" target="_blank" rel="noopener noreferrer"><img class="manual-image" src="assets/img/yampi-credenciais.png" alt="Janela de Credenciais de API da Yampi com os campos Alias, Token e Chave secreta" loading="lazy"></a><figcaption class="is-size-7 has-text-grey mt-2">Copie Alias, Token e Chave secreta nos botões ao lado dos campos. Exemplo público publicado pela Albato, com dados identificáveis ocultados; a aparência da interface pode variar. <a href="https://albato.com/en/wiki/articles/yampi-automate-your-online-store" target="_blank" rel="noopener noreferrer">Fonte da imagem</a></figcaption></figure><div class="table-container"><table class="table is-fullwidth is-bordered is-size-7">
+<thead><tr>
+<th>Credencial</th>
+<th>Como utilizar</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Alias</td>
+<td>Identificador interno da loja. Copie o valor exibido; não o substitua pelo endereço do site.</td>
+</tr>
+<tr>
+<td>Token</td>
+<td>Credencial de acesso à API da Yampi.</td>
+</tr>
+<tr>
+<td>Chave secreta</td>
+<td>Credencial utilizada junto com o Token. Na documentação técnica, aparece como User Secret Key.</td>
+</tr>
+</tbody>
+</table></div>
+<article class="message is-info is-size-7"><div class="message-body">Use as credenciais da loja que será integrada. Ao alterar a senha do usuário na Yampi, as credenciais de API são renovadas; atualize o cadastro no MeusCorreios.</div></article>
+</div>
+
+                            <!-- PASSO 2 -->
+                            <div id="passo-2" class="section-anchor mb-5">
+<h3 class="title is-6">2. Conferir os pedidos e os status</h3>
+<p class="is-size-7 block">Na Yampi, acesse <strong>Vendas &gt; Pedidos</strong>. Localize um pedido que deverá ser postado e confira seu número, data, situação do pagamento e endereço de entrega.</p>
+<div class="table-container"><table class="table is-fullwidth is-bordered is-size-7">
+<thead><tr>
+<th>Status na Yampi</th>
+<th>Conferência para a expedição</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Aguardando pagamento</td>
+<td>Pagamento ainda pendente.</td>
+</tr>
+<tr>
+<td>Pedido pré autorizado</td>
+<td>A autorização não confirma que o pedido está pago.</td>
+</tr>
+<tr>
+<td>Pagamento aprovado</td>
+<td>Pagamento confirmado.</td>
+</tr>
+<tr>
+<td>Produto em separação</td>
+<td>Pedido em preparação na loja.</td>
+</tr>
+<tr>
+<td>Faturado</td>
+<td>Pedido com nota fiscal emitida.</td>
+</tr>
+<tr>
+<td>Pronto para envio</td>
+<td>Pedido preparado para envio.</td>
+</tr>
+</tbody>
+</table></div>
+<article class="message is-info is-size-7"><div class="message-body">Defina os status de importação de acordo com o processo de expedição da sua loja. A situação do pedido e o filtro configurado no MeusCorreios precisam corresponder.</div></article>
+</div>
+                        </div>
+                        <!-- CONFIGURAÇÃO MC-->
+                        <div id="configuracao2" class="section-anchor mb-5">
+                            <h2 class="title is-5">Configuração no MeusCorreios e Pré-Postagem</h2>
+
+                            <p class="is-size-7 block">Cadastre as informações da Yampi no remetente correto. Depois, busque os pedidos e conclua as etapas da pré-postagem.</p>
+
+                            <!-- PASSO 1 -->
+                            <div id="pre-1" class="section-anchor mb-5">
+<h3 class="title is-6">1. Configurar a integração do remetente</h3>
+<h4 class="title is-6">Abrir a integração Yampi</h4>
+<div class="content is-size-7"><ol>
+<li>No menu lateral do MeusCorreios, acesse <strong>Configurações</strong>.</li>
+<li>No menu superior, abra <strong>Integrações</strong>.</li>
+<li>Localize o cartão <strong>Yampi</strong> e abra a configuração pelo controle do cartão. Se já houver remetentes configurados, será exibido o ícone de engrenagem.</li>
+</ol></div>
+<figure class="mb-4"><a href="assets/img/mc-integracoes.png" target="_blank" rel="noopener noreferrer"><img class="manual-image" src="assets/img/mc-integracoes.png" alt="Tela de integrações do MeusCorreios com o cartão Yampi no canto inferior direito" loading="lazy"></a><figcaption class="is-size-7 has-text-grey mt-2">Em Configurações, abra Integrações e localize o cartão Yampi.</figcaption></figure><h4 class="title is-6">Selecionar o remetente</h4>
+<div class="content is-size-7"><ol>
+<li>Na lista de <strong>Remetentes</strong>, localize aquele que será utilizado nas postagens da loja Yampi.</li>
+<li>Clique no <strong>ícone de lápis</strong> na linha desse remetente para abrir os campos da integração.</li>
+</ol></div>
+<figure class="mb-4"><a href="assets/img/mc-remetentes.png" target="_blank" rel="noopener noreferrer"><img class="manual-image" src="assets/img/mc-remetentes.png" alt="Lista de remetentes da integração Yampi no MeusCorreios com ícones de edição à esquerda" loading="lazy"></a><figcaption class="is-size-7 has-text-grey mt-2">Clique no lápis da linha do remetente que será integrado.</figcaption></figure><h4 class="title is-6">Preencher as credenciais e os status</h4>
+<p class="is-size-7 block">Preencha os campos conforme a tabela abaixo. As credenciais devem ser copiadas da loja Yampi que será vinculada ao remetente.</p>
+<div class="table-container"><table class="table is-fullwidth is-bordered is-size-7">
+<thead><tr>
+<th>Campo no MeusCorreios</th>
+<th>Como preencher</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Alias</td>
+<td>Cole o <strong>Alias</strong> exibido em Credenciais de API na Yampi.</td>
+</tr>
+<tr>
+<td>Token</td>
+<td>Cole o <strong>Token</strong> obtido na mesma tela da Yampi.</td>
+</tr>
+<tr>
+<td>Secret Key</td>
+<td>Cole a <strong>Chave secreta</strong> da Yampi. Secret Key corresponde à Chave secreta; não repita aqui o Token.</td>
+</tr>
+<tr>
+<td>Buscar Pedidos com Status</td>
+<td>Informe o código do status que deverá ser considerado na busca de pedidos. Utilize <strong>Lista de Status</strong> para consultar os códigos disponíveis.</td>
+</tr>
+<tr>
+<td>Status ao Enviar</td>
+<td>Informe o código do status da Yampi que deverá ser utilizado na atualização do pedido como enviado. Consulte o código em <strong>Lista de Status</strong>.</td>
+</tr>
+<tr>
+<td>Status ao Entregar</td>
+<td>Informe o código do status da Yampi que deverá ser utilizado na atualização do pedido como entregue. Consulte o código em <strong>Lista de Status</strong>.</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="mb-4"><a href="assets/img/mc-configuracao-yampi.png" target="_blank" rel="noopener noreferrer"><img class="manual-image" src="assets/img/mc-configuracao-yampi.png" alt="Formulário da Yampi no MeusCorreios com Alias, Token, Secret Key, Buscar Pedidos com Status, Status ao Enviar, Status ao Entregar e Lista de Status" loading="lazy"></a><figcaption class="is-size-7 has-text-grey mt-2">Campos da integração Yampi: credenciais, filtro de busca e status de atualização.</figcaption></figure><article class="message is-info is-size-7"><div class="message-body">Clique em <strong>Lista de Status</strong> para obter os códigos da loja. Escolha os status conforme o processo de expedição e não copie códigos de outra loja ou plataforma.</div></article>
+<div class="content is-size-7"><ol>
+<li>Revise o remetente, as três credenciais e os status informados.</li>
+<li>Clique em <strong>Confirmar</strong> para salvar a configuração.</li>
+<li>Volte à lista de remetentes e confira a situação <strong>Configurado</strong>.</li>
+</ol></div>
+<p class="is-size-7 block">A tela também dispõe do botão <strong>Como Isso Funciona ?</strong> para consultar as orientações da integração. Se a Yampi não estiver disponível em Configurações &gt; Integrações, solicite ao suporte MeusCorreios a verificação da disponibilidade na sua versão.</p>
+</div>
+
+                            <!-- PASSO 2 -->
+                            <div id="pre-2" class="section-anchor mb-5">
+<h3 class="title is-6">2. Buscar pedidos e gerar a pré-postagem</h3>
+<h4 class="title is-6">Abrir a integração</h4>
+<div class="content is-size-7"><ol>
+<li>Acesse o módulo de <strong>Pré-Postagem</strong> do MeusCorreios.</li>
+<li>Crie um lote ou utilize um lote existente, conforme a sua operação.</li>
+<li>Clique em <strong>Integrações</strong>.</li>
+<li>Marque a integração Yampi do remetente configurado e clique em <strong>F6 Integrar os Marcados</strong>.</li>
+</ol></div>
+<h4 class="title is-6">Consultar os pedidos</h4>
+<div class="content is-size-7"><ol>
+<li>Informe a data inicial para a busca e, se houver esse campo, a data final.</li>
+<li>Confira o remetente, o lote e os filtros disponíveis.</li>
+<li>Clique em <strong>Buscar Relação de Pedidos</strong>.</li>
+<li>Compare a relação retornada com os pedidos que deverão ser expedidos na Yampi.</li>
+</ol></div>
+<p class="is-size-7 block">Se um pedido não aparecer, confira a loja vinculada, o período da busca e o status utilizado no filtro. Não altere o status do pedido apenas para fazê-lo aparecer na integração.</p>
+<h4 class="title is-6">Definir as opções de importação</h4>
+<p class="is-size-7 block">Ajuste as opções disponíveis na tela antes de gerar a pré-postagem:</p>
+<div class="table-container"><table class="table is-fullwidth is-bordered is-size-7">
+<thead><tr>
+<th>Opção</th>
+<th>O que conferir</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Pedidos já incluídos no lote</td>
+<td>Utilize a opção de desconsiderar pedidos já incluídos para reduzir o risco de importação repetida.</td>
+</tr>
+<tr>
+<td>AR</td>
+<td>Defina se as postagens deverão incluir Aviso de Recebimento.</td>
+</tr>
+<tr>
+<td>Valor Declarado</td>
+<td>Defina se o valor do pedido será considerado como Valor Declarado.</td>
+</tr>
+<tr>
+<td>Declaração de Conteúdo</td>
+<td>Quando aplicável, utilize os itens do pedido para preencher a declaração.</td>
+</tr>
+<tr>
+<td>Itens em Observações</td>
+<td>Defina se os itens deverão ser incluídos no campo Observações.</td>
+</tr>
+<tr>
+<td>Sequência de etiquetas</td>
+<td>Defina se a geração deverá seguir uma sequência de etiquetas.</td>
+</tr>
+<tr>
+<td>Dicionário de Serviços</td>
+<td>Confira o comportamento para serviços recebidos da plataforma que não tenham correspondência cadastrada.</td>
+</tr>
+<tr>
+<td>Origens</td>
+<td>Se disponível, confira o filtro de origens para pedidos de outros marketplaces.</td>
+</tr>
+</tbody>
+</table></div>
+<article class="message is-info is-size-7"><div class="message-body">As opções exibidas dependem da integração e da versão utilizada. Os padrões de importação podem ser definidos nas <strong>Preferências do Cliente</strong>, acessadas pela engrenagem à esquerda, conforme as opções disponíveis.</div></article><h4 class="title is-6">Marcar os pedidos e gerar a pré-postagem</h4>
+<div class="content is-size-7"><ol>
+<li>Marque somente os pedidos que serão postados.</li>
+<li>Use o quadrinho do cabeçalho para marcar ou desmarcar os pedidos de cada página. Confira a seleção ao navegar pelas páginas.</li>
+<li>Revise destinatário, endereço, serviço e opções de importação.</li>
+<li>Clique em <strong>Gerar Pré-Postagem dos Marcados</strong>.</li>
+<li>Ao retornar ao lote, confira os objetos criados antes de atribuir etiquetas e imprimir.</li>
+</ol></div>
+<article class="message is-warning is-size-7"><div class="message-body">Se o pedido já tiver um serviço definido, cadastre a correspondência no <strong>Dicionário de Serviços</strong>. Se o serviço não for atribuído na importação, selecione-o no lote.</div></article><h4 class="title is-6">Concluir serviços, etiquetas e lista de postagem</h4>
+<p class="is-size-7 block">Os indicadores em vermelho mostram as etapas que ainda precisam ser concluídas:</p>
+<div class="table-container"><table class="table is-fullwidth is-bordered is-size-7">
+<thead><tr>
+<th>Indicador</th>
+<th>Próxima ação</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Sem Serviço</td>
+<td>Definir o serviço de postagem. Confira também o Dicionário de Serviços.</td>
+</tr>
+<tr>
+<td>Sem Registro</td>
+<td>Atribuir a etiqueta de rastreamento. Se necessário, confira a faixa e o estoque de etiquetas.</td>
+</tr>
+<tr>
+<td>Não Emitidos</td>
+<td>Imprimir as etiquetas dos objetos que já têm serviço e registro.</td>
+</tr>
+<tr>
+<td>Sem Lista</td>
+<td>Gerar a lista de postagem dos objetos com etiquetas emitidas.</td>
+</tr>
+</tbody>
+</table></div>
+<img class="manual-image mb-3" src="assets/img/etapas-prepostagem.png" alt="Indicadores do MeusCorreios: Sem Serviço, Sem Registro, Não Emitidos e Sem Lista" loading="lazy"><p class="is-size-7 block">Depois de concluir a lista de postagem, encaminhe as encomendas e os documentos exigidos para a unidade dos Correios que atende sua empresa.</p>
+<hr>
+<h4 class="title is-6">Referência de problemas</h4>
+<div class="table-container"><table class="table is-fullwidth is-bordered is-size-7">
+<thead><tr>
+<th>Sintoma</th>
+<th>O que verificar</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>A Yampi não aparece nas integrações</td>
+<td>Confira Configurações &gt; Integrações e solicite ao suporte a verificação da disponibilidade da Yampi na sua versão.</td>
+</tr>
+<tr>
+<td>Falha de autenticação</td>
+<td>Copie novamente Alias, Token e Chave secreta. Confira os campos, espaços extras e eventual troca de senha na Yampi.</td>
+</tr>
+<tr>
+<td>A busca não retorna um pedido esperado</td>
+<td>Compare o período, a loja e o filtro de status com os dados do pedido na Yampi.</td>
+</tr>
+<tr>
+<td>O objeto ficou Sem Serviço</td>
+<td>Cadastre a correspondência no Dicionário de Serviços ou defina o serviço no lote.</td>
+</tr>
+<tr>
+<td>O objeto ficou Sem Registro</td>
+<td>Confira se há etiquetas disponíveis para o serviço e atribua o registro.</td>
+</tr>
+<tr>
+<td>O pedido foi importado mais de uma vez</td>
+<td>Confira o número do pedido nos lotes e as opções de desconsiderar pedidos já incluídos antes de gerar nova pré-postagem.</td>
+</tr>
+<tr>
+<td>O rastreio não aparece na Yampi</td>
+<td>Confira se o retorno de rastreamento está disponível e habilitado na sua versão da integração. Encaminhe ao suporte o número do pedido e a etiqueta para verificar o retorno.</td>
+</tr>
+</tbody>
+</table></div>
+<h4 class="title is-6">Dúvidas frequentes</h4>
+<div class="content is-size-7">
+<p><strong>Preciso instalar um aplicativo na Yampi?</strong><br>Este procedimento utiliza o cadastro de Alias, Token e Chave secreta. Se a sua versão do MeusCorreios apresentar um fluxo de autorização por aplicativo, siga o procedimento indicado por essa versão.</p>
+<p><strong>A integração também calcula o frete do checkout?</strong><br>Este guia cobre a importação de pedidos para postagem. A configuração da cotação no checkout é um processo separado.</p>
+<p><strong>O rastreio e os status serão enviados automaticamente à Yampi?</strong><br>O retorno depende dos recursos e das configurações disponíveis na integração MeusCorreios utilizada. Confira essa disponibilidade com o suporte antes de contar com a atualização automática.</p>
+<p><strong>Troquei a senha da Yampi e a integração parou. O que fazer?</strong><br>Obtenha novamente as credenciais de API e atualize os campos no cadastro da integração.</p>
+</div>
+<h4 class="title is-6">Referências</h4>
+<div class="content is-size-7"><ul>
+<li><a href="https://help.yampi.com.br/pt-BR/articles/8273507-como-encontrar-as-credenciais-em-seu-painel-da-yampi" target="_blank" rel="noopener noreferrer">Yampi — Como encontrar as credenciais no painel</a></li>
+<li><a href="https://docs.yampi.com.br/auth/auth-user-token" target="_blank" rel="noopener noreferrer">Yampi — User Token e User Secret Key</a></li>
+<li><a href="https://help.yampi.com.br/pt-BR/articles/6067122-quais-sao-os-status-de-um-pedido" target="_blank" rel="noopener noreferrer">Yampi — Status de um pedido</a></li>
+</ul></div>
+</div>
+                        </div>
+
+                        <hr>
+                        <hr>
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer manual-footer">
+        <div class="content has-text-centered is-size-7 has-text-grey">Integração Yampi com MeusCorreios</div>
+    </footer>
+
+<script src="assets/js/manual.js" defer></script>
+</body>
+
+</html>

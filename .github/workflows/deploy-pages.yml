@@ -58,6 +58,8 @@ jobs:
               "ExpSect",
               "ImpBDF",
               "CheckSECT",
+              "WSCriDstxDadMoto11",
+              "APIMCImpDia",
           }
 
           class TitleParser(HTMLParser):

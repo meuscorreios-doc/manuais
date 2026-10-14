@@ -16,5 +16,6 @@ Repositório dedicado aos manuais das integrações do **MeusCorreios**.
 - [MeusCorreios Chatbot](https://meuscorreios-doc.github.io/manuais/meusCorreiosChatbot/index.html)
 - [Pré-Postagem Manual no MeusCorreios](https://meuscorreios-doc.github.io/manuais/PreManualMC/index.html)
 - [Venda Balança Cubadora SECT](https://meuscorreios-doc.github.io/manuais/CheckSECT/index.html)
+- [WSCriDstxDadMoto11](https://meuscorreios-doc.github.io/manuais/WSCriDstxDadMoto11/index.html)
 <!-- MANUAIS:FIM -->
 

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WSCriDstxDadMoto11 — Web Service de Criação de Postagem</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --border: #d1d9e0;
+    --code-bg: #f6f8fa; --accent: #0969da; --th-bg: #f6f8fa; --warn-bg: #fff8c5; --warn-border: #d4a72c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --border: #3d444d;
+      --code-bg: #151b23; --accent: #4493f8; --th-bg: #151b23; --warn-bg: #272115; --warn-border: #9e6a03;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 4px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h2 { font-size: 1.5rem; margin: 40px 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  h3 { font-size: 1.15rem; margin: 28px 0 8px; }
+  .meta { color: var(--muted); font-size: .9rem; margin: 0 0 24px; }
+  nav { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin-bottom: 24px; }
+  nav ol { margin: 0; padding-left: 20px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; font-size: .875em;
+         background: var(--code-bg); padding: .15em .35em; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px;
+        overflow-x: auto; line-height: 1.45; }
+  pre code { background: none; padding: 0; font-size: .85rem; }
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--th-bg); font-weight: 600; }
+  td:first-child { white-space: nowrap; }
+  .note { background: var(--warn-bg); border-left: 4px solid var(--warn-border); padding: 10px 14px; border-radius: 4px; margin: 16px 0; }
+  ul, ol { padding-left: 24px; }
+  li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>WSCriDstxDadMoto11 — Web Service de Criação de Postagem</h1>
+<p class="meta">meuscorreios.app · atualizado em 14/10/2026</p>
+
+<nav>
+  <ol>
+    <li><a href="#visao-geral">Visão geral</a></li>
+    <li><a href="#autenticacao">Autenticação</a></li>
+    <li><a href="#operacao">Operação Execute</a></li>
+    <li><a href="#exemplos">Exemplos</a></li>
+    <li><a href="#erros">Erros e códigos de retorno</a></li>
+  </ol>
+</nav>
+
+<h2 id="visao-geral">Visão geral</h2>
+<p>O <strong>WSCriDstxDadMoto11</strong> cria uma pré-postagem, gera a etiqueta dos Correios e devolve o PDF da etiqueta em base64, numa única chamada. É a versão 11 do web service de criação de postagem para a Motorola, com serviços adicionais e chave da NF-e opcional.</p>
+
+<div class="table-wrap"><table>
+  <tr><th>Item</th><th>Valor</th></tr>
+  <tr><td>Protocolo</td><td>SOAP 1.1, document/literal</td></tr>
+  <tr><td>Endpoint</td><td><code>https://meuscorreios.app/awscridstxdadmoto11.aspx</code></td></tr>
+  <tr><td>WSDL</td><td><a href="https://meuscorreios.app/awscridstxdadmoto11.aspx?wsdl"><code>https://meuscorreios.app/awscridstxdadmoto11.aspx?wsdl</code></a></td></tr>
+  <tr><td>Namespace</td><td><code>eSECT2</code></td></tr>
+  <tr><td>Operação</td><td><code>Execute</code></td></tr>
+  <tr><td>SOAPAction</td><td><code>eSECT2action/AWSCRIDSTXDADMOTO11.Execute</code></td></tr>
+  <tr><td>Content-Type</td><td><code>text/xml; charset=utf-8</code></td></tr>
+</table></div>
+
+<p>Como o serviço funciona:</p>
+<ul>
+  <li><strong>Serviço dos Correios:</strong> quem escolhe é o MC30, pela faixa de CEP cadastrada para o grupo. O cliente não informa o serviço, e o código escolhido volta em <code>Codectcod</code>.</li>
+  <li><strong>Lote:</strong> as postagens do dia de cada unidade ficam num lote “WS”. Passando de 300 postagens, abre-se um lote novo.</li>
+  <li><strong>Reenvio da mesma NF:</strong> se a <code>Dstxnfi</code> já foi enviada por essa unidade hoje ou ontem, nada novo é criado. O serviço devolve a etiqueta e o PDF da postagem que já existe, então reenviar após um timeout é seguro.</li>
+  <li><strong>Dimensões:</strong> a postagem sempre é gravada com 16 × 16 × 16 cm. Os valores de <code>Dstxvo1</code>, <code>Dstxvo2</code> e <code>Dstxvo3</code> são ignorados.</li>
+  <li><strong>Valor declarado:</strong> se existir uma faixa de valor declarado para o CEP de destino, o valor dela substitui o <code>Dstxvd</code> informado (código 13).</li>
+</ul>
+
+<h2 id="autenticacao">Autenticação</h2>
+<p>No corpo de cada chamada vão três campos: o login e a senha do usuário no meuscorreios.app e o código da unidade dentro do grupo empresarial. Não há token nem cabeçalho de autenticação.</p>
+<ol>
+  <li><code>Webcliema</code> e <code>Webclisen</code> são conferidos como no login da tela. Se falharem, a resposta traz <code>Erro</code> = “Usuário ou Senha Inválido” (ou a mensagem do login).</li>
+  <li>O grupo empresarial é o do e-mail <code>Webcliema</code>. Se o e-mail não pertencer a um grupo, a resposta é o código 2.</li>
+  <li><code>Grpusrcod</code> define a unidade (cliente) em nome de quem a postagem é criada. Se a unidade não for do grupo, a resposta é o código 3.</li>
+  <li>A unidade precisa ter <strong>exatamente um</strong> cartão de postagem: sem cartão é o código 4, e com mais de um é o código 14.</li>
+</ol>
+<p>No cadastro da unidade, o parâmetro <code>LIBIMP</code> = <code>S</code> deixa a postagem liberada para impressão assim que a etiqueta é gerada.</p>
+
+<h2 id="operacao">Operação Execute</h2>
+<p>A requisição deve trazer <strong>todos</strong> os 25 elementos, na ordem abaixo, porque o WSDL declara <code>minOccurs=1</code> em cada um. Um campo opcional sem conteúdo vai vazio (texto) ou como <code>0</code> (número).</p>
+
+<h3>Entrada</h3>
+<div class="table-wrap"><table>
+  <tr><th>Elemento</th><th>Tipo</th><th>Tamanho</th><th>Obrigatório</th><th>Descrição</th></tr>
+  <tr><td><code>Webcliema</code></td><td>string</td><td>90</td><td>sim</td><td>E-mail de login no meuscorreios.app</td></tr>
+  <tr><td><code>Webclisen</code></td><td>string</td><td>50</td><td>sim</td><td>Senha</td></tr>
+  <tr><td><code>Grpusrcod</code></td><td>string</td><td>15</td><td>sim</td><td>Código da unidade no grupo empresarial</td></tr>
+  <tr><td><code>Dstnom</code></td><td>string</td><td>55</td><td>sim</td><td>Nome do destinatário</td></tr>
+  <tr><td><code>Dstnom2</code></td><td>string</td><td>55</td><td>não</td><td>Complemento do nome (A/C, empresa)</td></tr>
+  <tr><td><code>Dstend</code></td><td>string</td><td>55</td><td>sim</td><td>Logradouro</td></tr>
+  <tr><td><code>Dstendnum</code></td><td>string</td><td>6</td><td>depende</td><td>Número, só dígitos (até 999999) ou <code>S/N</code>. É obrigatório quando o cliente exige número (<code>ENDCOM</code> = <code>S</code>)</td></tr>
+  <tr><td><code>Dstcpl</code></td><td>string</td><td>55</td><td>não</td><td>Complemento</td></tr>
+  <tr><td><code>Dstbai</code></td><td>string</td><td>25</td><td>não</td><td>Bairro</td></tr>
+  <tr><td><code>Dstcid</code></td><td>string</td><td>40</td><td>sim</td><td>Cidade</td></tr>
+  <tr><td><code>Dstest</code></td><td>string</td><td>2</td><td>sim</td><td>UF; precisa bater com a faixa do CEP</td></tr>
+  <tr><td><code>Dstxcep</code></td><td>int</td><td>8</td><td>sim</td><td>CEP, só dígitos</td></tr>
+  <tr><td><code>Dstxemail</code></td><td>string</td><td>60</td><td>não</td><td>E-mail do destinatário</td></tr>
+  <tr><td><code>Dstxcel</code></td><td>string</td><td>20</td><td>não</td><td>Celular com DDD; só os 11 primeiros caracteres são gravados</td></tr>
+  <tr><td><code>Dstxnfi</code></td><td>string</td><td>15</td><td>não</td><td>Número da NF. Também serve de chave contra duplicidade (veja a <a href="#visao-geral">Visão geral</a>)</td></tr>
+  <tr><td><code>Dstxcnpj</code></td><td>string</td><td>14</td><td>depende</td><td>CPF/CNPJ do destinatário, só dígitos; <code>0</code> equivale a vazio. Se for informado, é validado; é obrigatório quando o serviço ou o cliente exige</td></tr>
+  <tr><td><code>Dstxobs</code></td><td>string</td><td>60</td><td>não</td><td>Observação impressa na etiqueta</td></tr>
+  <tr><td><code>Dstxpes</code></td><td>double</td><td>7,1</td><td>sim</td><td>Peso</td></tr>
+  <tr><td><code>Dstxvo1</code></td><td>double</td><td>5,1</td><td>não</td><td>Ignorado (gravado como 16)</td></tr>
+  <tr><td><code>Dstxvo2</code></td><td>double</td><td>5,1</td><td>não</td><td>Ignorado (gravado como 16)</td></tr>
+  <tr><td><code>Dstxvo3</code></td><td>double</td><td>5,1</td><td>não</td><td>Ignorado (gravado como 16)</td></tr>
+  <tr><td><code>Dstxvd</code></td><td>double</td><td>10,2</td><td>não</td><td>Valor declarado em R$</td></tr>
+  <tr><td><code>Dstxcob</code></td><td>double</td><td>10,2</td><td>não</td><td>Valor a cobrar em R$</td></tr>
+  <tr><td><code>Dstxadi</code></td><td>string</td><td>20</td><td>não</td><td>Serviços adicionais</td></tr>
+  <tr><td><code>Dstxchvdanfe</code></td><td>string</td><td>50</td><td>não</td><td>Chave de acesso da NF-e (44 dígitos). Incluído em 06/10/2026; quem chama sem ele não é afetado</td></tr>
+</table></div>
+
+<h3>Saída</h3>
+<div class="table-wrap"><table>
+  <tr><th>Elemento</th><th>Tipo</th><th>Descrição</th></tr>
+  <tr><td><code>Dstxlot</code></td><td>string(10)</td><td>Lote em que a postagem foi criada</td></tr>
+  <tr><td><code>Dstxetq</code></td><td>string(13)</td><td>Número da etiqueta (objeto) dos Correios</td></tr>
+  <tr><td><code>Dstxcar</code></td><td>long</td><td>Cartão de postagem usado</td></tr>
+  <tr><td><code>Codectcod</code></td><td>string(9)</td><td>Código do serviço dos Correios escolhido</td></tr>
+  <tr><td><code>Pdfbase64</code></td><td>string</td><td>PDF da etiqueta em base64</td></tr>
+  <tr><td><code>Errocod</code></td><td>short</td><td><code>0</code> = sucesso (veja <a href="#erros">Erros</a>)</td></tr>
+  <tr><td><code>Erro</code></td><td>string(60)</td><td>Mensagem; vazia no sucesso</td></tr>
+</table></div>
+
+<h2 id="exemplos">Exemplos</h2>
+<p>Os dados abaixo são fictícios.</p>
+
+<h3>Requisição</h3>
+<pre><code>POST /awscridstxdadmoto11.aspx HTTP/1.1
+Host: meuscorreios.app
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "eSECT2action/AWSCRIDSTXDADMOTO11.Execute"</code></pre>
+
+<pre><code>&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;soap:Body&gt;
+    &lt;WSCriDstxDadMoto11.Execute xmlns="eSECT2"&gt;
+      &lt;Webcliema&gt;integracao@cliente.com.br&lt;/Webcliema&gt;
+      &lt;Webclisen&gt;********&lt;/Webclisen&gt;
+      &lt;Grpusrcod&gt;SP01&lt;/Grpusrcod&gt;
+      &lt;Dstnom&gt;MARIA DA SILVA&lt;/Dstnom&gt;
+      &lt;Dstnom2&gt;&lt;/Dstnom2&gt;
+      &lt;Dstend&gt;RUA DAS FLORES&lt;/Dstend&gt;
+      &lt;Dstendnum&gt;123&lt;/Dstendnum&gt;
+      &lt;Dstcpl&gt;APTO 45&lt;/Dstcpl&gt;
+      &lt;Dstbai&gt;CENTRO&lt;/Dstbai&gt;
+      &lt;Dstcid&gt;CAMPINAS&lt;/Dstcid&gt;
+      &lt;Dstest&gt;SP&lt;/Dstest&gt;
+      &lt;Dstxcep&gt;13010000&lt;/Dstxcep&gt;
+      &lt;Dstxemail&gt;maria@email.com&lt;/Dstxemail&gt;
+      &lt;Dstxcel&gt;19999998888&lt;/Dstxcel&gt;
+      &lt;Dstxnfi&gt;123456&lt;/Dstxnfi&gt;
+      &lt;Dstxcnpj&gt;12345678909&lt;/Dstxcnpj&gt;
+      &lt;Dstxobs&gt;&lt;/Dstxobs&gt;
+      &lt;Dstxpes&gt;500&lt;/Dstxpes&gt;
+      &lt;Dstxvo1&gt;0&lt;/Dstxvo1&gt;
+      &lt;Dstxvo2&gt;0&lt;/Dstxvo2&gt;
+      &lt;Dstxvo3&gt;0&lt;/Dstxvo3&gt;
+      &lt;Dstxvd&gt;150.00&lt;/Dstxvd&gt;
+      &lt;Dstxcob&gt;0&lt;/Dstxcob&gt;
+      &lt;Dstxadi&gt;&lt;/Dstxadi&gt;
+      &lt;Dstxchvdanfe&gt;35261012345678000199550010001234561000000017&lt;/Dstxchvdanfe&gt;
+    &lt;/WSCriDstxDadMoto11.Execute&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</code></pre>
+
+<h3>Resposta de sucesso</h3>
+<pre><code>&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;WSCriDstxDadMoto11.ExecuteResponse xmlns="eSECT2"&gt;
+      &lt;Dstxlot&gt;0000001234&lt;/Dstxlot&gt;
+      &lt;Dstxetq&gt;AB123456789BR&lt;/Dstxetq&gt;
+      &lt;Dstxcar&gt;1234567890&lt;/Dstxcar&gt;
+      &lt;Codectcod&gt;03220&lt;/Codectcod&gt;
+      &lt;Pdfbase64&gt;JVBERi0xLjQK...&lt;/Pdfbase64&gt;
+      &lt;Errocod&gt;0&lt;/Errocod&gt;
+      &lt;Erro&gt;&lt;/Erro&gt;
+    &lt;/WSCriDstxDadMoto11.ExecuteResponse&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</code></pre>
+<p>Para obter o arquivo da etiqueta, decodifique <code>Pdfbase64</code> e grave os bytes como <code>.pdf</code>.</p>
+
+<h2 id="erros">Erros e códigos de retorno</h2>
+<p>O resultado sai em <code>Errocod</code> e <code>Erro</code>. Considere sucesso apenas quando <code>Errocod</code> = 0 <strong>e</strong> <code>Erro</code> vier vazio, ou quando <code>Errocod</code> = 13.</p>
+<div class="note">Dois erros voltam com <code>Errocod</code> = 0 e só a mensagem preenchida (linhas marcadas com “0*”). Confira sempre o campo <code>Erro</code>.</div>
+
+<div class="table-wrap"><table>
+  <tr><th>Errocod</th><th>Mensagem</th><th>O que fazer</th></tr>
+  <tr><td>0</td><td>(vazia)</td><td>Sucesso: etiqueta e PDF na resposta</td></tr>
+  <tr><td>0*</td><td>Usuário ou Senha Inválido</td><td>Conferir login e senha</td></tr>
+  <tr><td>0*</td><td>Número do Logradouro N(6) ou string "S/N"</td><td><code>Dstendnum</code> com caractere que não é dígito</td></tr>
+  <tr><td>2</td><td>Grupo Empresarial não Existe.</td><td>O e-mail não está ligado a um grupo</td></tr>
+  <tr><td>3</td><td>Unidade X não existe no Grupo Empresarial.</td><td>Conferir <code>Grpusrcod</code></td></tr>
+  <tr><td>4</td><td>Cartão de Postagem não Existe</td><td>Cadastrar o cartão da unidade</td></tr>
+  <tr><td>5</td><td>Destinatário Incompleto / Número do Logradouro / Falta CPF/CNPJ Destin. / CPF ou CNPJ inválido</td><td>Corrigir os dados do destinatário</td></tr>
+  <tr><td>6</td><td>CEP não corresponde à UF informada.</td><td>Conferir <code>Dstxcep</code> e <code>Dstest</code></td></tr>
+  <tr><td>7</td><td>CEP não existe na base DNE</td><td>Só ocorre quando a unidade valida o CEP (<code>CEPVAL</code> = <code>S</code>)</td></tr>
+  <tr><td>9</td><td>Erro da tarifação / Chamada Simultânea: Solicite Novamente</td><td>A postagem não foi criada; reenviar</td></tr>
+  <tr><td>11</td><td>Pré-Postagem gerada sem definição de ETIQUETA</td><td>A pré-postagem existe, mas sem etiqueta. Reenviar com a mesma NF busca a etiqueta de novo</td></tr>
+  <tr><td>12</td><td>Pré-Postagem gerada sem definição do SERVIÇO ou ETIQUETA</td><td>Não há serviço configurado para a faixa desse CEP</td></tr>
+  <tr><td>13</td><td>Valor Declarado substituido pelo definido para a Faixa de CEPs</td><td>Aviso: a postagem e a etiqueta foram criadas normalmente</td></tr>
+  <tr><td>14</td><td>Existe mais de um Cartão de Postagem: …</td><td>Deixar um único cartão na unidade</td></tr>
+</table></div>
+<p>Uma falha de transporte (XML malformado, SOAPAction errada) volta como SOAP Fault, não nesses campos.</p>
+
+</main>
+</body>
+</html>

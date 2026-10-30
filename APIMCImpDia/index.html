@@ -398,7 +398,7 @@ pre.codeblock code { background: none; border: none; padding: 0; font-size: inhe
                                 <tbody>
                                     <tr>
                                         <td style="width:28%"><strong>URL</strong></td>
-                                        <td><code>https://meuscorreios.app/apimcimpdia.svc/rest/</code></td>
+                                        <td><code>https://meuscorreios.app/rest/APIMCImpDia</code></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Método</strong></td>
@@ -410,7 +410,7 @@ pre.codeblock code { background: none; border: none; padding: 0; font-size: inhe
                                     </tr>
                                     <tr>
                                         <td><strong>Autenticação</strong></td>
-                                        <td>Campo <code>token</code> dentro do corpo da requisição.</td>
+                                        <td>Campo <code>token</code> (em minúsculas) dentro do corpo da requisição.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Protocolo</strong></td>
@@ -490,7 +490,7 @@ pre.codeblock code { background: none; border: none; padding: 0; font-size: inhe
   }
 }</code></pre>
                                 <span class="codelabel">Chamada com curl</span>
-<pre class="codeblock"><code>curl -X POST "https://meuscorreios.app/apimcimpdia.svc/rest/" \
+<pre class="codeblock"><code>curl -X POST "https://meuscorreios.app/rest/APIMCImpDia" \
      -H "Content-Type: application/json" \
      --data-binary @requisicao.json</code></pre>
                             </div>
